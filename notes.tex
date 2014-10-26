@@ -1,0 +1,3143 @@
+%% LyX 2.1.1 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[english,hebrew]{article}
+\usepackage[T1]{fontenc}
+\usepackage[latin9,cp1255]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\PassOptionsToPackage{normalem}{ulem}
+\usepackage{ulem}
+
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+%% Because html converters don't know tabularnewline
+\providecommand{\tabularnewline}{\\}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+\usepackage{theorem}
+\theorembodyfont{\upshape}
+\newtheorem{theorem}{\R{משפט}}[section]
+\AtBeginDocument{\make@lr\thetheorem}
+
+% The following chunk fixes export with XeTeX.
+% It is needed because polyglossia is used by default
+% and \make@lr is only defined by babel.
+\@ifundefined{make@lr}
+{\def\make@lr#1{\begingroup
+    \toks@=\expandafter{#1}%
+    \edef\x{\endgroup
+  \def\noexpand#1{\noexpand\@number{\the\toks@}}}%
+  \x}}{\relax}
+\newtheorem{claim}[theorem]{\R{טענה}}
+\newenvironment{proof}%
+{\R{\textbf{הוכחה:}}}%
+{\hfill\rule{2mm}{2mm}\par\vspace{2mm}}
+\newtheorem{definition}[theorem]{\R{הגדרה}}
+\newtheorem{lemma}[theorem]{\R{למה}}
+\newtheorem{corollary}[theorem]{\R{מסקנה}}
+\newtheorem{remark}[theorem]{\R{הערה}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\date{}
+
+\makeatother
+
+\usepackage{babel}
+\begin{document}
+
+\title{אי שלמות ואי כריעות בשפות פורמליות\\
+ד\char`\"{}ר אסף חסון, אוניברסיטת בן-גוריון בנגב}
+
+
+\author{יובל אדם}
+
+\maketitle
+\selectlanguage{english}%
+\inputencoding{latin9}\begin{minipage}[t]{1\columnwidth}%
+\selectlanguage{english}%
+\begin{quote}
+Young man, in mathematics you don't understand things.\\
+You just get used to them.
+\begin{quote}
+- John von Neumann\end{quote}
+\end{quote}
+%
+\end{minipage}
+
+\selectlanguage{hebrew}%
+\inputencoding{cp1255}\tableofcontents{}
+
+
+\section{פרולוג}
+\begin{itemize}
+\item מספור הקטעים תואם למספור ההרצאות. )נשאיר כתרגיל לקורא החרוץ להבין
+מה זה אומר על פרק זה...(
+\item נא להתחשב בסביבה. נא להדפיס מסמך זה רק אם הדבר הכרחי, ורק את טווח
+העמודים הנדרש.
+\item תודה לצביקה סקופינסקי על סיכומים של חלק מהשיעורים.
+\item הערות/טענות/בקשות - כתובת המייל שלי היא \L{$yuv.adm$} ולאחר מכן \L{$gmail.com$}
+\item שאו ברכה, עלו והצליחו.
+\end{itemize}
+
+\section{הגדרות}
+\begin{itemize}
+\item יהי \L{$\mathcal{M}$} מבנה לשפה מסדר ראשון \L{$L$}, \L{$s$} השמה
+ל\L{$\mathcal{M}$} ו-\L{$t$} שם עצם. אז הערך של \L{$t$} ב-\L{$\mathcal{M}$}
+עבור ההשמה \L{$s$} הוא:
+\item אם \L{$t$} קבוע אישי \L{$c$} אז \L{$Val_{\mathcal{M}}(t,s)=c^{\mathcal{M}}$}
+\item אם \L{$t$} משתנה אישי \L{$x$} אז \L{$Val_{\mathcal{M}}(t,s)=s(x)$}
+\item אם \L{$t=f(t_{1},...,t_{n})$} אז \L{$Val_{\mathcal{M}}(t,s)=f^{\mathcal{M}}(Val_{\mathcal{M}}(t_{1},s),...,Val_{\mathcal{M}}(t_{n},s))$}
+\item \noindent יהיו \L{$\mathcal{M}$}, \L{$L$} , ו-\L{$s$} כנ\char`\"{}ל
+ותהי \L{$\varphi$} נוסחה ב-\L{$L$} אז ערך האמת של )\inputencoding{latin9}\L{TRUE}\inputencoding{cp1255}
+או \inputencoding{latin9}\L{FALSE}\inputencoding{cp1255}( של \L{$\varphi$}
+ב\L{$\mathcal{M}$} עבור ההשמה \L{$s$} מוגדר באינדוקציה באופן הבא:
+
+\begin{itemize}
+\item \noindent אם \L{$\varphi$} נוסחה אטומית, כלומר \L{$\varphi$} מהצורה
+\L{$R(t_{1},...,t_{n})$} עבור הסימן יחס n-מקומי \L{$R$} ושמות עצם
+\L{$t_{1},...,t_{n}$} אזי \L{
+\begin{eqnarray*}
+Val_{\mathcal{M}}(\varphi,s) & = & TRUE\iff\left\langle Val_{\mathcal{M}}(t_{1},s),...,Val_{\mathcal{M}}(t_{n},s)\right\rangle \in R^{\mathcal{M}}
+\end{eqnarray*}
+}.
+\item \noindent אם \L{$\varphi=\neg\psi$} עבור נוסחה \L{$\psi$} אז \L{
+\begin{eqnarray*}
+Val_{\mathcal{M}}(\varphi,s) & = & TRUE\iff Val_{\mathcal{M}}(\psi,s)=FALSE
+\end{eqnarray*}
+}
+\item \noindent באופן דומה עבור יתר הקשרים הלוגיים
+\item \noindent אם \L{$\varphi=(\exists x)\psi$} )כלומר הנוסחה היא מסוג
+\char`\"{}קיים איקס\char`\"{} וההמשך הוא נוסחה קטנה יותר( אז \L{
+\begin{eqnarray*}
+Val_{\mathcal{M}}(\varphi,s) & = & TRUE\iff(\exists a\in M)Val_{\mathcal{M}}(\psi,s\left[{x\atop a}\right])=TRUE
+\end{eqnarray*}
+} כאשר \L{$s\left[{x\atop a}\right]$} הינה ההשמה אשר נותנת לכל משתנה
+אישי \L{$y$} שאינו \L{$x$} את הערך \L{$s(y)$} ולמשתנה האישי \L{$x$}
+את הערך \L{$a$} )כלומר רק מחליפה את \L{$x$}(. הגדרה שקולה: \L{
+\begin{eqnarray*}
+Val_{\mathcal{M}}(\varphi,s) & = & TRUE\iff max\left\{ Val_{\mathcal{M}}(\psi,s\left[{x\atop a}\right]):a\in\mathcal{M}\right\} 
+\end{eqnarray*}
+} כאשר נגדיר שרירותית \L{$F<T$}. 
+\item \noindent אם \L{$\varphi=(\forall x)\psi$} אז \L{
+\begin{eqnarray*}
+Val_{\mathcal{M}}(\varphi,s) & = & TRUE\iff(\forall a\in M)Val_{\mathcal{M}}(\psi,s\left[{x\atop a}\right])=TRUE
+\end{eqnarray*}
+}הגדרה שקולה: \L{
+\begin{eqnarray*}
+Val_{\mathcal{M}}(\varphi,s) & = & TRUE\iff min\left\{ Val_{\mathcal{M}}(\psi,s\left[{x\atop a}\right]):a\in\mathcal{M}\right\} 
+\end{eqnarray*}
+}. 
+\end{itemize}
+\end{itemize}
+הערות:
+\begin{enumerate}
+\item בכל שפה לתחשיב פסוקים נניח שיש סימן יחס דו מקומי מיוחס \L{$\approx$}
+אשר תמיד מתפרש כיחס השוויון
+\item כמוסכמה: אם אומרים ש\L{$L$} שפה לתחשיב הפסוקים בד\char`\"{}כ לא נציין
+במפורש את סימן השוויון למרות שבמובלת נניח שהוא שם
+\item בקורס הזה לא ניתקל בכך, אבל ניתן לעבוד בתחשיב ללא שוויון. יש משפטים
+שיותר קל להוכיח בתחשיב שכזה. בכל מקרה, תמיד אפשר לעבור בין תחשיב עם
+שוויון לתחשיב ללא שוויון וחזרה.\end{enumerate}
+\begin{itemize}
+\item תהי \L{$L$} שפה לתחשיב הפסוקים ותהי \L{$\Gamma$} קבוצת נוסחאות ב\L{$L$}
+)לאו דווקא סופית(. נאמר ש\L{$\Gamma$} ספיקה \inputencoding{latin9}\L{(satisfiable)}\inputencoding{cp1255}
+אם קיים מבנה \L{$\mathcal{M}$} לשפה \L{$L$} וקיימת השמה \L{$s$}
+ל\L{$\mathcal{M}$} כך ש\L{$Val_{\mathcal{M}}(\varphi,s)=TRUE$} לכל
+\L{$\varphi\in\Gamma$}. נסמן \L{$(\mathcal{M},s)\models\Gamma$}
+)לפעמים נשמיט את ההשמה \L{$s$} מן הסימונים(. דוגמאות:
+
+\begin{itemize}
+\item \L{$L=\{R\}$} ו-\L{$\Gamma=\left\{ (\forall x)\neg R(x,x),(\forall x\forall y)(R(x,y)\rightarrow R(y,x))\right\} $}
+זו קבוצת פסוקים ספיקה כי לכל גרף \L{$G$} )לא מכוון( נגדיר מבנה \L{$M_{G}$}
+ל\L{$L$} באופן הבא: העולם של \L{$M_{G}$} יהיה \L{$V(G)$} )קבוצת
+הקודקודים של \L{$G$}( והיחס \L{$R^{M_{G}}$} יהיה \L{$E(G)$} )קבוצת
+הקשתות(. 
+\item \L{$L=\{\approx\}$} ו-\L{$T_{3}=\left\{ \forall x_{1},x_{2},x_{3},x_{4}\bigvee_{i,j}(x_{i}=x_{j})\right\} $}
+אז \L{$T_{3}$} ספיקה כי כל קבוצה בת פחות מ-{\beginL 4\endL} איברים
+מספקת אותה. 
+\item \L{$L=\{<\}$} ו- \L{
+\begin{eqnarray*}
+DLO & = & \left\{ \begin{array}{c}
+\forall x\neg(x,x),\\
+\forall x,y(x<y\rightarrow\neg(y<x)),\\
+\forall x,y,z(x<y\wedge y<z\rightarrow x<z),\\
+\forall x,y(x\neq y\rightarrow x<y\vee y<x),\\
+\forall x,y\exists z(x<y\rightarrow x<z\le y)
+\end{array}\right\} 
+\end{eqnarray*}
+} אשר הינו \inputencoding{latin9}\L{dense linear order}\inputencoding{cp1255}
+אז מתקיים \L{$(\mathbb{Q},\le)\models DLO$}. 
+\end{itemize}
+\item אם \L{$L$} ו-\L{$\Gamma$} כנ\char`\"{}ל ו- \L{$(\mathcal{M},s)\models\Gamma$}
+אז נאמר ש\L{$\mathcal{M}$} מודל של \L{$\Gamma$}.
+\item תורה זו קבוצה ספיקה של פסוקים.
+\item פסוק בשפה \L{$L$} זו נוסחה ללא משתנים חופשיים
+\item המשתנים החופשיים בשם עצם \L{$t$}, נסמנם \L{$Free(t)$}, הם אוסף כל
+המשתנים המופיעים ב-\L{$t$}. 
+
+\begin{itemize}
+\item אם \L{$\varphi$} נוסחה אטומית \L{$R(t_{1},...,t_{n})$} אז \L{$Free(\varphi)={\displaystyle \bigcup_{i=1}^{n}t_{i}}$}.
+\item אם \L{$\varphi=\varphi_{1}\square\varphi_{2}$} )קשר לוגי דו מקומי
+כלשהו( אז \L{$Free(\varphi)=Free(\varphi_{1})\cup Free(\varphi_{2})$}
+\item אם \L{$\varphi=(\exists x)\psi$} או \L{$\varphi=(\forall x)\psi$}
+אז \L{$Free(\varphi)=Free(\psi)$} אם \L{$x\notin Free(\psi)$} ו-
+\L{$Free(\varphi)=Free(\psi)\backslash{x}$} אחרת.
+\end{itemize}
+\end{itemize}
+
+\section{תחשיב היחסים}
+\begin{itemize}
+\item לפסוק )שאין לו משתנים חופשיים פר הגדרה( יש ערך אמת ברגע שנקבע המבנה,
+ללא כל תלות בהשמה
+\item נוסחה \L{$\varphi$} תקרא \uline{אמיתית לוגית }אם לכל מבנה \L{$\mathcal{M}$}
+)לשפה של \L{$\varphi$}( ולכל השמה \L{$s$} עבור \L{$\mathcal{M}$}
+מתקיים \L{$Val_{\mathcal{M}}(\varphi,s)=TRUE$}. 
+
+\begin{itemize}
+\item דוגמה: אם \L{$P$} סימן יחס חד-מקומי אז \L{$P(x)\vee\neg P(x)$} אמיתי
+לוגית. מדוע? יהי \L{$\mathcal{M}$}מבנה עבור \L{$\{P\}$} ו\L{$s$}
+השמה עבור \L{$\mathcal{M}$}. \L{
+\begin{eqnarray*}
+Val_{\mathcal{M}}(P(x)\vee\neg P(x),s) & = & t_{\vee}(Val_{\mathcal{M}}(P(x),s),Val_{\mathcal{M}}(\neg P(x),s))\\
+ &  & =t_{\vee}(Val_{\mathcal{M}}(P(x),s),t_{\neg}(Val_{\mathcal{M}}(P(x),s))\\
+ &  & =t_{\vee}(Q,t_{\neg}(Q))\\
+ &  & =TRUE
+\end{eqnarray*}
+} . 
+\item דוגמה: נניח ש\L{$\varphi(x)$} נוסחה עם משתנה חופשי \L{$x$} ו-\L{$c$}
+קבוע אישי שאינו מופיע ב\L{$\varphi(x)$}. אז \L{$\varphi(c)\rightarrow(\forall x)\varphi(x)$}
+אמיתי לוגית )אם \L{$\varphi(c)$} אמיתי לוגית - ייתכן שזה לא נדרש(.
+\item דוגמה: \L{$\forall x(P(x)\vee\neg P(x))$} - אז לפי הגדרת האמת ולפי
+הדוגמה הראשונה זהו פסוק אמיתי לוגית. מדוע זו אינה טאוטולוגיה? באינדוקציה
+על היצירה של \L{$\psi$} )הטאוטולוגיה של תחשיב הפסוקים( מראים:
+
+\begin{itemize}
+\item אם \L{$\psi=\neg\psi^{\prime}$} אז \L{$\psi(\varphi_{1},...,\varphi_{k})=\neg\psi^{\prime}(\varphi_{1},...,\varphi_{k})$}
+\item אם \L{$\psi=\psi_{1}\square\psi_{2}$} עבור קשר לוגי דו מקומי אז \L{
+\begin{eqnarray*}
+\psi(\varphi_{1},...,\varphi_{k}) & = & \psi_{1}(\varphi_{1},...,\varphi_{k})\square\psi_{2}(\varphi_{1},...,\varphi_{k})
+\end{eqnarray*}
+}
+\item אבל \L{$(\forall x)(P(x)\vee\neg P(x))$} לפי משפט הקריאה היחידה אינו
+מהצורה א' או ב' לכן אם הוא מתקבל ע\char`\"{}י החלפה כנ\char`\"{}ל
+מפסוק \L{$\psi$} של תחשיב הפסוקים, \L{$\psi$} הוא בהכרח פסוק יסודי.
+אבל פסוק יסודי )משתנה פסוקי( אינו טאוטולוגיה.
+\end{itemize}
+\end{itemize}
+\item טאוטולוגיה )הגדרה שקולה לשאלה {\beginL 5\endL}(: נוסחה \L{$\varphi$}היא
+טאוטולוגיה של תחשיב היחסים אם קיימת טאוטולוגיה \L{$\psi(P_{1},...,P_{k})$}
+של תחשיב הפסוקים )הסימון הזה אומר ש\L{$P_{1},...,P_{k}$} הם כל המשתנים
+הפסוקיים המופיעים ב\L{$\psi$}( )למשל: \L{$\psi(p,q)=\neg(p\vee q)\iff(\neg p\wedge\neg q)$}(
+ונוסחאות \L{$\varphi_{1},...,\varphi_{k}$} )של תחשיב היחסים( כך ש-
+\L{$\varphi=\psi(\varphi_{1},...,\varphi_{k})$} ו-\L{$\varphi$}
+מתקבלת ע\char`\"{}י החלפת כל מופע של \L{$P_{i}$} ב-\L{$\varphi_{i}$}.
+\item משפט הקריאה היחידה: תהי \L{$\varphi$} נוסחה בתחשיב היחסים, אזי בדיוק
+אחד מן הבאים מתקיים:
+
+\begin{itemize}
+\item \L{$\varphi$} נוסחה אטומית
+\item קיימות נוסחאות \L{$\varphi_{1},\varphi_{2}$} יחידות וקשר לוגי דו
+מקומי יחיד \L{$\square$} כך ש-\L{$\varphi=\varphi_{1}\square\varphi_{2}$}
+\item קיימת נוסחה יחידה \L{$\varphi_{1}$} כך ש-\L{$\varphi=\neg\varphi_{1}$}
+\item קיימת נוסחה יחידה \L{$\varphi_{1}$} כך ש-\L{$\varphi=\exists x\varphi_{1}$}
+\item קיימת נוסחה יחידה \L{$\varphi_{1}$} כך ש-\L{$\varphi=\forall x\varphi_{1}$} 
+\end{itemize}
+\item תרגיל לחשוב עליו בבית: ניתן לכתוב תוכנית מחשב )בשפת התכנות החביבה
+עליכם( שבהינתן נוסחה \L{$\varphi$} בתחשיב הפסוקים בודקת האם \L{$\varphi$}
+טאוטולוגיה של תחשיב היחסים.
+\item )רמז( בהינתן נוסחה \L{$\varphi$} של תחשיב הפסוקים יש אלגוריתם הקובע
+האם \L{$\varphi$} טאוטולוגיה.
+\end{itemize}
+דברים שצריך בשביל העבודה:
+\begin{itemize}
+\item )שאלה {\beginL 4\endL}( תהיינה \L{$\Gamma,\Delta$} קבוצות פסוקים.
+נסמן \L{$\Gamma\models\Delta$} )גורר( אם לכל מבנה \L{$\mathcal{M}$}
+ולכל השמה \L{$s$} מתקיים: אם \L{$(\mathcal{M},s)\models\Gamma$}
+אז \L{$(\mathcal{M},s)\models\Delta$}. 
+
+\begin{itemize}
+\item דוגמה: אם ב\L{$\Delta$} יש רק טאוטולוגיות/נוסחאות אמיתיות לוגיות
+אז \L{$\Gamma\models\Delta$} לכל \L{$\Gamma$}. 
+\item ל\L{$\Delta$} כנ\char`\"{}ל אם \L{$\Delta\models\Gamma$} אז ב\L{$\Gamma$}
+יש רק נוסחאות אמיתיות לוגיות.
+\item אם \L{$\Gamma$} אינה ספיקה אז \L{$\Gamma\models\Delta$} לכל \L{$\Delta$}
+)באופן ריק(.
+\item אם \L{$\varphi\models\psi$} אז \L{$\models\varphi\rightarrow\psi$}
+כלומר \L{$\varphi\models\psi$} אמיתי לוגית. הכיוון השני גם נכון.
+\end{itemize}
+\item )שאלה {\beginL 1\endL}( אפשר לחשוב על \L{$G$} כעל מבנה לשפה \L{$\{R\}$}
+עבור יחס דו מקומי \L{$R$}. אם \L{$G$} גרף סופי קיים פסוק \L{$\varphi_{G}$}
+בשפה הנ\char`\"{}ל כך שלכל מבנה \L{$\mathcal{M}$} בשפה , אם \L{$\mathcal{M}\models\varphi_{G}$}
+אז \L{$\mathcal{M}\cong G$} .
+\item תזכורת: יהיו \L{$\mathcal{M},\mathcal{N}$} מבנים לשפה \L{$\mathcal{L}$}
+של תחשיב היחסים. נאמר ש\L{$\mathcal{M}\cong\mathcal{N}$} )איזומורפיים(
+אם קיימת פונקציה חח\char`\"{}ע ועל \L{$f:\mathcal{M}\rightarrow\mathcal{N}$}
+כך ש:
+
+\begin{itemize}
+\item \L{$f(c^{\mathcal{M}})=c^{\mathcal{N}}$} לכל קבוע אישי \L{$c$}
+\item לכל סימן יחס n-מקומי \L{$R$} ולכל \L{$(a_{1},...,a_{n})\in\mathcal{M}^{\mathcal{N}}$}
+מתקיים \L{
+\begin{eqnarray*}
+\left\langle a_{1},...,a_{n}\right\rangle  & \in & R^{\mathcal{M}}\iff\left\langle f(a_{1}),...,f(a_{n})\right\rangle \in R^{\mathcal{N}}
+\end{eqnarray*}
+}
+\item לכל סימן פונקציה n-מקומי \L{$G$} ולכל \L{$(a_{1},...,a_{n})\in\mathcal{M}^{\mathcal{N}}$}
+מתקיים \L{
+\begin{eqnarray*}
+f(G^{\mathcal{M}}(a_{1},...,a_{n})) & = & G^{\mathcal{N}}(f(a_{1}),...,f(a_{n}))
+\end{eqnarray*}
+}
+\end{itemize}
+\end{itemize}
+הכנה לשיעור הבא:
+\begin{itemize}
+\item אם \L{$\Gamma$} קבוצת נוסחאות ספיקה ו\L{$\Gamma_{0}\subseteq\Gamma$}
+אז \L{$\Gamma_{0}$} ספיקה
+\item אם \L{$\Gamma$} ספיקה ו-\L{$\varphi_{1},\varphi_{2}\in\Gamma$} אז
+גם \L{$\Gamma\cup\{\varphi_{1}\wedge\varphi_{2}\}$} ספיקה
+\item אם ב\L{$\Gamma$} יש פסוק \L{$\varphi$} שאינו ספיק אז בוודאי \L{$\Gamma$}
+אינה ספיקה
+\item משפט הקומפקטיות: תהי \L{$\Gamma$} קבוצת פסוקים סגורה תחת \L{$\wedge$}
+)כלומר אם \L{$\varphi_{1},\varphi_{2}\in\Gamma$} אז גם \L{$\varphi_{1}\wedge\varphi_{2}\in\Gamma$}(
+אז \L{$\Gamma$} ספיקה אם ורק אם כל \L{$\varphi\in\Gamma$} ספיקה.
+\end{itemize}
+
+\section{קומפקטיות ומסננים}
+\begin{theorem}
+\textbf{\uline{משפט הקומפקטיות}}: תהי \L{$\Gamma$} קבוצת פסוקים
+סגורה תחת \L{$\wedge$} )כלומר אם \L{$\varphi_{1},\varphi_{2}\in\Gamma$}אז
+גם \L{$\varphi_{1}\wedge\varphi_{2}\in\Gamma$}( אזי \L{$\Gamma$}
+ספיקה אם ורק אם כל \L{$\varphi\in\Gamma$} ספיק.\end{theorem}
+\begin{claim}
+תהי \L{$\Gamma$} קבוצת פסוקים אזי קיימת קבוצת פסוקים \L{$\Gamma\subseteq\Gamma^{\prime}$}
+כך ש-
+\begin{enumerate}
+\item \L{$\Gamma^{\prime}$} סגורה תחת \L{$\wedge$} 
+\item \L{$\Gamma\equiv\Gamma^{\prime}$} כלומר כל מודל של \L{$\Gamma$}
+הוא מודל של \L{$\Gamma^{\prime}$} ולהיפך
+\end{enumerate}
+\end{claim}
+\begin{proof}
+תהי \L{$\Gamma^{\prime}$} קבוצת הפסוקים המתקבלת מ\L{$\Gamma$} באופן
+הבא: לכל \L{$1\le k\in\mathbb{N}$} ולכל \L{$\varphi_{1},...,\varphi_{k}\in\Gamma$}
+, ב\L{$\Gamma^{\prime}$} יהיה הפסוק \L{${\displaystyle \bigwedge_{i=1}^{k}\varphi_{i}}$}.
+נשים לב ש\L{$\Gamma^{\prime}$} סגורה תחת \L{$\wedge$}. מדוע? יהיו
+\L{$\psi_{1},\psi_{2}\in\Gamma^{\prime}$} לפי ההגדרה של \L{$\Gamma^{\prime}$}
+יש מספרים טבעיים \L{$1\le k_{1},k_{2}$} ופסוקים \L{$\varphi_{1}^{1},...,\varphi_{k_{1}}^{1}$}
+ו- \L{$\varphi_{1}^{2},...,\varphi_{k_{2}}^{2}$} כך ש- \L{
+\begin{eqnarray*}
+{\displaystyle \psi_{1}=\bigwedge_{i=1}^{k_{1}}\varphi_{i}^{1}}
+\end{eqnarray*}
+} ו- \L{
+\begin{eqnarray*}
+{\displaystyle \psi_{2}=\bigwedge_{i=1}^{k_{2}}\varphi_{i}^{2}}
+\end{eqnarray*}
+}אז \L{${\displaystyle \psi_{1}\wedge\psi_{2}=\bigwedge_{i=1}^{k_{1}+k_{2}}\Theta}i$}
+כאשר \L{
+\begin{eqnarray*}
+\Theta_{i} & = & \begin{cases}
+\varphi_{i}^{1} & i\le k_{1}\\
+\varphi_{i-k_{1}}^{2} & i>k_{1}
+\end{cases}
+\end{eqnarray*}
+}מכיוון ש-\L{$\Theta_{i}\in\Gamma$} לכל \L{$i$} גמרנו. \L{$\Gamma^{\prime}$}
+היא המועמדת שלנו לספק את הטענה ונותר להראות ש\L{$\Gamma\equiv\Gamma^{\prime}$}.
+מספיק להראות שאם \L{$\mathcal{M}\models\Gamma$} אז \L{$\mathcal{M}\models\Gamma^{\prime}$}.
+יהי \L{$\psi\in\Gamma^{\prime}$} ונניח כמו קודם \L{$\psi={\displaystyle \bigwedge_{i=1}^{k}}\varphi_{i}$}
+עבור \L{$\varphi_{i}\in\Gamma$} כלשהו.
+
+אזי:\L{
+\begin{eqnarray*}
+Val_{\mathcal{M}}(\psi) & = & Val_{\mathcal{M}}(\bigwedge\varphi_{i})=t_{\wedge}(Val_{\mathcal{M}}(\varphi_{1}),...Val_{\mathcal{M}}(\varphi_{k}))=TRUE
+\end{eqnarray*}
+} מתקיים אמ\char`\"{}ם לכל \L{$1\le i\le k$} \L{$Val_{\mathcal{M}}(\varphi_{i})=TRUE$}.
+כיוון ש\L{$\mathcal{M}\models\Gamma$} אז \L{$\mathcal{M}\models\varphi_{i}$}
+לכל \L{$i$} ולכן \L{$\mathcal{M}\models\psi$}. \end{proof}
+\begin{definition}
+קבוצת פסוקים \L{$\Gamma$} נקראת ספיקה מקומית אם כל תת קבוצה סופית
+שלה היא ספיקה.\end{definition}
+\begin{theorem}
+)משפט הקומפקטיות - נוסח שקול( קבוצת פסוקים \L{$\Gamma$} היא ספיקה
+מקומית אם ורק אם היא ספיקה.\end{theorem}
+\begin{proof}
+נוכיח שמשפט הקומפקטיות גורר את הנוסח הזה. תהי \L{$\Gamma$} קבוצת
+פסוקים ספיקה מקומית. תהי \L{$\Gamma^{\prime}$} כמובטח בטענה, כלומר
+\L{$\Gamma^{\prime}\equiv\Gamma$} ו\L{$\Gamma^{\prime}$} סגורה תחת
+\L{$\wedge$}. מספיק להראות לפי משפט הקומפקטיות שכל פסוק ב\L{$\Gamma^{\prime}$}
+הוא ספיק. יהי \L{$\psi\in\Gamma^{\prime}$} אז \L{${\displaystyle \psi=\bigwedge_{i=1}^{k}\varphi_{i}}$}
+לאיזה \L{$\varphi_{1},...,\varphi_{k}\in\Gamma$} . לפי ההנחה \L{$\Gamma$}
+ספיקה מקומית. לכן \L{$\{\varphi_{1},...,\varphi_{k}\}$} קבוצת פסוקים
+ספיקה. לכן יש מודל \L{$\mathcal{M}\models\varphi_{i}$} לכל \L{$1\le i\le k$}
+לפי מה שהראנו בהוכחת הטענה \L{$\mathcal{M}\models\psi$}. לכן \L{$\Gamma^{\prime}$}
+סגורה תחת חיתוך וכל \L{$\psi\in\Gamma^{\prime}$} ספיק. לפי משפט הקומפקטיות
+עבור \L{$\Gamma^{\prime}$} יש \L{$\mathcal{M}\models\Gamma^{\prime}$}
+אבל \L{$\Gamma\equiv\Gamma^{\prime}$} לכן \L{$\mathcal{M}\models\Gamma^{\prime}$}. 
+
+נוכיח את הכיוון השני )שהנוסח הזה גורר את משפט הקומפקטיות(. נניח \L{$\Gamma$}
+מקיימת את ההנחות כלומר \L{$\Gamma^{\prime}$} סגורה תחת \L{$\wedge$}
+וכל פסוק בה ספיק. יספיק להראות בעזרת הנוסח השקול ש\L{$\Gamma$} ספיקה
+מקומית. נוכיח באינדוקציה על \L{$k$} שכל קבוצת פסוקים מגודל \L{$k$}
+ב-\L{$\Gamma$} היא ספיקה. עבור \L{$k=1$} - נתון. נניח ש\L{$\{\varphi_{1},...,\varphi_{k}\}\subseteq\Gamma$}
+והראנו עבור כל קבוצת פסוקים מגודל \L{$k-1$} שהיא ספיקה. כיוון ש\L{$\Gamma$}
+סגורה תחת חיתוך \L{$\varphi_{1}\wedge\varphi_{2}\in\Gamma$} . \L{$\Delta=\{\varphi_{1}\wedge\varphi_{2},\varphi_{3},...,\varphi_{k}\}$}
+היא קבוצה בגודל \L{$k-1$} ולכן לפי הנחת האינדוקציה היא ספיקה. אם
+\L{$\mathcal{M}\models\Delta$} אז \L{$\mathcal{M}\models\varphi_{i}$}
+לכל \L{$i\ge3$} וכן \L{$\mathcal{M}\models\varphi_{1}\wedge\varphi_{2}$}
+. אבל \L{$\mathcal{M}\models\varphi_{1}\wedge\varphi_{2}\iff\mathcal{M}\models\varphi_{1}\wedge\mathcal{M}\models\varphi_{2}$}
+ולכן \L{$\mathcal{M}\models\{\varphi_{1},...,\varphi_{k}\}$} כנדרש.
+כלומר \L{$\Gamma$} ספיקה מקומית וע\char`\"{}ס הנוסח השקול - ספיקה.\end{proof}
+\begin{definition}
+תהי \L{$I$} קבוצה )בד\char`\"{}כ אינסופית אבל לא בהכרח(. מסנן )\inputencoding{latin9}\L{filter}\inputencoding{cp1255}(
+על \L{$I$} זו קבוצה \L{$F\subseteq\mathbb{P}(I)$} )כלומר אוסף של
+תת קבוצות של \L{$I$}( כך שמתקיים:
+\begin{enumerate}
+\item \L{$\emptyset\not\in F$}
+\item אם \L{$J\in F$} ו-\L{$J\subseteq J^{\prime}$} אז \L{$J^{\prime}\in F$}
+\item אם \L{$J,J^{\prime}\in F$} אז \L{$J\cap J^{\prime}\in F$} 
+\end{enumerate}
+
+אם בנוסף לכל \L{$J\subseteq I$} אם \L{$J\not\in F$} אז \L{$I\backslash J\in F$}
+- אז \L{$F$} נקרא על מסנן.
+
+\end{definition}
+דוגמאות:
+\begin{itemize}
+\item תהי \L{$I$} קבוצה כלשהי. לכל \L{$a\in I$} נגדיר על מסנן \L{$F_{a}$}
+באופן הבא: \L{$J\subseteq I,J\in F$} אמ\char`\"{}ם \L{$a\in J$}
+.)הערה: על מסנן \L{$F$} על \L{$I$} נקרא ראשי אם קיים \L{$I$} כך
+ש-\L{$F=F_{a}$}(.
+\item אם \L{$I$} סופית אז כל על מסנן על \L{$I$} הוא ראשי. יהי \L{$F$}
+על מסנן על \L{$I$}. כיוון ש-\L{$I$} סופית גם \L{$F$} סופית ולכן
+באינדוקציה לפי {\beginL 3\endL}: \L{$J_{F}=\{\bigcap J:J\in F\}$}
+ו-\L{$J_{F}\in F$}. אם \L{$J_{F}$} יחידון - גמרנו. נניח בשלילה שזה
+לא המקרה. אחרת יש {\beginL 2\endL} איברים שונים ב\L{$J_{F}$} )לפחות(.
+ניקח \L{$J\subseteq I$} שמכילה את הראשון אבל לא את השני. לא \L{$J$}
+ולא המשלים של \L{$J$} יכולים להיות ב\L{$F$} כי כל קבוצה ב\L{$F$}
+מכילה את \L{$J_{F}$}. 
+\item תהי \L{$I$} קבוצה אינסופית. נגדיר \L{$F=\{U\subseteq I:|I\backslash U|<\aleph_{0}(finite)\}$}.
+תרגיל: זהו מסנן שאינו על מסנן. \end{itemize}
+\begin{claim}
+תהי \L{$I$} קבוצה לא ריקה. \L{$F$} מסנן על \L{$I$} אזי קיים על
+מסנן \L{$F\subseteq F^{\prime}$}. במילים אחרות כל מסנן על \L{$I$}
+ניתן להרחבה לעל מסנן. )הוכחה בשיעור הבא(.
+\end{claim}
+
+\section{מסננים והלמה של צורן}
+\begin{definition}
+תהי \L{$I$} קבוצה )לא ריקה( אז \textbf{מסנן} \L{$F$} על \L{$I$}
+זה אוסף של תת קבוצות של \L{$I$} כך ש:
+\begin{enumerate}
+\item \L{$\emptyset\not\in F$}
+\item אם \L{$U_{1},U_{2}\in F$} אז \L{$U_{1}\wedge U_{2}\in F$}
+\item אם \L{$U\in F$} ו- \L{$U\subseteq V$} אז \L{$V\in F$} 
+\end{enumerate}
+
+\L{$F$} הוא על-מסנן אם לכל \L{$V\subseteq I$} אם \L{$V\not\in F$}
+אז \L{$I\backslash V\in F$} .
+
+\end{definition}
+\begin{lemma}
+\uline{הלמה של צורן} - תהי \L{$(I,\le)$} קבוצה סדורה חלקית. \L{$V\subseteq I$}
+תקרא שרשרת אם לכל \L{$v_{1},v_{2}\in V$} או \L{$v_{1}\le v_{2}$}
+או \L{$v_{2}\le v_{1}$}. אז נניח שלכל שרשרת \L{$V\subseteq I$} יש
+חסם מלעיל, כלומר קיים \L{$w\in I$} כך ש-\L{$w\ge V$} )כלומר \L{$w\ge v$}
+לכל \L{$v\in V$}(. אזי ב\L{$(I,\le)$} יש איבר מירבי, כלומר קיים
+\L{$u\in I$} כך שלכל \L{$u\not=v\in I$} מתקיים \L{$u\not\le v$}.\end{lemma}
+\begin{claim}
+תהי \L{$I$} קבוצה לא ריקה ו- \L{$F$} מסנן על \L{$I$}. אזי קיים
+על-מסנן \L{$F\subseteq U$}. במילים אחרות, כל מסנן \L{$F$} על \L{$I$}
+ניתן להרחבה לעל-מסנן.
+\begin{proof}
+תהי \L{$\mathcal{H}$} קבוצת כל המסננים על \L{$I$}. לאינטואיציה:
+\L{$F\in\mathbb{P}(\mathbb{P}(I))$} אז \L{$\mathcal{H}\subseteq\mathbb{P}(\mathbb{P}(I)$}
+או \L{$\mathcal{H}\in\mathbb{P}(\mathbb{P}(\mathbb{P}(I)))$}. על
+\L{$\mathcal{H}$} אפשר להגדיר סדר חלקי ע\char`\"{}י הכלה. כלומר,
+ל-\L{$F_{1},F_{2}\in\mathcal{H}$} נאמר ש\L{$F_{1}\le F_{2}$} אם
+לכל \L{$V\in F_{1}$} מתקיים גם \L{$V\in F_{2}$}. אפשר לכתוב גם \L{$F_{1}\subseteq F_{2}$}.
+נרצה להשתמש בלמה של צורן, לכן עלינו להראות שאם \L{$V\subseteq\mathcal{H}$}
+שרשרת אז ל\L{$V$} יש חסם מלעיל ב\L{$\mathcal{H}$}. נגדיר \L{$F_{V}={\displaystyle \bigcup V}=\{U\subseteq I:U\in F,\, for\, some\, F\in V\}$}.
+נראה ש\L{$F_{V}$} הוא מסנן. 
+\begin{enumerate}
+\item ברור כי \L{$\emptyset\not\in F_{V}$}
+\item נניח ש \L{$U_{1},U_{2}\in F_{V}$}. קיימים \L{$F_{1},F_{2}\in V$}
+כך ש \L{$U_{1}\in F_{1}$} וגם \L{$U_{2}\in F_{2}$}. כיוון ש-\L{$V$}
+שרשרת, ב.ה.כ \L{$F_{1}\subseteq F_{2}$} . לכן \L{$U_{1}\in F_{2}$}
+לכן גם \L{$U_{1}\cap U_{2}\in F_{2}$} ולכן \L{$U_{1}\cap U_{2}\in F_{V}$}.
+\item אם \L{$U\in F_{V}$} ו- \L{$U\subseteq W$} אז לפי הגדרה קיים איזה
+\L{$F\in V$} כך ש- \L{$U\in F$}. לכן גם \L{$W\in F$} ולכן \L{$W\in F_{V}$}.
+\end{enumerate}
+
+הראנו שלכל שרשרת ב\L{$\mathcal{H}$} יש חסם מלעיל, כי ברור \L{$F_{V}\in\mathcal{H}$}
+ו- \L{$F\subseteq F_{V}$} לכל \L{$F\in V$} כלומר \L{$F_{V}$} חסם
+מלעיל ל-\L{$V$}. לפי הלמה של צורן, ב-\L{$\mathcal{H}$} יש איבר מירבי,
+נסמנו \L{$\mathcal{U}$}. נראה ש\L{$\mathcal{U}$} על מסנן. נניח בשלילה
+שהוא לא. כיוון ש-\L{$\mathcal{U}\in\mathcal{H}$} הוא מסנן ולכן הנחת
+השלילה מבטיחה שיש קבוצה \L{$U\subseteq I$} כך ש- \L{$U\not\in\mathcal{U}$}
+ו- \L{$I\backslash U\not\in\mathcal{U}$}. נשים לב כי במקרה זה \L{$\mathcal{U}_{U}=\mathcal{U}\cup\{W\subseteq I:U\cap V\subseteq W,\, for\, some\, V\in\mathcal{U}\}$}
+הוא מסנן וזאת תהיה סתירה למירביות של \L{$\mathcal{U}$} כי \L{$\mathcal{U}\not\subseteq\mathcal{U}_{U}$}.
+מדוע \L{$\mathcal{U}_{U}$} הוא מסנן? 
+\begin{enumerate}
+\item נוכיח ש\L{$\emptyset\in\mathcal{U}_{U}$}. אם \L{$\emptyset\in\mathcal{U}_{U}$}
+הרי שהיא מהצורה \L{$U\cap V$} לאיזה \L{$V\in\mathcal{U}$}. אבל אז
+\L{$V\subseteq I\backslash U$} ואז \L{$I\backslash U\in\mathcal{U}$}
+בסתירה.
+\item \L{$\mathcal{U}_{U}$} סגורה כלפי מעלה מעצם הגדרתה. 
+\item נראה כי אם \L{$U_{1},U_{2}\in\mathcal{U}_{U}$} אז גם \L{$U_{1}\cap U_{2}\in\mathcal{U}_{U}$}.
+ב.ה.כ \L{$U_{1}\not\in\mathcal{U}$}. לכן \L{$U\cap V\subseteq U$}
+לאיזה \L{$V\in\mathcal{U}$}. לכן \L{$U\cap V\cap U_{2}\subseteq U_{2}\cap U_{1}$}
+עבור \L{$V$} הזו. אם \L{$U_{2}\in\mathcal{U}$} אז \L{$V\cap U_{2}\in\mathcal{U}$}
+ולכן \L{$U\cap(V\cap U_{2})\in\mathcal{U}_{U}$} וכך גם \L{$U_{1}\cap U_{2}$}.
+אחרת \L{$U\cap V_{2}\subseteq U_{2}$} לאיזה \L{$V_{2}\in\mathcal{U}$}
+. ואז \L{$U\cap(V\cap V_{2})\subseteq U_{1}\cap U_{2}$} וגם \L{$U\cap(V\cap V_{2})\in\mathcal{U}_{U}$}.
+קיבלנו \L{$\mathcal{U}_{U}\in\mathcal{H}$} ו-\L{$\mathcal{U}\not\in\mathcal{U}_{U}$}
+סתירה. לכן \L{$\mathcal{U}$} על מסנן. 
+\end{enumerate}
+
+)הרחבה( אם \L{$F$} מסנן על \L{$I$} נגדיר \L{$\mathcal{H}_{F}\subseteq\mathcal{H}$}
+אוסף המסננים המכילים את \L{$F$}. באופן טריויאלי לכל שרשרת ב-\L{$\mathcal{H}_{F}$}
+יש חסם מלעיל ב-\L{$\mathcal{H_{F}}$})כי כל שרשרת כזו היא שרשרת של
+איברים שגדולים מ-\L{$F$} ולכן אם יש לה חסם ב\L{$\mathcal{H}$} הרי
+שהוא חסם ב\L{$\mathcal{H}_{F}$}. לכן \L{$\mathcal{H}_{F}$}מקיימת
+את הלמה של צורן, לכן יש איבר מירבי גם ב\L{$\mathcal{H}$}וראינו שאלו
+על מסננים.
+
+\end{proof}
+\begin{corollary}
+לכל קבוצה אינסופית \L{$I$} יש על מסנן \L{$F$} על \L{$I$} כך שאם
+\L{$|I\backslash U|<\aleph_{0}$} אז \L{$U\in F$}.\end{corollary}
+\begin{definition}
+\uline{מכפלות}: תהי \L{$\Gamma$}קבוצה לא ריקה כלשהי ו-\L{$\{M_{\gamma}\}_{\gamma\in\Gamma}$}
+אוסף של קבוצות לא ריקות. אז המכפלה \L{${\displaystyle \prod_{\gamma\in\Gamma}\mathcal{M}_{\gamma}}$}
+זה אוסף כל הפונקציות \L{$f:\Gamma\rightarrow{\displaystyle \bigcup_{\gamma\in\Gamma}\mathcal{M}_{\gamma}}$}
+המקיימות \L{$f(\gamma)\in\mathcal{M}_{\gamma}$}. הערה: אם \L{$\Gamma=\{1,...,n\}$}
+ו-\L{$\mathcal{M}_{i}=\mathcal{M}_{j}$} לכל \L{$i,j$} אז \L{${\displaystyle \prod_{i=1}^{n}\mathcal{M}=\mathcal{M}^{n}}$}.\end{definition}
+\begin{theorem}
+\uline{אקסיומת הבחירה}: אם \L{$\Gamma$}לא ריקה ו-\L{$\mathcal{M}_{\gamma}\not=\emptyset$}
+לכל \L{$\gamma\in\Gamma$} אז \L{${\displaystyle \prod_{\gamma\in\Gamma}\mathcal{M}_{\gamma}\not=\emptyset}$}.
+\end{theorem}
+
+\section{מכפלות}
+
+\end{claim}
+\begin{definition}
+\uline{מכפלות}: תהי \L{$\Gamma$} קבוצה לא ריקה כלשהי ו-\L{$\{M_{\gamma}\}_{\gamma\in\Gamma}$}
+אוסף של קבוצות לא ריקות. אז המכפלה \L{${\displaystyle \prod_{\gamma\in\Gamma}\mathcal{M}_{\gamma}}$}
+זה אוסף כל הפונקציות \L{$f:\Gamma\rightarrow{\displaystyle \bigcup_{\gamma\in\Gamma}\mathcal{M}_{\gamma}}$}
+המקיימות \L{$f(\gamma)\in\mathcal{M}_{\gamma}$}. הערה: אם \L{$\Gamma=\{1,...,n\}$}
+ו-\L{$\mathcal{M}_{i}=\mathcal{M}_{j}$} לכל \L{$i,j$} אז \L{${\displaystyle \prod_{i=1}^{n}\mathcal{M}=\mathcal{M}^{n}}$}.
+
+דוגמה: אם \L{$\mathcal{M}_{\gamma}=\mathcal{M}$} לכל \L{$\mathcal{M}$}
+אז \L{${\displaystyle \prod_{\gamma\in\Gamma}\mathcal{M}=M^{\Gamma}}$}זה
+פשוט אוסף כל הפונקציות מ\L{$\Gamma$} ל\L{$\mathcal{M}$}. 
+\end{definition}
+~
+\begin{definition}
+אם \L{$\Gamma$}לא ריקה ו-\L{$\mathcal{M}_{\gamma}\not=\emptyset$}
+לכל \L{$\gamma\in\Gamma$}. תהי \L{$\mathcal{M}=\prod\mathcal{M}_{\gamma}$}.
+ל\L{$\bar{x},\bar{y}\in\mathcal{M}$} נגדיר \L{$x\sim_{F}y$} עבור
+על מסנן \L{$F$} על \L{$\Gamma$} אם \L{$\{\gamma\in\Gamma:\bar{x}(\gamma)=\bar{y}(\gamma)\}\in F$}. \end{definition}
+\begin{claim}
+בסימונים של ההגדרה האחרונה \L{$\sim_{F}$} הוא יחס שקילות. \end{claim}
+\begin{proof}
+~
+\begin{enumerate}
+\item \L{$\{\gamma\in\Gamma:\bar{x}(\gamma)=\bar{y}(\gamma)\}=\Gamma\in F$}
+
+\begin{enumerate}
+\item \L{$\{\gamma\in\Gamma:\bar{x}(\gamma)=\bar{y}(\gamma)\}=\{\gamma\in\Gamma:\bar{y}(\gamma)=\bar{x}(\gamma)\}$}
+\item נניח ש\L{$x\sim_{F}y$} ו-\L{$y\sim_{F}z$} אז \L{
+\begin{eqnarray*}
+U & = & \{\gamma\in\Gamma:\bar{x}(\gamma)=\bar{y}(\gamma)\}\in F
+\end{eqnarray*}
+} וגם \L{
+\begin{eqnarray*}
+V & = & \{\gamma\in\Gamma:\bar{y}(\gamma)=\bar{z}(\gamma)\}\in F
+\end{eqnarray*}
+} לכן \L{$U\cap V\in F$} אבל \L{$U\cap V\subseteq\{\gamma\in\Gamma:\bar{x}(\gamma)=\bar{z}(\gamma)\}\in F$}.
+\end{enumerate}
+\end{enumerate}
+\end{proof}
+\begin{definition}
+תהי \L{$\Gamma$} קבוצה לא ריקה ולכל \L{$\gamma\in\Gamma$} יהי \L{$\mathcal{M}_{\gamma}$}
+מבנה לשפה \L{$\mathcal{L}$}. יהי \L{$F$} על מסנן )לא ראשי( על \L{$\Gamma$}
+אז העל מכפלה של \L{$\{\mathcal{M}_{\gamma}\}_{\gamma\in\Gamma}$}
+ביחס ל\L{$F$} שתסומן \L{$\mathcal{M=}({\displaystyle \prod_{\gamma\in\Gamma}\mathcal{M}_{\gamma}})/F$}
+היא המבנה המוגדר כלהלן: \end{definition}
+\begin{enumerate}
+\item העולם של העל מכפלה הוא \L{$({\displaystyle \prod_{\gamma\in\Gamma}\mathcal{M}_{\gamma}})/\sim_{F}$}
+כלומר אוסף מחלקות השקילות של היחס \L{$\sim_{F}$} על המכפלה \L{$({\displaystyle \prod_{\gamma\in\Gamma}\mathcal{M}_{\gamma}})$}
+\item לכל קבוע אישי \L{$c\in\mathcal{L}$} נפרש \L{$[(c^{\mathcal{M}_{\gamma}})_{\gamma\in\Gamma}]$}
+מחלקת השקילות של הסדרה \L{$(c^{\mathcal{M}_{\gamma}})_{\gamma\in\Gamma}$}
+ביחס ל \L{$\sim_{F}$}.
+\item לכל סימן יחס n-מקומי \L{$R\in\mathcal{L}$} . נאמר ש\L{$[\bar{a_{1}},...,\bar{a_{n}}]\in R^{\mathcal{M}}$}
+אם \L{$\{\gamma\in\Gamma:(\bar{a_{1}}(\gamma),...,\bar{a_{n}}(\gamma))\in R^{\mathcal{M}_{\gamma}}$}
+. 
+\item לכל סימן פונקציה n-מקומי \L{$F$}נאמר ש\L{$F^{\mathcal{M}}[(\bar{a_{1}},...,\bar{a_{n})}]=[b]$}
+אם \L{$\{\gamma\in\Gamma:F^{\mathcal{M}_{\gamma}}(\bar{a_{1}}(\gamma),...,\bar{a_{n}}(\gamma))=b(\gamma)\}\in F$}
+. הערה: הנ\char`\"{}ל מוגדר היטב. כלומר אם \L{$[b]=[d]$} אז \L{
+\begin{eqnarray*}
+ &  & \underset{\in F}{\underbrace{\underset{\in F}{\underbrace{\{\gamma\in\Gamma:F^{\mathcal{M}_{\gamma}}(\bar{a_{1}}(\gamma),...,\bar{a_{n}}(\gamma))=b(\gamma)\}}}\cap\underset{\in F}{\underbrace{\{\gamma\in\Gamma:d(\gamma)=b(\gamma)\}}}}}\\
+ & \subseteq & \underset{\in F}{\underbrace{\{\gamma\in\Gamma:F^{\mathcal{M}_{\gamma}}(\bar{a_{1}},...,\bar{a_{n}}(\gamma))=d(\gamma)\}}}
+\end{eqnarray*}
+} כי \L{$[b]=[d]$} כלומר \L{$b\sim_{F}d$} וזאת בדיוק ההגדרה. \end{enumerate}
+\begin{theorem}
+יהיו \L{$\mathcal{M}=({\displaystyle \prod_{\gamma\in\Gamma}\mathcal{M}_{\gamma}})/F$}
+ו-\L{$\varphi(x_{1},...,x_{n})$} נוסחה ו-\L{$s$} השמה ל\L{$\mathcal{M}$}.
+אזי מתקיים \L{$Val_{\mathcal{M}}(\varphi,s)=TRUE$} אם ורק אם לכל
+השמות \L{$(s_{\gamma})_{\gamma\in\Gamma}$} )עם \L{$s_{\gamma}$}
+השמה ל\L{$\mathcal{M}_{\gamma}$}( כך ש \L{$[(s_{\gamma})_{\gamma\in\Gamma}]\sim_{F}[s]$}
+מתקיים ש \L{$\{\gamma\in\Gamma:Val_{\mathcal{M}}(\varphi,s_{\gamma})=TRUE\}\in F$}.\end{theorem}
+\begin{proof}
+באינדוקציה על יצירת הנוסחאות. נתחיל משמות עצם:
+\begin{itemize}
+\item עבור \L{$t$} קבוע אישי \L{$c$} מתקיים \L{$Val_{\mathcal{M}}(c,s)=c^{\mathcal{M}}=[(c^{\mathcal{M}_{\gamma}})_{\gamma\in\Gamma}]=[Val_{\mathcal{M}_{\gamma}}(c,s)_{\gamma\in\Gamma}]$}.
+לשם נוחות נקבע השמה \L{$s_{0}$} ל-\L{${\displaystyle \prod_{\gamma\in\Gamma}\mathcal{M}_{\gamma}}$}
+כך ש-\L{$[s_{0}]=s$}. כלומר לכל משתנה אישי \L{$x$} מתקיים \L{$[s_{0}(x)]=s(x)$}. 
+\item עבור \L{$t$} משתנה אישי \L{$x$} : \L{$Val_{\mathcal{M}}(x,s)=\underset{=[s_{\gamma}(x)]}{\underbrace{[s_{0}(x)]}}=s(x)$}
+\item עבור \L{$t$} פונקציה \L{$t=F(t_{1},...,t_{n})$} אז \L{
+\begin{eqnarray*}
+Val_{\mathcal{M}}(F(t_{1},...,t_{n}),s) & = & F{}^{\mathcal{M}}(Val_{\mathcal{M}}(t_{1},s),...,Val_{\mathcal{M}}(t_{n},s))\\
+ & = & F^{\mathcal{M}}([Val_{\mathcal{M}_{\gamma}}(t_{1},s_{\gamma})],...,[Val_{\mathcal{M}_{\gamma}}(t_{n},s_{\gamma})])\\
+ & = & [F^{\mathcal{M}_{\gamma}}(Val_{\mathcal{M}_{\gamma}}(t_{1},s_{\gamma}),...Val_{\mathcal{M}_{\gamma}}(t_{n},s_{\gamma})]
+\end{eqnarray*}
+}עתה נתחיל בהוכחה עבור נוסחאות:\end{itemize}
+\begin{enumerate}
+\item אם \L{$\varphi$} נוסחה אטומית \L{$R(t_{1}(x_{1},...,x_{n}),...,t_{m}(x_{1},...,x_{n}))$}
+אז אם ורק אם \L{
+\begin{eqnarray*}
+Val_{\mathcal{M}}(R(t_{1},...,t_{n}),s) & = & TRUE\\
+ & \iff & (Val_{\mathcal{M}}(t_{1},s),...Val_{\mathcal{M}}(t_{m},s))\in R^{\mathcal{M}}\\
+ & \iff & \{\gamma\in\Gamma:(Val_{\mathcal{M}}(t_{1},s)(\gamma),...,Val_{\mathcal{M}}(t_{n},s)(\gamma))\in R^{\mathcal{M}_{\gamma}}\}\in F
+\end{eqnarray*}
+} אם ורק אם לפי מה שהראנו עבור שמות עצם \L{$[Val_{\mathcal{M}}(t_{i},s)]=[(Val_{\mathcal{M}}(t_{i},s_{\gamma})(\gamma))_{\gamma\in\Gamma}]$}
+לכל \L{$1\le i\le m$}. לכן, \L{
+\begin{eqnarray*}
+\{\gamma & \in & \Gamma:(Val_{\mathcal{M}}(t_{1},s_{\gamma}),...,Val_{\mathcal{M}}(t_{m},s_{\gamma}))\in R^{\mathcal{M}_{\gamma}}\}\in F\\
+ &  & \iff\{\gamma\in\Gamma:(Val_{\mathcal{M}_{\gamma}}(t_{1},s_{\gamma}),...,Val_{\mathcal{M}_{\gamma}}(t_{m},s_{\gamma}))\in R^{\mathcal{M}_{\gamma}}\}\in F
+\end{eqnarray*}
+} וזה מה שהיינו צריכים .
+\end{enumerate}
+\end{proof}
+
+\section{משפט \L{Los} והוכחת קומפקטיות}
+\begin{theorem}
+\uline{משפט }\inputencoding{latin9}\L{\uline{Los}}\inputencoding{cp1255}
+תהי \L{$\mathcal{L}$} שפה לתחשיב הפסוקים, \L{$\Gamma$} קבוצה לא
+ריקה, לכל \L{$\gamma\in\Gamma$} מבנה \L{$\mathcal{M}_{\gamma}$}
+לשפה \L{$\mathcal{L}$}. יהי \L{$F$} על מסנן על \L{$\Gamma$} ו-\L{$s$}
+השמה עבור \L{$\mathcal{M}=({\displaystyle \prod_{\gamma}\mathcal{M}_{\gamma}}/F)$}
+ו- \L{$\varphi(x)$} נוסחה ב\L{$\mathcal{L}$}. אזי \L{$Val_{\mathcal{M}}(\varphi,\bar{s})=TRUE$}אם
+ורק אם לכל השמה \L{$s$} ל-\L{${\displaystyle \prod_{\gamma}\mathcal{M}_{\gamma}}$}
+המקיימת \L{$\bar{s}(x)=[s(x)]$} מתקיים: \L{
+\begin{eqnarray*}
+\{\gamma & \in & \Gamma:Val_{\mathcal{M}_{\gamma}}(\mathcal{M}_{\gamma},s(\gamma))=TRUE\}\in F
+\end{eqnarray*}
+} )כאשר \L{$s(\gamma)(x)$} זה הקואורדינטה ה\L{$\gamma$} של \L{$s(x)$}(. 
+\end{theorem}
+תזכורת: כיצד מגדירין )\char`\"{}לכבוד פסח\char`\"{} - א. חסון, חג
+שמח( מבנה לשפה \L{$\mathcal{L}$} על \L{${\displaystyle (\prod_{\gamma\in\Gamma}\mathcal{M}_{\gamma}}/F)$}?
+\begin{itemize}
+\item עבור קבוע אישי \L{$c$} פשוט לוקחים את \L{$[(c^{\mathcal{M}_{\gamma}})_{\gamma\in\Gamma}]$}.
+\item עבור סימן יחס n-מקומי \L{$R$} נקבע ש-\L{$\left\langle \bar{a}_{1},...,\bar{a}_{n}\right\rangle \in R^{\mathcal{M}}$}
+אם קיימים \L{$a_{1},...,a_{n}\in{\displaystyle \prod_{\gamma\in\Gamma}\mathcal{M}_{\gamma}}$}
+כך ש \L{$[a_{1}]=\bar{a_{1}},...,[a_{n}]=\bar{a_{n}}$} כך ש-\L{
+\begin{eqnarray*}
+\{\gamma & \in & \Gamma:(a_{1}(\gamma),...a_{n}(\gamma))\in R^{\mathcal{M}_{\gamma}}\}\in F
+\end{eqnarray*}
+}
+\item עבור סימן פונקציה n-מקומי \L{$F^{\mathcal{M}}(\bar{a}_{1},...,\bar{a}_{n})=b$}
+אם קיימים \L{$b,a_{1},...,a_{n}\in{\displaystyle \prod_{\gamma\in\Gamma}\mathcal{M}_{\gamma}}$}
+כך ש \L{$[a_{1}]=\bar{a_{1}},...,[a_{n}]=\bar{a_{n}},[b]=b$} כך ש
+\L{
+\begin{eqnarray*}
+\{\gamma & \in & \Gamma:F^{\mathcal{M}}(a_{1}(\gamma),...a_{n}(\gamma))=b(\gamma)\}\in F
+\end{eqnarray*}
+}.
+\end{itemize}
+\uline{תרגיל:}
+\begin{enumerate}
+\item להוכיח כי זה מוגדר היטב, כלומר \L{$F^{\mathcal{M}}$} היא אכן פונקציה.
+ז\char`\"{}א עבור \L{$\bar{a_{1}},...,\bar{a_{n}}\in\mathcal{M}$}
+קיים \L{$b$} יחיד כך ש\L{$F^{\mathcal{M}}(\bar{a_{1},}...,\bar{a_{n}})=b$}.
+\item אם \L{$[a_{1}]=\bar{a_{1}},...,[a_{n}]=\bar{a_{n}}$} אז \L{$F^{\mathcal{M}}(\bar{a_{1}},...,\bar{a_{n}})=[F^{\mathcal{M}}(a_{1}(\gamma),...,a_{n}(\gamma))_{\gamma\in\Gamma}]$}\end{enumerate}
+\begin{proof}
+ראשית נראה: אם \L{$t$} שם עצם ב\L{$\mathcal{L}$}, \L{$\bar{s},s$}
+השמות כבניסוח המשפט אז \L{$Val_{\mathcal{M}}(t,\bar{s})=[(Val_{\mathcal{M}_{\gamma}}(t,s(\gamma)))_{\gamma\in\Gamma}]$}
+באינדוקציה על יציאת \L{$t$}.
+\begin{itemize}
+\item עבור \L{$t$} קבוע אישי \L{$c$}: \L{$Val_{\mathcal{M}}(t,\bar{s})=[(c^{\mathcal{M}_{\gamma}})_{\gamma\in\Gamma}]=[(Val_{\mathcal{M}_{\gamma}}(c,s(\gamma)))_{\gamma\in\Gamma}]$}
+\item עבור \L{$t$} משתנה אישי \L{$x$}: \L{$Val_{\mathcal{M}}(t,s)=\bar{s}(x)=[s(\gamma)(x)_{\gamma\in\Gamma}]=[(Val_{\mathcal{M}_{\gamma}}(t,s(\gamma)))_{\gamma\in\Gamma}]$}
+\item עבור \L{$t=F(t_{1},...,t_{n})$}: \L{
+\begin{eqnarray*}
+Val_{\mathcal{M}}(f(t_{1},...t_{n}),\bar{s})\\
+ & = & F^{\mathcal{M}}(Val_{\mathcal{M}}(t_{1},s),...,Val_{\mathcal{M}}(t_{n},s))\\
+ & = & F^{\mathcal{M}}([(Val_{\mathcal{M}_{\gamma}}(t_{1},s(\gamma)))_{\gamma\in\Gamma}],...,[(Val_{\mathcal{M}_{\gamma}}(t_{n},s(\gamma)))_{\gamma\in\Gamma}]\\
+ & = & [F^{\mathcal{M}}(Val_{\mathcal{M}_{\gamma}}(t_{1},s(\gamma)),...,(Val_{\mathcal{M}_{\gamma}}(t_{n},s(\gamma))]
+\end{eqnarray*}
+}
+\end{itemize}
+
+הוכחנו עבור שמות עצם. כעת נוכיח את המשפט באינדוקציה על יצירת הנוסחה.
+\begin{itemize}
+\item עבור \L{$\varphi$} נוסחה אטומית \L{$R(t_{1},...,t_{n})$} מתקיים
+\L{
+\begin{eqnarray*}
+Val_{\mathcal{M}}(R(t_{1},...t_{n}),\bar{s}) & = & TRUE\iff(Val_{\mathcal{M}}(t_{1},\bar{s}),...Val_{\mathcal{M}}(t_{n},\bar{s}))\in R^{\mathcal{M}}
+\end{eqnarray*}
+} אם ורק אם קיימים נציגים ל-\L{$Val_{\mathcal{M}}(t,\bar{s})$} נסמנם
+\L{$a_{1},...,a_{n}$} כך ש\L{$\{\gamma\in\Gamma:(a_{1}(\gamma),...,a_{n}(\gamma))\in R^{\mathcal{M}_{\gamma}}\}\in F$}.
+את מי נבחר כנציגים? לפי מה שהראנו עבור שמות עצם אפשר לבחור את \L{$(Val_{\mathcal{M}_{\gamma}}(t_{i},s(\gamma)))_{\gamma\in\Gamma}$}
+בתור נציגים לכל \L{$i$}. ז\char`\"{}א \L{
+\begin{eqnarray*}
+Val_{\mathcal{M}}(\varphi,s) & = & TRUE\\
+ &  & \iff\{\gamma\in\Gamma:(Val_{\mathcal{M}_{\gamma}}(t_{1},s(\gamma)),...,Val_{\mathcal{M}_{\gamma}}(t_{n},s(\gamma))\in R^{\mathcal{M}_{\gamma}}\}
+\end{eqnarray*}
+} )וזה בדיוק מה שמשפט \inputencoding{latin9}\L{Los}\inputencoding{cp1255}
+אומר(.
+\item עבור \L{$\varphi=\neg\psi$} מתקיים \L{
+\begin{eqnarray*}
+Val_{\mathcal{M}}(\psi,\bar{s}) & = & TRUE\\
+ & \iff & \{\gamma\in\Gamma:Val_{\mathcal{M}_{\gamma}}(\psi,s(\gamma))=TRUE\}\in F\\
+ & \iff & \{\gamma\in\Gamma:Val_{\mathcal{M}_{\gamma}}(\psi,s(\gamma))=FALSE\}\not\in F\\
+ & \iff & \{\gamma\in\Gamma:Val_{\mathcal{M}_{\gamma}}(\neg\psi,s(\gamma))=TRUE\}\not\in F
+\end{eqnarray*}
+} וזה מתקיים אם ורק אם \L{
+\begin{eqnarray*}
+Val_{\mathcal{M}}(\neg\psi,\bar{s}) & = & FALSE\iff Val_{\mathcal{M}}(\varphi,\bar{s})=FALSE
+\end{eqnarray*}
+}.
+\item המקרים של \L{$\varphi=\psi_{1}\square\psi_{2}$} דומים מאוד )משתמשים
+בתכונות של על מסנן(.
+\item נותר המקרה \L{$\varphi=\exists x\psi(x)$} )המקרה של \L{$\forall x$}
+נובע מהמקרה הנ\char`\"{}ל וממה שעבר עשינו ע\char`\"{}י השקילות הלוגית
+\L{$\forall x\psi(x)=\neg\exists x\neg\psi(x)$}(.
+
+\begin{itemize}
+\item כיוון אחד: נניח כי \L{$(\mathcal{M},s)\models(\exists x)\psi(x)$}
+ז\char`\"{}א שקיים \L{$\bar{a}\in\mathcal{M}$} כך ש\L{$(\mathcal{M},s)\models\psi(\bar{a})$}.
+נוסיף לשפה קבוע אישי חדש \L{$c$} ונרשום \L{$\psi(c)$} הנוסחה המתקבלת
+מ\L{$\psi$}ע\char`\"{}י החלפת של מופע חופשי של \L{$x$} בנוסחה \L{$\psi$}
+ב\L{$c$} . נרחב את \L{$\mathcal{M}$}למבנה לשפה המועשרת ע\char`\"{}י
+כך שנגדיר \L{$c^{\mathcal{M}}=\bar{a}$}. אזי \L{$Val_{\mathcal{M}}(\psi,\bar{s}[{x\atop \bar{a}}])=Val_{\mathcal{M}}(\psi(c),s)$}.
+אז לפי הנחת האינדוקציה: \L{
+\begin{eqnarray*}
+Val_{\mathcal{M}}(\psi(c),\bar{s}) & = & TRUE\\
+ & \iff & \{\gamma\in\Gamma:Val_{\mathcal{M}_{\gamma}}(\psi(c),s(\gamma))=TRUE\}\in F\\
+ & \iff & \{\gamma\in\Gamma:Val_{\mathcal{M}_{\gamma}}(\psi(x),s(\gamma)([{x\atop c^{\mathcal{M}_{\gamma}}}]))=TRUE\}\in F\\
+ & \Rightarrow & \{\gamma\in\Gamma:Val_{\mathcal{M}_{\gamma}}(\exists x\psi(x),s(\gamma))=TRUE\}\in F
+\end{eqnarray*}
+} 
+\item כיוון שני: נניח כי \L{$\{\gamma\in\Gamma:(M_{\gamma},s)\models(\exists x)\psi(x)\}\in F$}.
+נגדיר איבר \L{$a\in{\displaystyle \prod_{\gamma\in\Gamma}\mathcal{M}_{\gamma}}$}
+באופן הבא: לכל \L{$\gamma\in\Gamma$} אם \L{$(\mathcal{M}_{\gamma},s)\models\exists x\psi(x)$}
+אז נבחר \L{$a_{\gamma}$} שמעיד על כך. אם \L{$(\mathcal{M}_{\gamma},s)\not\models\exists x\psi(x)$}
+נבחר \L{$a_{\gamma}\in\mathcal{M}_{\gamma}$} שרירותי. נגדיר \L{$\bar{a}=[a]$}
+. מההנחה שלנו \L{
+\begin{eqnarray*}
+\{\gamma & \in & \Gamma:(\mathcal{M}_{\gamma},s(\gamma)[{x\atop a_{\gamma}}])\models\psi(x)\}\in F\\
+ &  & \iff(\mathcal{M},\bar{s}[{x\atop \bar{a}}])\models\psi(x)\\
+ &  & \iff(\mathcal{M},\bar{s})\models(\exists x)\psi(x)
+\end{eqnarray*}
+}. 
+\end{itemize}
+\end{itemize}
+\end{proof}
+\begin{corollary}
+נניח ש\L{$\Gamma$} לא ריקה ו\L{$\mathcal{M}_{\gamma}$}מבנים לשפה
+\L{$\mathcal{L}$} לכל \L{$\gamma\in\Gamma$} ו-\L{$F$} על מסנן על
+\L{$\Gamma$}, אזי לכל פסוק \L{$\psi$} ב\L{$\mathcal{L}$} מתקיים
+\L{$({\displaystyle \prod_{\gamma\in\Gamma}\mathcal{M}_{\gamma}})/F\models\psi$}
+אם ורק אם \L{$\{\gamma\in\Gamma:\mathcal{M}_{\gamma}\models\psi\}\in F$}.
+\begin{corollary}
+\uline{משפט הקומפקטיות}: תהי \L{$\Gamma$} קבוצה פסוקים בשפה \L{$\mathcal{L}$}.
+נניח שלכל \L{$\psi_{1},\psi_{2}\in\Gamma$} גם \L{$\psi_{1}\wedge\psi_{2}\in\Gamma$}
+ולכל \L{$\psi\in\Gamma$} קיים מודל \L{$\mathcal{M}_{\psi}\models\psi$}
+אזי \L{$\Gamma$} ספיקה כלומר קיים \L{$\mathcal{M}\models\Gamma$}. \end{corollary}
+\begin{proof}
+לכל \L{$\psi\in\Gamma$} נבחר מבנה \L{$\mathcal{M}_{\psi}\models\psi$}.
+תהי \L{$\mathcal{U}\subseteq\mathbb{P}(\Gamma)$} הקבוצה המקיימת קיים
+\L{$\psi\in\Gamma$}כך ש: \L{$V\in\mathcal{U}\iff\{\gamma\in\Gamma:\mathcal{M}_{\gamma}\models\psi\}\subseteq V$}. 
+\end{proof}
+\end{corollary}
+\begin{claim}
+\L{$\mathcal{U}$} מסנן על \L{$\Gamma$} .\end{claim}
+\begin{proof}
+לכל \L{$\psi\in\Gamma$} מהנחתנו \L{$\mathcal{M}_{\psi}\models\psi$}
+לכן \L{$\{\gamma\in\Gamma:\mathcal{M}_{\gamma}\models\psi\}\not=\emptyset$}.
+לכן \L{$\mathcal{U}\not=\emptyset$}. ברור ש\L{$\mathcal{U}$} סגורה
+כלפי מעלה. נניח ש\L{$v_{1},v_{2}\in\mathcal{U}$} אזי קיימים \L{$\psi_{1},\psi_{2}\in\Gamma$}
+כך ש-\L{$\{\gamma\in\Gamma:\mathcal{M}_{\gamma}\models\psi_{i}\}\subseteq V_{i}$}
+וזה גורר..... \L{$V_{1}\cap V_{2}\in\mathcal{U}$}. 
+\end{proof}
+יהי \L{$F$} על מסנן שמרחיב את \L{$\mathcal{U}$} . לפי המסקנה מתקיים
+\L{$({\displaystyle \prod_{\gamma\in\Gamma}\mathcal{M}_{\gamma})}/F\models\psi$}
+אם ורק אם \L{$\{\gamma\in\Gamma:\mathcal{M}_{\gamma}\models\psi\}\in F$}.
+אבל מהגדרת \L{$\mathcal{U}$} לכל \L{$\psi\in\Gamma$} הקבוצה \L{$\{\gamma\in\Gamma:\mathcal{M}_{\gamma}\models\psi\}\in\mathcal{U}$}
+ולכן ל-\L{$F$}. מש\char`\"{}ל.
+
+
+\section{עקביות}
+\begin{theorem}
+תהי \L{$(P,\le)$} קס\char`\"{}ח, אזי קיים יחס \L{$R$} על \L{$P$}
+)דו-מקומי( כך ש-\end{theorem}
+\begin{enumerate}
+\item \L{$R$} יחס סדר קווי
+
+\begin{enumerate}
+\item לכל \L{$a,b\in P$} אם \L{$a\le b$} אז \L{$R(a,b)$}.
+\end{enumerate}
+
+במילים אחרות, קיים סדר קווי \L{$R$} על \L{$P$} שמרחיב את \L{$\le$}.
+
+\end{enumerate}
+\begin{theorem}
+\uline{הערה:} המשפט עבור קבוצה סופית \L{$P$} איננו קשה. ההוכחה
+באינדוקציה על \L{$|P|$}. עבור \L{$|P|=1$} אין מה להוכיח. נניח שהוכחנו
+עבור כל \L{$P$} עם \L{$|P|=n$} ונוכיח עבור \L{$n+1$}: תהי \L{$(P,\le)$}
+קס\char`\"{}ח עם \L{$n+1$} איברים. כיוון ש\L{$P$} סופית יש לה איבר
+מינימלי \L{$a$}. תהי \L{$Q=P\backslash\{a\}$}. אז \L{$(Q,\le)$}
+קס\char`\"{}ח עם \L{$n$} איברים ולפי הנחת האינדוקציה יש \L{$R$}
+סדר קווי על \L{$Q$} שמרחיב את \L{$\le$} על \L{$Q$}. עתה לא קשה
+לבדוק שאם נגדיר \L{$R(a,b)$} לכל \L{$b\in Q$} נקבל את המבוקש.\end{theorem}
+\begin{proof}
+)מקרה כללי( תהי \L{$L$} שפה לתחשיב היחסים שבה:
+\begin{enumerate}
+\item לכל \L{$p\in P$} יש קבוע אישי \L{$c_{p}$}
+\item יחס דו מקומי \L{$R$}
+\end{enumerate}
+
+\uline{בלבד.} נגדיר קבוצת פסוקים \L{$T_{P}$} ב\L{$L$} באופן הבא:
+\begin{enumerate}
+\item \L{$c_{p}\not=c_{q}$} לכל \L{$p\not=q\in P$} 
+\item \L{$R$} יחס סדר קווי
+\item לכל \L{$p,q\in P$} אם \L{$p\le q$} אזי יהיה פסוק \L{$R(c_{p},c_{q})$}.\end{enumerate}
+\begin{claim}
+\L{$T_{P}$} ספיקה )מקומית(.
+\begin{proof}
+ממשפט הקומפקטיות יספיק להוכיח ש\L{$T_{P}$} ספיקה מקומית. תהי \L{$T_{0}\subseteq T_{P}$}
+סופית. בה\char`\"{}כ האקסיומה ){\beginL 2\endL}( \char`\"{}\L{$R$}
+יחס סדרי קווי\char`\"{} שייכת ל\L{$T_{0}$}. בנוסף נשים לב שב\L{$T_{0}$}
+מופיעים רק מספר סופי של קבועים, נאמר: \L{$c_{P_{1}},...,c_{p_{n}}$}.
+נביט בקבוצה \L{$P_{0}=\{p_{1},...,p_{n}\}\subseteq P$}. אז \L{$(P_{0},\le)$}
+קס\char`\"{}ח סופית. לכן לפי ההערה יש יחס \L{$R^{P_{0}}$} שהוא סדר
+קווי על \L{$P_{0}$} המרחיב את \L{$\le$} על \L{$P_{0}$}. ברור שאם
+נפרש את \L{$R$} ב\L{$P_{0}$} ע\char`\"{}י \L{$R^{P_{0}}$} כנ\char`\"{}ל
+ו-\L{$c_{p_{i}}$} ע\char`\"{}י \L{$p_{i}$} אז נקבל מודל של \L{$T_{0}$}.
+\end{proof}
+\end{claim}
+
+יהי \L{$\mathcal{M}\models T_{P}$}, בפרט \L{$R^{\mathcal{M}}$} סדר
+קווי על \L{$\mathcal{M}$}. יהי \L{$\mathcal{N}\le\mathcal{M}$} המבנה
+שעולמו הוא הקבועים של \L{$\mathcal{M}$} )כלומר \L{$a\in\mathcal{N}\iff a=c_{p}^{\mathcal{M}}$}
+לאיזה \L{$p\in P$}(. נגדיר יחס סדר חלקי \L{$\le^{\mathcal{N}}$}על
+\L{$\mathcal{N}$} ע\char`\"{}י \L{$p\le q\iff c_{p}^{\mathcal{N}}\le c_{q}^{\mathcal{N}}$}
+לכל \L{$p,q\in P$} . אז \L{$(P,\le)\cong(N,\le^{\mathcal{N}})$}
+פשוט ע\char`\"{}י \L{$p\mapsto c_{p}^{\mathcal{N}}$}. לכן בה\char`\"{}כ
+\L{$(P,\le)=(N,\le^{\mathcal{N}})$}. עתה \L{$R^{\mathcal{M}}|\mathcal{N}$}
+)צמצום( סדר קווי על \L{$\mathcal{N}$}. )לפי \L{$\mathcal{M}\models(2)$}
+מתקיים כי\L{$R^{\mathcal{M}}$} סדר קווי וצמצום של כזה הוא נשאר קווי(.
+כיוון ש-\L{$\mathcal{M}\models(3)$} אז אם \L{$p\le q$} אזי \L{$p(c_{p},c_{q})$}
+היא אקסיומה ב){\beginL 3\endL}( ולכן \L{$\mathcal{M}\models R(c_{p},c_{q})$}
+ולכן \L{$\mathcal{N}\models R(c_{p},c_{q})$}. 
+
+\end{proof}
+\begin{theorem}
+תהי \L{$L=\{G\}$} עבור יחס דו מקומי \L{$G$}. \L{$T_{G}$} התורה
+שאומרת כי העולם הוא גרף. אזי אין פסוק \L{$\psi$} ב\L{$L$} כך ש\L{$\mathcal{M}\models\psi$}
+אם ורק אם \L{$\mathcal{M}$} גרף קשיר.\end{theorem}
+\begin{proof}
+נניח בשלילה שיש פסוק \L{$\psi$} כזה. נוסיף לשפה קבועים אישיים חדשים
+\L{$c_{1},c_{2}$}. יהי \L{$\varphi_{n}$} הפסור שאומר שאין מסילה
+באורך קטן מ\L{$n$} בין \L{$c_{1}$} ל\L{$c_{2}$}:\L{
+\[
+\neg(\exists x_{1},...,x_{n})[G(c_{1},x_{1})\wedge\bigwedge_{i=1}^{n-1}(G(x_{i},x_{i+1})\vee x_{i}=x_{i+1})\wedge G(c_{2},x_{n})]
+\]
+} נשים לב ש\L{$\Gamma=\{c_{1},c_{2}\}\cup\psi\cup\{\varphi_{n}\}_{n=1}^{\infty}$}
+עיקבית מקומית. אם \L{$\Gamma_{0}$} קבוצה סופית של פסוקים מן הקבוצה
+הנ\char`\"{}ל יש \L{$n$} מירבי כך ש\L{$\varphi_{n}\in\Gamma_{0}$}.
+ברור שאם נמצא \L{$\mathcal{M}\models\varphi_{n}\wedge\psi\wedge(c_{1}\not=c_{2})$}
+אז \L{$\mathcal{M}\models\Gamma_{0}$}. אבל ברור שלכל \L{$n$} יש
+גרך המקיים את \L{$\varphi_{n}\wedge\psi\wedge(c_{1}\not=c_{2})$}
+)פחות מ\L{$n$} קודקודים, בפרט אין מסילה מ\L{$c_{1}$}ל\L{$c_{2}$}(.
+ולכן \L{$\Gamma$} ספיקה סופית. לפי קומפקטיות \L{$\Gamma$} עקבית.
+אבל זה לא ייתכן: אם \L{$\mathcal{M}\models\Gamma$} אז \L{$\mathcal{M}\models\psi$}
+ולכן בין \L{$c_{1}$} ל\L{$c_{2}$} יש מסילה ובהכרח אורכה סופי, נאמר
+\L{$n$}. מצד שני \L{$\mathcal{M}\models\varphi_{n}$} ולכן אין מסילה
+באורך \L{$n$} בין \L{$c_{1}$} ל\L{$c_{2}$} וזוהי סתירה להנחת השלילה.
+\end{proof}
+\uline{הערה:}
+\begin{enumerate}
+\item באופן דומה אפשר להוכיח כי אין פסוק \L{$\psi$} בשפה \L{$L=\{\le\}$}
+כך ש\L{$\mathcal{M}\models\psi$} אם ורק אם \L{$\{\le\}$} סדר טוב
+)כלומר \L{$\le$} סדר שווי בלי סדרה אינסופית יורדת(. 
+\item אותה הוכחה בדיוק תעבוד אם ננסה למצוא קבוצת פסוקים \L{$\Gamma$} כך
+ש\L{$\mathcal{M}\models\Gamma$} אם ורק אם \L{$\mathcal{M}$} גרף
+קשיר/\L{$\mathcal{M}$} סדור היטב )סדר טוב(.
+\end{enumerate}
+\uline{תזכורת:}
+
+אם \L{$\Gamma$} קבוצת פסוקים אז \L{$\Gamma\models\psi$} אם לכל מבנה
+\L{$\mathcal{M}$}: אם \L{$\mathcal{M}\models\Gamma$} אז \L{$\mathcal{M}\models\psi$}
+.
+\begin{corollary}
+אם \L{$\Gamma\models\psi$} אז קיימת קבוצת פסוקים \L{$\Gamma_{0}\subseteq\Gamma$}
+סופית כך ש\L{$\Gamma_{0}\models\psi$}. \end{corollary}
+\begin{proof}
+נביט בקבוצה \L{$\Gamma\cup\{\neg\psi\}$} . מהנחתנו קבוצה זו איננה
+ספיקה. מקומפקטיות יש \L{$\Gamma_{1}\subseteq\Gamma\cup\{\neg\psi\}$}
+סופית כך ש\L{$\Gamma_{1}$} איננה ספיקה. ברור ש\L{$\neg\psi\in\Gamma_{1}$}
+כי אחרת \L{$\Gamma_{1}\subseteq\Gamma$} ו\L{$\Gamma$} עקבית. )אם
+\L{$\Gamma$} איננה עקבית מקומפקטיות יש \L{$\Gamma_{0}\subseteq\Gamma$}
+שאינה ספיקה ו\L{$\Gamma_{0}\models\varphi$} לכל פסוק \L{$\varphi$}(.
+לכן \L{$\Gamma\supseteq\Gamma_{0}=\Gamma_{1}\backslash\{\neg\psi\}$}
+סופית ומקיימת \L{$\Gamma_{0}\models\psi$} )כי אחרת יש מודל \L{$\mathcal{M}\models\Gamma_{0}$}
+ו-\L{$\mathcal{M}\not\models\psi$} כלומר \L{$\mathcal{M}\models\neg\psi$}
+כלומר \L{$\mathcal{M}\models\Gamma_{1}$} בסתירה לבחירת \L{$\Gamma_{1}$}(.
+במילים אחרות ליחס \L{$\models$} יש טבע סופי.
+\end{proof}
+\uline{שאלה מרכזית}: בהינתן שפה \L{$L$} וקבוצת פסוקים \L{$\Gamma$}
+ב\L{$L$}, כיצד אפשר לדעת/לבדוק ביחס לפסוק \L{$\psi$} כלשהו האם \L{$\Gamma\models\psi$}?
+בתור התחלה נשים לב שאם \L{$\psi\in\Gamma$} אז בוודאי \L{$\Gamma\models\psi$}.
+ולכן רצוי שנוכל לענות על השאלה האם \L{$\psi\in\Gamma$}? נניח שהגדרנו
+מתי קבוצת פסוקים \L{$\Gamma$} היא חשיבה, כלומר ניתן לענות על השאלה
+מתי פסוק \L{$\psi$} שייך ל\L{$\Gamma$}. נניח ש\L{$\Gamma$} קבוצת
+פסוקים חשיבה ונניח ש\L{$\psi_{1},\psi_{2}\in\Gamma$} אז \L{$\Gamma\models\psi_{1}\wedge\psi_{2}$}.
+נניח ש\L{$\psi_{1}\in\Gamma$} ו\L{$\Gamma\models\psi_{1}\rightarrow\psi_{2}$}
+אז \L{$\Gamma\models\psi_{2}$}. באופן כללי יותר אם הראנו למשל \L{$\psi_{1}$}
+ו-\L{$\psi_{1}\rightarrow\psi_{2}$} נגררים לוגית ע\char`\"{}י \L{$\Gamma$}
+אז ניתן להראות \L{$\Gamma\models\psi_{2}$}.
+
+
+\section{מערכות היסק ויכיחות}
+
+\uline{בעיה מרכזית:} נתונה קבוצת פסוקים \L{$\Gamma$} ורוצים לדעת
+עבור פסוק \L{$\psi$} האם \L{$\Gamma\models\psi$}. 
+
+מקרה פרטי: \L{$\Gamma=\emptyset$}, כלומר רוצים לדעת האם פסוק \L{$\psi$}
+אמיתי לוגית או לא. המקרה הפרטי מנביע את המקרה הכללי. מדוע? בהינתן
+קבוצת פסוקים \L{$\Gamma$} ו\L{$\psi$} כלשהו, אם \L{$\Gamma\models\psi$}
+אז יש \L{$\Gamma_{0}\subseteq\Gamma$} סופית כך ש\L{$\Gamma_{0}\models\psi$}
+)משפט הקומפקטיות( ולכן \L{$({\displaystyle \bigwedge_{\varphi\in\Gamma_{0}}\varphi})\rightarrow\psi$}
+אמיתי לוגית ואת זה אנחנו יודעים לבדוק.
+
+\uline{שאלה}: מתי פסוק הוא אמיתי לוגית?
+\begin{enumerate}
+\item אנחנו יודעים שכל טאוטולוגיה היא אמיתית לוגית.
+\item אם \L{$\varphi$} אמיתי לוגית אז \L{$\forall x\varphi$} אמיתי לוגית.
+אפשר לרשום גם: \L{$\varphi\rightarrow\forall x\varphi$} אמיתי לוגית.
+\item אם \L{$\forall x\varphi(x)$} אמיתי לוגית אז \L{$\varphi(t)$} אמיתי
+לוגית לכל שם עצם \L{$t$}. אפשר לרשום גם: \L{$\forall x\varphi(x)\rightarrow\varphi(t)$}
+אמיתי לוגית.
+\item \textbf{אם \L{$\varphi\rightarrow\psi$} אמיתי לוגית ו\L{$\varphi$}
+אמיתי לוגית אז \L{$\psi$} אמיתי לוגית. })בכל מערכות ההיסק שנעבוד
+איתן זה יהיה כלל ההיסק היחיד. זה נקרא \uline{כלל הניתוק} או \inputencoding{latin9}\L{Modus
+Poneus}\inputencoding{cp1255}(
+\end{enumerate}
+\uline{סימון:} בהינתן שפה \L{$\mathcal{L}$} מסדר ראשון נסמן \L{$Def(\mathcal{L})$}
+אוסף הנוסחאות בשפה \L{$\mathcal{L}$}.
+\begin{definition}
+מערכת היסק )לשפה \L{$\mathcal{L}$}( זה זוג סדור \L{$\left\langle \mathcal{A},\mathcal{I}\right\rangle $}כאשר: \end{definition}
+\begin{enumerate}
+\item \L{$\mathcal{A}\subseteq Def(\mathcal{L})$} )אולי ריקה( שנקראת קבוצת
+האקסיומות הלוגיות
+\item \L{${\displaystyle \mathcal{I}\subseteq{\displaystyle \bigcup}_{i=1}^{\infty}F_{i}}$}
+כאשר \L{$F_{n}$} זה אוסף הפונקציות \L{$f:Def^{n}(\mathcal{L})\rightarrow Def(\mathcal{L})$}
+ו-\L{$\mathcal{I}$} נקראת אוסף כללי ההיסק.
+\end{enumerate}
+\uline{הערה:} תמיד נדרוש כי:
+\begin{enumerate}
+\item אם \L{$\varphi\in\mathcal{A}$} אז \L{$\varphi$} אמיתי לוגית. במקרה
+זה נאמר כי האקסיומות הלוגיות \uline{תקפות}.
+\item אם \L{$f\in\mathcal{I}$} ו- \L{$\{\varphi_{1},...,\varphi_{n}\}\in dom(f)$}
+אז \L{$\{\varphi_{1},...,\varphi_{n}\}\models f(\varphi_{1},...,\varphi_{n})$}.
+במקרה זה נאמר כי כללי ההיסק \uline{נאותים}.
+\end{enumerate}
+\uline{סימון}: אם נרצה לומר ש\L{$\psi$}מתקבל מ\L{$\psi_{1},...,\psi_{n}$}
+על ידי אחד מכללי ההיסק נרשום \L{$\frac{\psi_{1},...,\psi_{n}}{\psi}$}
+ולא צריך יהיה להסביר באיזה כלל היסק מדובר. 
+\begin{definition}
+בהינתן מערכת היסק \L{$\left\langle \mathcal{A},\mathcal{I}\right\rangle $}
+וקבוצת נוסחאות \L{$\Gamma$} נאמר שנוסחה \L{$\psi$} \textbf{יכיחה}
+)כלומר, ניתנת להוכחה( מ\L{$\Gamma$} ,ונסמן \L{$\Gamma\vdash\psi$},
+אם קיימת סדרת נוסחאות \L{$\varphi_{1},...,\varphi_{k}$} לאיזה \L{$k\in\mathbb{N}$}
+כך ש:\end{definition}
+\begin{enumerate}
+\item \L{$\psi=\varphi_{k}$}
+\item לכל \L{$1\le i\le k$} או:
+
+\begin{enumerate}
+\item \L{$\varphi_{i}$} אקסיומה לוגית. או:
+\item \L{$\varphi_{i}\in\Gamma$}. או:
+\item \L{$\varphi_{i}$} מתקבל מנוסחאות קודמות בסדרה ע\char`\"{}י אחד מכללי
+ההיסק. במקרה שלנו יש \L{$j_{1},j_{2}<i$} כך ש\L{$\varphi_{i}$} מתקבל
+מ-\L{$\varphi_{j_{1}}$}ו-\L{$\varphi_{j_{2}}$} ע\char`\"{}י כלל
+הניתוק.
+\end{enumerate}
+
+הסדרה \L{$\varphi_{1},...,\varphi_{k}$} המקיימת את התנאים הנ\char`\"{}ל
+נקראת הוכחה של \L{$\psi$} מ-\L{$\Gamma$}.
+
+\end{enumerate}
+\uline{שאלה:} האם קיימת מערכת היסק \uline{חשיבה} )כלומר שבה
+אפשר להכריע מתי נוסחה היא אקסיומה לוגית, ומתי נוסחה מתקבלת מנוסחאות
+קודמות ע\char`\"{}י אחד מכללי ההיסק( כך שכל נוסחה אמיתית לוגית יכיחה
+)מ-\L{$\emptyset$}(.
+
+מעכשיו כל מערכת היסק שנדון בה תכיל את כלל הניתוק ככלל יחיד ואת כל
+הטאוטולוגיות כאקסיומות לוגיות )אולי גם אקסיומות לוגיות נוספות(. 
+\begin{claim}
+תהי \L{$T$} תורה )קבוצת פסוקים ספיקה( כלשהי ו\L{$\psi$} נוסחה כך
+ש-\L{$T\vdash\psi$} אזי \L{$T\cup\{\psi\}$} ספיקה. \end{claim}
+\begin{proof}
+יהי \L{$\mathcal{M}\models T$} נראה באינדוקציה על אורך ההוכחה של
+\L{$\psi$} מ-\L{$T$} ש-\L{$\mathcal{M}\models\psi$}. אם ל-\L{$\psi$}
+הוכחה באורך {\beginL 1\endL} אז או ש-\L{$\psi$} אקסיומה לוגית ולכן
+אמיתי לוגית ולכן מסופק ב-\L{$\mathcal{M}$}, או ש-\L{$\psi\in T$}
+ובוודאי ש-\L{$\mathcal{M}\models\psi$} )כי \L{$\mathcal{M}\models T$}(.
+נניח ש-\L{$\varphi_{1},...,\varphi_{k}$} הוכחה של \L{$\psi$} מ-\L{$T$}
+ואפשר להניח ב.ה.כ ש-\L{$\psi=\varphi_{k}$} מתקבל מאיזה \L{$\varphi_{j_{1}},\varphi_{j_{2}}$}
+עם \L{$j_{1},j_{2}<k$} ע\char`\"{}י כלל הניתוק. לפי הנחת האינדוקציה
+\L{$\mathcal{M}\models\varphi_{j_{1}}$} וגם \L{$\mathcal{M}\models\varphi_{j_{2}}$}.
+מכיוון שכלל הניתוק הוא נאות, בפרט \L{$\{\varphi_{j_{1}},\varphi_{j_{2}}\}\models\psi$}
+ולכן \L{$\mathcal{M}\models\psi$}. \end{proof}
+\begin{theorem}
+\uline{משפט ההיסק: }תהי \L{$\Gamma$} קבוצת נוסחאות ו-\L{$\psi$}
+נוסחה כלשהי, אז \L{$\Gamma\cup\{\psi\}\vdash\phi$} אם ורק אם \L{$\Gamma\vdash(\psi\rightarrow\phi)$}
+)\L{$\phi$} נוסחה(. 
+\end{theorem}
+)ההוכחה היא באינדוקציה על אורך ההוכחה, ונראה זאת עוד מעט(.
+\begin{definition}
+קבוצת נוסחאות \L{$\Gamma$} תקרא עקבית אם היא לא מוכיחה סתירה. )סתירה
+היא המקבילה של טאוטולוגיה - כלומר הצבה של פסוקים מתחשיב היחסים בסתירה
+של תחשיב הפסוקים(.\end{definition}
+\begin{remark}
+אם \L{$\Gamma$} אינה עקבית אז \L{$\Gamma\vdash\psi$} לכל נוסחה \L{$\psi$}. \end{remark}
+\begin{proof}
+מהנחתנו \L{$\Gamma\vdash\sigma$} לאיזו סתירה \L{$\sigma$}. אז \L{$\Gamma\rightarrow\psi$}
+היא טאוטולוגיה )\L{$\sigma$} מתקבלת ע\char`\"{}י הצבה של פסוקים מתחשיב
+היחסים בפסוק \L{$\Sigma(P_{1},...,P_{n})$} של תחשיב הפסוקים ו-\L{$\Sigma(P_{1},...,P_{n})\rightarrow P$}
+היא טאוטולוגיה של תחשיב הפסוקים(. כיוון ש\L{$\Gamma\vdash\sigma$}
+מכלל הניתוק \L{$\Gamma\vdash\psi$}. \end{proof}
+\begin{corollary}
+)ממשפט ההיסק( לכל תורה \L{$T$} ולכל נוסחה \L{$\varphi$} או ש-\L{$T\cup{\varphi}$}
+עקבית או ש-\L{$T\cup{\neg\varphi}$} עקבית.\end{corollary}
+\begin{proof}
+נניח ש-\L{$T\cup{\varphi}$} ו-\L{$T\cup{\neg\varphi}$} שתיהן אינן
+עקביות. לפי ההערה יש סתירה \L{$\sigma$} כך ש-\L{$T\cup{\varphi}\vdash\sigma$}
+ו-\L{$T\cup{\neg\sigma}\vdash\sigma$} . לפי משפט ההיסק \L{$T\vdash\varphi\rightarrow\sigma$}
+ו-\L{$T\vdash\neg\varphi\rightarrow\sigma$} . אבל: \L{$(\varphi\rightarrow\sigma)\rightarrow((\neg\varphi\rightarrow\sigma)\rightarrow\sigma)$}
+זו טאוטולוגיה. שימוש כפול בכלל הניתוק יתן לנו הוכחה של \L{$\sigma$}
+מ-\L{$T$}. בסתירה להנחה ש-\L{$T$} ספיקה ולטענה הקודמת.\end{proof}
+\begin{corollary}
+לכל תורה \L{$T$} יש קבוצת פסוקים \L{$T\subseteq T^{\prime}$} כך
+שלכל פסוק \L{$\psi$} או \L{$T^{\prime}\vdash\psi$} או \L{$T^{\prime}\vdash\neg\psi$}. \end{corollary}
+\begin{definition}
+תורה \L{$T$} המקיימת לכל פסוק \L{$\psi$} או \L{$T\vdash\psi$} או
+\L{$T\vdash\neg\psi$} נקראת \uline{שלמה}.\end{definition}
+\begin{proof}
+)של המסקנה( תהי \L{$\mathcal{T}$} אוסף כל קבוצות הפסוקים המכילות
+את \L{$T$} ביחס לסדר ההכלה. קל לבדוק שאם \L{$\{T_{i}\}$} שרשרת עולה
+של תורות ב-\L{$\mathcal{T}$} אז \L{$\bigcup T_{i}\in\mathcal{T}$}.
+למה? קומפקטיות )צריך לנמק(. לכן לפי הלמה של צורן יש \L{$T\subseteq T^{\prime}\in\mathcal{T}$}
+מירבית. לפי המסקנה הקודמת \L{$T^{\prime}$} עונה על הדרישות.
+\end{proof}
+
+\section{מערכות היסק - המשך}
+\begin{definition}
+קבוצת פסוקים עקבית \L{$T$} היא \textbf{שלמה} אם לכל פסוק \L{$\psi$}
+או ש-\L{$T\vdash\psi$} או ש-\L{$T\vdash\neg\psi$}.
+
+ראינו שאם \L{$T$} קבוצת פסוקים עקבית ומירבית כזו ביחס להכלה אז \L{$T$}
+שלמה.\end{definition}
+\begin{claim}
+לכל קבוצת פסוקים עקבית \L{$T$} יש קבוצת פסוקים שלמה \L{$T\subseteq T^{\prime}$}.\end{claim}
+\begin{proof}
+הלמה של צורן. כדי להשתמש בלמה של צורן יספיק להראות שאם \L{$\{T_{i}\}$}
+שרשרת )ביחס להכלה( של קבוצות פסוקים עקביות אז גם \L{$\tilde{T}=\bigcup T_{i}$}
+עיקבית. מדוע? אם \L{$\tilde{T}\vdash\sigma$} לאיזו סתירה \L{$\sigma$}
+אז יש סדרה \L{$\varphi_{1},...,\varphi_{k}\in\tilde{T}$} שהיא הוכחה
+של \L{$\sigma$} מ-\L{$\tilde{T}$}. כל \L{$\varphi_{i}$} הוא או
+אקסיומה לוגית או שייך לאיזה \L{$T_{j_{i}}$} או נובע מאיברים קודמים
+בסדרה ע\char`\"{}י כלל הניתוק. קיים \L{$j$} מירבי כך שלכל \L{$i$}
+כנ\char`\"{}ל או \L{$\varphi_{i}$} אקסיומה לוגית או \L{$\varphi_{i}\in T_{j}$}
+או \L{$\varphi_{i}$} מתקבל מכלל הניתוק. ז\char`\"{}א ש\L{$\varphi_{1},...,\varphi_{k}$}
+הוכחה של \L{$\sigma$} מתוך \L{$T_{j}$}. אבל \L{$T_{j}$} עקבית -
+סתירה.\end{proof}
+\begin{theorem}
+קיימת מערכת היסק )שבה כלל הניתוק הוא כלל ההיסק היחיד( וכך שמערכת ההיסק
+\char`\"{}חשיבה\char`\"{} ומתקיים ש\L{$T$} עקבית אם ורק אם \L{$T$}
+ספיקה.\end{theorem}
+\begin{corollary}
+{]}משפט השלמות{[} נקבע מערכת היסק כנ\char`\"{}ל. תהי \L{$T$} קבוצת
+פסוקים עקבית, \L{$\psi$} פסוק כלשהו אזי \L{$T\vdash\psi$} אם ורק
+אם \L{$T\models\psi$}.\end{corollary}
+\begin{proof}
+אם \L{$T\vdash\psi$} הראנו ש\L{$T\models\psi$} )שיעור שעבר(. בכיוון
+השני, אם \L{$T\models\psi$} אבל \L{$T\not\vdash\psi$} אז \L{$T\cup{\neg\psi}$}
+עקבית. לפי המשפט יש \L{$\mathcal{M}\models T\cup{\neg\psi}$} בסתירה
+להנחה.\end{proof}
+\begin{remark}
+המשפט הנ\char`\"{}ל שקול לטענה: קיימת מערכת היסק \char`\"{}חשיבה\char`\"{}
+כך שלכל \L{$\varphi$} אמיתי לוגית מתקיים \L{$\emptyset\vdash\varphi$}.\end{remark}
+\begin{proof}
+נניח את המשפט ונוכיח את הטענה. \L{$\emptyset\models\varphi$}מתקיים
+כי \L{$\varphi$} אמיתי לוגית ומן המסקנה \L{$\emptyset\vdash\varphi$}.
+בכיוון השני, נניח את הטענה ונוכיח את המשפט. תהי \L{$T$} תורה עקבית.
+עלינו להראות )בעזרת הטענה( של\L{$T$} יש מודל. נניח שלא. ז\char`\"{}א
+מקומפקטיות יש תת קבוצה סופית \L{$T_{0}\subseteq T$} שאין לה מודל.
+יהי \L{${\displaystyle \psi=\bigwedge_{\varphi\in T_{0}}\varphi}$}.
+אז \L{$\psi$}שיקרי לוגית. אז \L{$\neg\psi$} אמיתי לוגית. אז \L{$T\vdash\neg\psi$}.
+אבל \L{$T\vdash\psi$} אז \L{$T$} איננה עקבית.\end{proof}
+\begin{remark}
+ממשפט השלמות נובע ש\L{$T$} שלמה אם ורק אם \L{$T\models\varphi$}
+או \L{$T\models\neg\varphi$} לכל פסוק \L{$\varphi$}. 
+\end{remark}
+דוגמאות לתורות שלמות:
+\begin{enumerate}
+\item יהי \L{$\mathcal{M}$} מבנה כלשהו לשפה \L{$\mathcal{L}$}. התורה של
+\L{$\mathcal{M}$} היא \L{$Th(\mathcal{M})=\{\psi:\mathcal{M}\models\psi\}$}.
+מהגדרת האמת, אם \L{$\mathcal{M}\not\models\varphi$} אז \L{$\mathcal{M}\models\neg\varphi$}.
+כלומר \L{$\varphi\not\in Th(\mathcal{M})$} ואז \L{$\neg\varphi\in Th(\mathcal{M})$}. \end{enumerate}
+\begin{theorem}
+)לוונהיים-סקולם היורד(: יהי \L{$\mathcal{M}$} מבנה אינסופי לשפה )בת
+מניה( \L{$\mathcal{L}$}. תהי \L{$A\subseteq M$} )בעולם של \L{$\mathcal{M}$}(
+אזי קיים \L{$A\subseteq\mathcal{M}^{\prime}\prec\mathcal{M}$} וכך
+ש-\L{$|\mathcal{M}^{\prime}|=|A|+|\mathcal{L}|$}. \end{theorem}
+\begin{corollary}
+נניח ש\L{$T$} תורה בשפה בת מניה ול\L{$T$} יש מודל יחיד עד כדי איזומורפיזם
+בעוצמה \L{$\aleph_{0}$}. אזי \L{$T$} שלמה )סוג של קריטריון \inputencoding{latin9}\L{Vaught}\inputencoding{cp1255}(. \end{corollary}
+\begin{proof}
+נניח שלא. אזי יש פסוק \L{$\varphi$} כך ש\L{$T_{1}=T\cup{\varphi}$}
+ו-\L{$T_{2}=T\cup{\neg\varphi}$} עקביות. אזי קיימים \L{$\mathcal{M}_{1}\models T_{1}$}
+ו-\L{$\mathcal{M}_{2}\models T_{2}$}. מהמשפט אנחנו יודעים )נשתמש
+ב\L{$\emptyset=A\subseteq\mathcal{M}_{i}$}( שיש \L{$\mathcal{M}_{i}^{\prime}\prec\mathcal{M}_{i}$}כך
+ש\L{$\aleph_{0}=|\mathcal{M}_{i}^{\prime}|$}עבור \L{$i=1,2$}. אבל
+\L{$\mathcal{M}_{i}\models T$} ולכן \L{$\mathcal{M}_{i}^{\prime}\models T$}.
+לכן \L{$\mathcal{M}_{2}^{\prime}\cong\mathcal{M}_{1}^{\prime}$})זאת
+ההנחה(. לפי משפט האיזומורפיזם \L{$\mathcal{M}_{2}^{\prime}\models\varphi\iff\mathcal{M}_{1}^{\prime}\models\varphi$}
+אבל \L{$\mathcal{M}_{1}\models\varphi\rightarrow\mathcal{M}_{1}^{\prime}\models\varphi$}
+וגם \L{$\mathcal{M}_{2}\models\neg\varphi\rightarrow\mathcal{M}_{2}^{\prime}\models\neg\varphi$}
+- סתירה. \end{proof}
+\begin{corollary}
+~\end{corollary}
+\begin{enumerate}
+\item תהי \L{$T_{\approx}$} התורה בשפה הריקה )ז\char`\"{}א שוויון בלבד(
+שאומרת שהעולם אינסופי. זו תורה שלמה. 
+\item תהי \L{$\mathcal{L}=\{\le\}$} ו- \L{$DLO$} היא התורה של סדר קווי
+צפוף ללא קצוות. אז \L{$DLO$} תורה שלמה. 
+\item הגרף המקרי )שנתנו אקסיומטיזציה שלו בתרגיל {\beginL 1\endL} שאלה {\beginL 2\endL}(
+הוא קטגורי ב\L{$\aleph_{0}$} )כלומר כל מודל אחר של התורה בעוצמה \L{$\aleph_{0}$}
+איזומורפי לו( לפי תרגיל {\beginL 2\endL} שאלה {\beginL 5\endL}. 
+\end{enumerate}
+
+\section{מכונות טיורינג}
+
+\uline{תזכורת:}
+\begin{itemize}
+\item תורה \L{$T$} שלמה אם לכל פסוק \L{$\psi$} או \L{$T\vdash\psi$} או
+\L{$T\vdash\neg\psi$}
+\item אם \L{$T$} קטגורית ב\L{$\aleph_{0}$} )כלומר, יש לה מודל יחיד עד
+כדי איזומורפיזם שעוצמתו \L{$\aleph_{0}$}( ול-\L{$T$} אין מודלים
+סופיים אז \L{$T$} שלמה.
+\end{itemize}
+\uline{\L{$C$} - מחלקת הפונקציות החשיבות:}
+\begin{itemize}
+\item פונקציות חלקיות )דטרמיניסטיות(
+\item ניתנות לתיאור סופי
+\item הקלט הוא מספר טבעי או סדרת סופית של טבעיים
+\item חלוקה לשלבים, בכל שלב מתבצעת פעולת חישוב אלמנטרית
+\item כל שלב בחישוב יכול להשתמש בתוצאות חישוב קודמות - \char`\"{}זיכרון\char`\"{}
+\item זיכרון לא חסום בגודלו, אך בכל שלב בחישוב נעשה שימוש בחלק סופי בלבד
+של הזכרון
+\item בכל שלב של החישוב \char`\"{}כמות סופית של אינפורמציה\char`\"{} - מספיקה
+כדי לתאר את \char`\"{}מצב החישוב\char`\"{}\end{itemize}
+\begin{definition}
+יהיו \L{$S$} א\char`\"{}ב סופי עם תו מיוחד \L{$B$}, ו-\L{$Q$} קבוצה
+סופית )זרה ל\L{$S$}( שנקרא לה \char`\"{}קבוצת המצבים הפנימיים\char`\"{}
+עם מצב התחלתי \L{$q_{0}$}. \textbf{פקודה} זו רביעייה \L{$\left\langle r,q,x,q^{\prime}\right\rangle $}
+כאשר \L{$r\in S$}, \L{$q,q^{\prime}\in Q$}, \L{$x\in\{L,R\}\cup S$}.
+\textbf{מכונת טיורינג} זו רביעיה \L{$M=\left\langle I,S,q_{0},Q\right\rangle $}
+כאשר \L{$I$} קבוצה סופית, חסרת סתירות של פקודות. )הערה: \L{$I$}
+חסרת סתירות אם \L{$rqxq^{\prime},rqyq^{\prime\prime}\in I$} אז \L{$y=x$}
+ו-\L{$q^{\prime}=q^{\prime\prime}$}.(
+\end{definition}
+נחשוב בצורה גרפית על מ\char`\"{}ט כעל סרט אינסופי המחולק לאינסוף תאים.
+בכל תו של הסרט כתובה אחת מאותיות הא\char`\"{}ב כאשר על \L{$B$} נחשוב
+כעל תו המייצג תא ריק. למכונה יש ראש קורא שנמצא תמיד על אחד התאים.
+הראש הקורא יכול לזהות מהו התו הכתוב בתא בו הוא נמצא. לפי המצב הפנימי
+של המכונה ולפי הנקרא, יכול הראש הקורא לזוז ימינה ושמאלה תא אחד או
+לכתוב תו אחר בא\char`\"{}ב באותו התא, ולעבור למצב פנימי חדש. על פקודה
+נחשב כאומרת: אם הראש הקורא רואה תו \L{$r$} והמצב הפנימי הוא \L{$q$}
+אז אם \L{$x\in\{L,R\}$} זוז ימינה או שמאלה תו אחד ועבור למצב פנימי
+\L{$q^{\prime}$}. אם \L{$x\in S$} כתוב בתא הנוכחי \L{$x$} ועבור
+למצב פנימי \L{$q^{\prime}$}. לומר ש\L{$I$} היא סדרת פקודות חסרת
+סתירה זה פשוט לומר ש\L{$I$} היא פונקציה חלקית: \L{$S\times Q\rightarrow Q\times(S\cup\{L,R\})$}. 
+\begin{definition}
+~
+\begin{enumerate}
+\item \textbf{מצב} \L{$m$} של מכונת טיורינג \L{$T$} שו שלשה \L{$(n,q,h)$}
+כאשר:
+
+\begin{enumerate}
+\item \L{$n\in\mathbb{Z}$} מציין את מיקום הראש הקורא ביחס למיקום ההתחלתי
+\L{$n=0$}.
+\item \L{$q\in Q$} המצב הפנימי של המכונה
+\item \L{$h:\mathbb{Z}\rightarrow S$} פונקציה המתארת מה כתוב בכל תא של
+הסרט.
+\end{enumerate}
+\item בהינתן מ\char`\"{}ט \L{$T$} ומצב \L{$m$} של המכונה נגדיר את \textbf{המצב
+העוקב} ל\L{$m$} לפי המכונה \L{$T$} להיות \L{$m^{(T)}=(n^{*},q^{*},h^{*})$}
+כאשר:
+
+\begin{enumerate}
+\item \L{$m=(n,q,h)$} ויש פקודה \L{$rqxq^{\prime}\in I$} כך ש\L{$r=h(n)$}
+ו-\L{$q$} הוא אותו מצב פנימי
+\item אם )א( מתקיים אז \L{$n^{*}=\begin{cases}
+n & x\in S\\
+n+1 & x=R\\
+n-1 & x=L
+\end{cases}$}
+\item אם )א( מתקיים אז \L{$q^{*}=q^{\prime}$}
+\item אם )א( מתקיים אז \L{$h^{*}(m)=\begin{cases}
+h(m) & m\not=n\\
+y & m=n
+\end{cases}$} כאשר \L{$y=h(n)$} אם \L{$x\in\{L,R\}$} ו-\L{$y=x$} אם \L{$x\in S$}
+.
+\end{enumerate}
+\item \textbf{ריצה} של מ\char`\"{}ט \L{$T$} זו סדרה של מצבים \L{$m_{0},m_{1},m_{2},...$}
+המקיימת:
+
+\begin{enumerate}
+\item \L{$m_{0}=(0,q_{0},h^{0})$} לאיזו \L{$h^{0}$}
+\item לכל \L{$i>0$} מתקיים \L{$m_{i}=m_{i-1}^{(T)}$}.
+\end{enumerate}
+\item ריצה של מ\char`\"{}ט \L{$T$} נקראת \textbf{סופית} )או מסתיימת( אם
+היא מהצורה \L{$m_{0},m_{1},...,m_{n}$} לאיזה \L{$n\in\mathbb{N}$}
+ו-\L{$M_{n}^{(T)}$} אינו מוגדר.
+\end{enumerate}
+~
+\begin{definition}
+בהינתן מ\char`\"{}ט \L{$T$} ומספר טבעי \L{$n$} נגדיר פונקציה )חלקית(
+\L{$f_{T}^{n}=\mathbb{N}^{n}\rightarrow\mathbb{N}$} באופן הבא: \L{$n=0$},
+\L{$q=q_{0}$} , והסרט נראה כך: \L{
+\begin{eqnarray*}
+...BB\underset{1+x_{1}}{\underbrace{1...1}}B\underset{1+x_{2}}{\underbrace{1...1}}B...B\underset{1+x_{n}}{\underbrace{1...1}}BB...
+\end{eqnarray*}
+}מתקיים \L{$m=f_{T}^{n}(x_{1},...,x_{n})$} אם ריצה של \L{$T$} עם
+המצב ההתחלתי הנ\char`\"{}ח מסתיימת )אחרת לא מוגדר( ו-\L{$m$} היא
+מספר האחדות על הסרט בתום הריצה.
+\end{definition}
+\end{definition}
+~
+\begin{definition}
+פונקציה \L{$f:\mathbb{N}^{n}\rightarrow\mathbb{N}$} נקראת \textbf{חשיבה
+ע\char`\"{}י מ\char`\"{}ט }אם קיימת מ\char`\"{}ט \L{$T$} כך ש\L{$f_{T}^{n}=f$},
+כלומר \L{$f$} מוגדרת בדיוק באותו התחום בו \L{$f_{T}^{n}$} מוגדרת
+ובכל מקום שהן מוגדרות \L{$f_{T}^{n}(x_{1},...,x_{n})=f(x_{1},...,x_{n})$}. 
+\end{definition}
+
+\section{מכונות טיורינג - המשך}
+\begin{definition}
+תהי \L{$f:\mathbb{N}^{k}\rightarrow\mathbb{N}$} פונקציה \L{$f$}
+נקראת \textbf{חשיבה} )ע\char`\"{}י מכונת טיורינג( אם קיימת מכונה \L{$T$}
+כך שלכל \L{$(n_{1},...,n_{k})\in\mathbb{N}^{k}$} הריצה של \L{$T$}
+על סרט מהצורה \L{
+\begin{eqnarray*}
+...BB\underset{1+n_{1}}{\underbrace{1...1}}B\underset{1+n_{2}}{\underbrace{1...1}}B...B\underset{1+n_{k}}{\underbrace{1...1}}BB...
+\end{eqnarray*}
+} מסתיימת אם ורק אם \L{$f(n_{1},...,n_{k})$} מוגדר ובמקרה זה מספר
+האחדות על הסרט בתום הריצה הוא \L{$f(n_{1},...,n_{k})$}.
+
+\uline{תזכורת}: סימנו, בהינתן מ\char`\"{}ט \L{$T$} את הפונקציה
+\L{$f_{T}^{n}$} להיות הפונקציה שעבור קלט כנ\char`\"{}ל מחזירה את
+מספר האחדות בריצה סופית של המכונה )על הקלט(.\end{definition}
+\begin{claim}
+לכל מכונת טיורינג \L{$T$} יש מכונת טיורינג \L{$T^{*}$} כך ש:
+\begin{enumerate}
+\item \L{$f_{T}^{n}=f_{T^{*}}^{n}$} לכל \L{$n$}
+\item בא\char`\"{}ב של \L{$T^{*}$} יש שני תווים מיוחדים \L{$S,E$} כך שבכל
+ריצה מסתיימת של \L{$T^{*}$} )על קלט תקני( הסרט לאחר הריצה נראה כך:
+\L{$...BBS111...1EBB...$}
+\item המכונה מעולם לא עברה במהלך הריצה את התא המסומן ב\L{$S$} שמאלה
+\item פרט ל\L{$S,E$} ל-\L{$T^{*}$} יש רק את התווים \L{$\{1,B\}$}.
+\end{enumerate}
+\end{claim}
+\begin{proof}
+~
+\begin{enumerate}
+\item ~
+\item לכל מצב פנימי \L{$q\in Q(T)$} יהיה במכונה \L{$T^{*}$} מצב פנימי
+\L{$q^{*}$}. כל פקודה \L{$rqxq^{\prime}\in I(T)$} נחליף בפקודה \L{$rq^{*}x(q^{\prime})^{*}$}.
+נוסיף ל\L{$T^{*}$} את הפקודות הבאות:
+
+\begin{itemize}
+\item כותב \L{$S$} משמאל לקלט וחוזר ימינה
+
+\begin{itemize}
+\item \L{$Bq_{0}Lq_{1}$}
+\item \L{$1q_{0}Lq_{1}$}
+\item \L{$Bq_{1}Sq_{2}$}
+\item \L{$Bq_{2}Lq_{3}$}
+\end{itemize}
+\item מטפל בהגעה לסוף הקלט, כותב \L{$E$} וחוזר להתחלה
+
+\begin{itemize}
+\item \L{$Bq_{3}Rq_{4}$}
+\item \L{$Bq_{4}Lq_{5}$}
+\item \L{$Bq_{5}Eq_{r}$}
+\item \L{$*q_{r}Lq_{r}$} )\L{$*$} זה או \L{$B$} או \L{$1$}(
+\item \L{$Sq_{r}Rq_{0}^{*}$} 
+\item שלב הסריקה
+
+\begin{itemize}
+\item \L{$1q_{3}Rq_{3}$}
+\item \L{$1q_{4}Rq_{3}$}
+\end{itemize}
+\end{itemize}
+\end{itemize}
+
+נותר להבטיח שכל האחדות צמודות ושהמכונה יודעת מה לעשות במקרה שהיא נתקלת
+ב\L{$S$} או ב\L{$E$} בשלב הריצה. נטפל קודם בחלק השני, לכל מצב פנימי
+\L{$q^{*}$} נוסיף פקודות:
+\begin{itemize}
+\item \L{$Sq^{*}B\tilde{q_{1}}$}
+\item \L{$B\tilde{q_{1}}L\tilde{q_{2}}$}
+\item \L{$B\tilde{q_{2}}S\tilde{q_{3}}$}
+\item \L{$S\tilde{q_{3}}Rq^{*}$}
+\item באופן אנלוגי מטפלים ב\L{$E$}
+\end{itemize}
+
+נטפל כעט בלהבטיח שכל האחדות צמודות. נניח שכל ריצה מסתיימת של \L{$T$}
+מסתיימת במצב פנימי \L{$\hat{q}$} )שאינו מופיע במהלך הריצה של \L{$T$}(.
+נוסיף פקודות:
+\begin{itemize}
+\item \L{$*\hat{q}R\hat{q}$} )כאשר \L{$*$} הינו כל תו שאינו \L{$E$}(
+\item \L{$E\hat{q}Bq_{w}$} 
+\item \L{$Bq_{w}Lq_{w}^{1}$}
+\item \L{$*q_{w}^{1}E\hat{q}$} )כאשר \L{$*$} הינו כל תו שאינו \L{$1$}
+ואינו \L{$S$}(
+\item נטפל במקרה שראינו \L{$S$}אחרי שמחקנו את \L{$E$}:
+
+\begin{itemize}
+\item \L{$Sq_{w}^{1}Eq_{w}^{s}$}
+\item \L{$Eq_{w}^{s}Lq_{w}^{s_{1}}$}
+\item \L{$Bq_{w}^{s_{1}}Sq_{w}^{s_{2}}$} - מצב סופי
+\end{itemize}
+\item וגם:
+
+\begin{itemize}
+\item \L{$1q_{w}^{1}Eq_{w}^{d}$}
+\item \L{$1q_{w}^{d}Lq_{w}^{d}$}
+\item \L{$*q_{w}^{d}1\hat{q}$} )כאשר\L{$*$}- כל תו שאינו \L{$S$} או \L{$1$}(
+\item \L{$Sq_{w}^{d}1q_{w}^{s}$}
+\item \L{$1q_{w}^{s}Lq_{w}^{s_{1}}$} 
+\end{itemize}
+\end{itemize}
+\item הטיפול דומה לזה של הסעיף הקודם, פרט לטיפול במה קורה כאשר פוגשים \L{$S$}.
+כל פעם שהמכונה פוגשת \L{$S$} היא תיכנס ל\char`\"{}תת מכונה\char`\"{}
+שמזיזה את כל הסרט שעד \L{$E$} ימינה בתו אחד, כותבת \L{$B$} במקום
+הראשון שמימין ל-\L{$S$} וחוזרת לריצה של \L{$T$}. הדבר היחיד שצריך
+להשתכנע: יש מכונה \L{$Sh$} שבהינתן קלט מן הצורה \L{$...BBS...EBBB...$}
+מעתיקה את כל הקלט בהזזה של תא אחד ימינה. נוסיף לא\char`\"{}ב שלנו
+תו מיוחד \L{$B^{*}$} , המכונה תרוץ באופן הבא:
+
+\begin{enumerate}
+\item תסרוק עד שתגיע ל\L{$E$} 
+\item לכל תו \L{$\alpha$} בא\char`\"{}ב המקורי )כלומר שאינו \L{$B^{*}$}(
+יהיה מצב פנימי \L{$q_{\alpha}$}. סדרת הפקודות:
+
+\begin{itemize}
+\item \L{$\alpha q_{w}B^{*}q_{\alpha}$}
+\item \L{$Bq_{\alpha}Lq_{\alpha}^{1}$}
+\item \L{$B^{*}q_{\alpha}^{1}\alpha q_{w}$} 
+\end{itemize}
+
+מעתיקה את התו \L{$\alpha$} תו אחד מימין למקומו המקורי. צריך טיפול
+נפרד בתווים \L{$S,E$} אבל אין בעיה.
+
+\end{enumerate}
+\item אם בא\char`\"{}ב שלנו יש \L{$n$} תווים נבנה מכונה \L{$T^{*}$} שבה
+התו ה-\L{$i$} בא\char`\"{}ב של \L{$T$} ייוצג ע\char`\"{}י \L{$n$}-יה
+של תאים \L{$\underset{i}{\underbrace{11...1}}\underset{n-i}{\underbrace{BB...B}}$}
+. קל לבדוק שכל פקודה מהצורה \char`\"{}זוז ימינה\char`\"{} או \char`\"{}זוז
+שמאלה\char`\"{} ב\L{$T$} ניתן לתרגם בקלות לפקודה \char`\"{}זוז \L{$n$}
+תווים ימינה/שמאלה\char`\"{} ב\L{$T^{*}$}. פקודה מהצורה \char`\"{}כתוב
+את התו ה\L{$i$} בא\char`\"{}ב בתא הנוכחי\char`\"{} תתרגם לסדרה של
+\L{$n$} פקודות כתיבה \char`\"{}כתוב במקום ה\L{$n$}-יה שאתה נמצא
+בתחילתה את ה\L{$n$}-יה \L{$\underset{i}{\underbrace{11...1}}\underset{n-i}{\underbrace{BB...B}}$}.
+כנ\char`\"{}ל לגבי הקריאה. לא קשה לבדוק: אם נייצג את התו \L{$1$}
+בא\char`\"{}ב של \L{$T$} ע\char`\"{}י \L{$\underset{n-1}{1\underbrace{BB...B}}$}אז
+\L{$f_{T^{*}}^{n}=f_{T}^{n}$} לכל \L{$n$}. 
+\end{enumerate}
+\end{proof}
+מעכשיו נניח שכל מכונת טיורינג שנעבוד איתה מקיימת את התנאים {\beginL 2,3,4\endL}
+. לפי {\beginL 1\endL} אם מה שמעניין אותנו זה מחלקת הפונקציות הניתנות
+לחישוב ע\char`\"{}י מכונת טיורינג הרי שהנחה זו אינה משנה את המחלקה.
+בנוסף נניח שלכל מכונת טיורינג יש מצב מסיים יחיד שאינו מופיע במהלך
+הריצה. עוד אפשר להניח שבסיום הריצה הראש הקורא נמצא תו אחד מימין ל-\L{$S$}.
+\begin{claim}
+נניח ש-\L{$f:\mathbb{N}\rightarrow\mathbb{N}$} ו- \L{$g:\mathbb{N}\rightarrow\mathbb{N}$}
+חשיבות טיורינג אז גם \L{$f\circ g$} חשיבה טיורינג.\end{claim}
+\begin{proof}
+תהינה \L{$T_{f},T_{g}$} מכונות כך ש\L{$f_{T_{f}}^{\prime}=f$} וגם
+\L{$g_{T_{g}}^{\prime}=g$} . לכל מצב פנימי של \L{$f$} במכונה החדשה
+יהיה מצב פנימי \L{$q^{*}$}. אז המכונה של ההרכבה תהיה:
+\begin{enumerate}
+\item רשימת הפקודות של \L{$T_{g}$}. 
+\item מוחקים את \L{$S$}, וכותבים במקומו \L{$1$}, מוחקים את \L{$E$}, חוזר
+להתחלה ועובר למצב פנימי \L{$q_{0}^{*}$}
+\item רשימת הפקודות של \L{$T_{f}$} עם השינוי שכל פקודה מהצורה \L{$*q\star q_{1}$}
+משתנה לפקודה מהצורה \L{$*q^{*}\star q_{1}^{*}$}.
+\end{enumerate}
+\end{proof}
+\begin{claim}
+משפחת הפונקציות החשיבות טיורינג סגורה תחת אופרטור \char`\"{}מיזער\char`\"{}:
+\L{
+\begin{eqnarray*}
+\mu_{x_{1}}(g(x_{1},...,x_{n})) & = & \begin{cases}
+a & (*)\\
+undefined & else
+\end{cases}
+\end{eqnarray*}
+} כאשר {*} הינו תנאי שנגדיר בשיעור הבא....
+\end{claim}
+
+\section{פונקציות חשיבות}
+
+ראינו שהפונקציות הבאות חשיבות טיורינג:
+\begin{itemize}
+\item \L{$1$} - הפונקציה הקבועה {\beginL 1\endL}
+\item \L{$0$} - הפונקציה הקבועה {\beginL 0\endL}
+\item \L{$x+y$} - חיבור
+\item קל לוודא ש\L{$\Pi_{k}^{n}(x_{1},...,x_{n})=x_{k}$} עבור \L{$k<n\in\mathbb{N}$}
+חשיבה טיורינג )לכל \L{$k,n$}( 
+\item מה לגבי \L{$x\cdot y$}? קודם כל יש לוודא שיש מכונה שבהינתן קלט \L{$y$}
+מעתיקה את \L{$y$} בסוף הקלט. גם כפל פונקציה חשיבה - תרגיל קל.
+\item מה לגבי הפונקציה \L{$C_{<}(x,y)=\begin{cases}
+1 & x<y\\
+0 & else
+\end{cases}$}? גם הפונקציה הזו חשיבה )מוחקים כל פעם תו מתחילת \L{$x$} ומסוף \L{$y$}...(
+\item ראינו גם: אם \L{$f:\mathbb{N}^{k}\rightarrow\mathbb{N}^{m}$} ו-\L{$g:\mathbb{N}^{m}\rightarrow\mathbb{N}^{r}$}
+חשיבות טיורינג אז גם \L{$f\circ g$} חשיבה טיורינג.\end{itemize}
+\begin{definition}
+\L{$f:\mathbb{N}^{k}\rightarrow\mathbb{N}^{m}$} חשיבה טיורינג אם
+\L{
+\begin{eqnarray*}
+f(x_{1},...,x_{k}) & = & (f_{1}(x_{1},...,x_{k}),...,f_{m}(x_{1},...,x_{k}))
+\end{eqnarray*}
+} וכל אחת מהפונקציות \L{$f_{i}$} עבור \L{$1\le i\le m$} חשיבה טיורינג.
+
+ברור שזה לא מספיק כדי לתאר את כל הפונקציות החשיבות טיורינג משום שכל
+הפונקציות המתקבלות מן הרשימה הנ\char`\"{}ל על ידי מספר סופי של הרכבות
+הן פונקציות שלמות. כלומר מוגדרות על כל \L{$\mathbb{N}^{k}$} עבור
+\L{$k$} מתאים. לא קשה להשתכנע שיש פונקציות חשיבות טיורינג שאינן שלמות,
+למשל: \L{$1q_{0}Lq_{2},\, Bq_{2}Lq_{1},\,*q_{1}Lq_{1}$} )מכונה שלא
+עוצרת על חלק מהקלטים - על \L{$0$} במקרה הזה(. \end{definition}
+\begin{claim}
+תהי \L{$g(x_{1},...,x_{n}):\mathbb{N}^{k}\rightarrow\mathbb{N}$}
+פונקציה כלשהי. נגדיר \L{
+\begin{eqnarray*}
+h(x_{2},...,x_{k}) & = & \mu_{x_{1}}(g(x_{1},...,x_{k}))=\begin{cases}
+t & g(t,x_{2},...,x_{k})=0\wedge\\
+ & (\forall z<t)(g(z,x_{2},...,x_{k})>0)\\
+undefined & else
+\end{cases}
+\end{eqnarray*}
+} אזי אם \L{$g$} חשיבה טיורינג גם \L{$h$} חשיבה טיורינג. \L{$\mu$}
+נקרא אופרטור ה\char`\"{}מיזער\char`\"{}.\end{claim}
+\begin{proof}
+)רעיון( תהי \L{$T$} מכונת טיורינג המחשבת את \L{$g$} )כלומר \L{$f_{T}^{k}=g$}(.
+\char`\"{}מטה רעיון\char`\"{} - נריץ את \L{$T$} על הקלט \L{$0,x_{2},...,x_{k}$}.
+אם המכונה לא עוצרת זה אומר ש\L{$g$} לא מוגדרת ב\L{$(0,x_{2},...,x_{k})$}
+ולכן גם \L{$h(x_{2},...,x_{k})$} לא מוגדרת כנדרש. אם הריצה מסתיימת
+נבדוק האם היא הסתיימה ב\L{$0$}. אם כן, נחזיר \L{$0$} ואז \L{$h(0,x_{2},...,x_{k})=0$}
+כנדרש. אם לא, נחזור על אותה פעולה עם הקלט \L{$1,x_{2},...,x_{k}$}
+וכו'. אם המכונה הנ\char`\"{}ל תעצור אי פעם, זה יהיה הטבעי הקטן ביותר
+\L{$t$} עבורו \L{$g(t,x_{2},...,x_{k})=0$}, בפרט \L{$g(t^{\prime},x_{2},...,x_{k})$}
+מוגדרת לכל \L{$t^{\prime}<t$}. מתי הריצה לא מסתיימת? בדיוק אם אחד
+מהבאים מתקיים:
+\begin{enumerate}
+\item קיים \L{$t$} כך ש\L{$g(t,x_{2},...,x_{k})$} לא מוגדר ו\L{$g(t^{\prime},x_{2},...,x_{k})>0$}
+לכל \L{$t^{\prime}<t$}.
+\item הסעיף הקודם לא מתקיים ו\L{$g(t,x_{2},...,x_{k})>0$} לכל \L{$t$}.
+ואילו במקומות בהם \L{$h$} לא מוגדרת כך שקיבלנו שיוויון.
+\end{enumerate}
+
+ביתר פירוט: נבנה מכונה הפועלת באופן הבא. המכונה מסמנת את סוף הקלט
+ב\L{$S$}. בשלב הראשון המכונה \L{$T^{*}$} תעתיק את הקלט \L{$x_{2},...,x_{k}$}
+מימין ל\L{$S$} ותוסיף \L{$1B$} בהתחלה. בשלב הבא \L{$T^{*}$} תחקה
+את הריצה של \L{$T$} על \L{$0,x_{2},...,x_{k}$} כאשר היא מקפידה )וזה
+הרי \L{$T$} עושה ממילא( לא לזוז משמאל ל\L{$S$}. אם השלב הזה בריצה
+הסתיים במקום כלשהו על הסרט מימין ל\L{$S$} יהיה כתוב \L{$E$} )כי
+כך \L{$T$} עובדת(. אם בין \L{$S$} ל\L{$E$} לא מופיע התו \L{$1$},
+אז \L{$T^{*}$} תחזור עד להתחלת הקלט של \L{$T^{*}$} )משמאל ל\L{$S$}(
+תמחק את כל הקלט ותעצור. אם בין \L{$S$} ל\L{$E$} מופיע התו \L{$1$}
+המכונה תחזור לתחילת הקלט של \L{$T^{*}$}, תכתוב \L{$1$} לפני ה\L{$B$}
+הראשון ותתחיל מההתחלה. 
+
+\end{proof}
+\begin{definition}
+פונקציה \L{$f:\mathbb{N}^{k}\rightarrow\mathbb{N}^{m}$} תיקרא חשיבה/רקורסיבית
+אם היא מתקבלת מן הפונקציות \L{$\{x+y,x\cdot y,C_{<}(x,y),\Pi_{k}^{n}(x_{1},...,x_{n}),1,0\}$}
+על ידי מספר סופי של הרכבות והפעלה של האופרטור \L{$\mu_{x}$}. במילים
+אחרות, משפחת הפונקציות החשיבות זו המשפחה/אוסף הקטנ/ה ביותר של פונקציות
+מ\L{$\mathbb{N}^{k}$} ל\L{$\mathbb{N}^{m}$} שמכיל/ה את הפונקציות
+הנ\char`\"{}ל וסגור/ה תחת הרכבה והאופרטור \L{$\mu_{x}$}. \end{definition}
+\begin{theorem}
+פונקציה \L{$f:\mathbb{N}^{k}\rightarrow\mathbb{N}^{m}$} חשיבה אם
+ורק אם היא חשיבה טיורינג.
+
+הוכחנו שכל פונקציה חשיבה היא חשיבה טיורינג. \uline{תרגיל:} הפונקציה
+\L{$n\mapsto n!$} היא חשיבה טיורינג. הוכח שהפונקציה חשיבה. שאלה כמעט
+זהה: מדוע הפונקציה \L{$f(m)=\begin{cases}
+n & m=2^{n}\\
+0 & m=1\, or\, else
+\end{cases}$} חשיבה?\end{theorem}
+\begin{definition}
+תהי \L{$A\subseteq\mathbb{N}^{m}$} אזי \L{$\chi_{A}=\mathbb{N}^{m}\rightarrow\mathbb{N}$}
+זו הפונקציה המוגדרת על ידי \L{
+\begin{eqnarray*}
+\chi_{A}(x) & = & \begin{cases}
+1 & x\in A\\
+0 & else
+\end{cases}
+\end{eqnarray*}
+}. \L{$\chi_{A}$} נקראת \textbf{הפונקציה המציינת} של \L{$A$}.
+\begin{definition}
+יחס \L{$A\subseteq\mathbb{N}^{m}$} נקרא \textbf{חשיב} אם \L{$\chi_{A}$}
+פונקציה חשיבה.\end{definition}
+\begin{claim}
+משפחת היחסים החשיבים סגורה תחת פעולות בוליאניות, כלומר תחת איחודים,
+חיתוכים והשלמה.
+\end{claim}
+\end{definition}
+\begin{proof}
+~
+\begin{itemize}
+\item אם \L{$A$} חשיבה אז \L{$\chi_{A}(x)=C_{<}(\chi_{A}(x),1)$}.
+\item אם \L{$A,B$} חשיבות אז \L{$\chi_{A\cap B}(x)=\chi_{A}(x)\cdot\chi_{B}(x)$}.
+\item \L{$\chi_{A\cup B}(x)=C_{<}(0,\chi_{A}(x)+\chi_{B}(x))$} או לפי דה-מורגן.
+\end{itemize}
+
+יוצא, למשל, כי היחס \L{$A(x,y)=(x\le y)$} חשיב. זה פשוט איחוד היחסים
+החשיבים \L{$C_{<}(x,y)$} ו-\L{$x=y$}. 
+
+\end{proof}
+\begin{claim}
+)הגדרה לפי מקרים(: תהיינה \L{$f_{1},...,f_{n}$} פונקציות חשיבות \L{$k$}-מקומיות,
+ו-\L{$A_{1},...,A_{n}\subseteq\mathbb{N}^{k}$} זרות וחשיבות, כך ש\L{$\bigcup_{i=1}^{n}A_{i}=\mathbb{N}^{k}$}.
+אזי הפונקציה \L{
+\begin{eqnarray*}
+f(x) & = & \begin{cases}
+f_{1}(x) & x\in A_{1}\\
+\vdots & \vdots\\
+f_{n}(x) & x\in A_{n}
+\end{cases}
+\end{eqnarray*}
+} חשיבה. \end{claim}
+\begin{proof}
+\L{$\sum_{i=1}^{n}f_{i}(x)\cdot\chi_{A_{i}}(x)$} וזו פונקציה חשיבה
+כי \L{$\chi_{A_{i}}$} חשיבות, \L{$f_{i}$} חשיבות והחיבור והכפל חשיבים.
+\end{proof}
+
+\section{פונקציות חשיבות - המשך}
+\begin{definition}
+יהי \L{$A\subseteq\mathbb{N}^{k+1}$} יחס חשיב, \L{$k+1$} מקומי.
+נגדיר אופרטור: \L{
+\begin{eqnarray*}
+\mu_{x<z}(A(x,\bar{y})) & = & \begin{cases}
+t & t<z\wedge\mu_{x}(\chi_{A}(x,\bar{y}))=t\\
+z & else
+\end{cases}
+\end{eqnarray*}
+}.\end{definition}
+\begin{claim}
+אם \L{$A\subseteq\mathbb{N}^{k+1}$} יחס חשיב אז הפונקציה \L{$h(z,\bar{y})\equiv\mu_{x<z}(A(x,\bar{y}))$}
+חשיבה.\end{claim}
+\begin{proof}
+פשוט לפי המשפט על הגדרה לפי מקרים {]}אבל צריך מעט להיזהר כי מה הם
+המקרים?{[}. לחילופין אפשר נשים לב ש-\L{
+\begin{eqnarray*}
+h(z,\bar{y}) & = & \mu_{x}(\chi_{A}(x,\bar{y})\cdot C_{=}(x,z))
+\end{eqnarray*}
+} כאשר \L{$C_{=}(x,z)=0\iff x=z$}, וברור שזו פונקציה חשיבה. נשים לב
+\L{$h(z,\bar{y})$} תמיד מוגדרת, כלומר פונקציה שלמה. \end{proof}
+\begin{corollary}
+אם \L{$A\subseteq\mathbb{N}^{k+1}$} יחס חשיב אז היחס \L{$B(z,\bar{y})\equiv(\exists x<z)(A(x,\bar{y}))$}
+הוא חשיב.\end{corollary}
+\begin{proof}
+\L{$(z,\bar{y})\in B\iff C_{<}(h(z,\bar{y}),z)=1$}. לכן זו פשוט הפונקציה
+\L{$\chi_{B}$} ולפי הטענה האחרונה זו פונקציה חשיבה. מדוע \L{$C_{<}(h(z,\bar{y}),z)=\chi_{B}$}?
+כיוון ששתי הפונקציות מקבלות רק ערכים \L{$0,1$} יספיק להראות שלכל
+\L{$(z,\bar{y})$} מתקיים \L{$\chi_{B}(z,\bar{y})=1\iff C_{<}(h(z,\bar{y}),z)=1$}
+. לפי הגדרה \L{
+\begin{eqnarray*}
+\chi_{B}(z,\bar{y}) & = & 1\iff(\exists x<z)(A(x,\bar{y}))\iff h(z,\bar{y})<z
+\end{eqnarray*}
+}.
+\end{proof}
+במילים אחרות המסקנה אומרת שמשפחת היחסים החשיבים סגורה תחת כימות חסום.
+\uline{הערה חשובה מאוד}: משפחת היחסים החשיבים איננה סגורה תחת כימות
+)שאינו חסום(. 
+
+\uline{מטרה:} לבנות פונקציה חשיבה \L{$\beta:\mathbb{N}^{2}\rightarrow\mathbb{N}$}
+כך שלכל סדרה סופית \L{$\bar{a}=\left\langle a_{1},...,a_{n}\right\rangle $}
+של מספרים טבעיים קיים \L{$c_{\bar{a}}\in\mathbb{N}$} )קוד הסדרה(
+המקיים:
+\begin{enumerate}
+\item \L{$\beta(c_{\bar{a}},0)=n$}
+\item לכל \L{$i\le\beta(c_{\bar{a}},0)$} מתקיים \L{$\beta(c_{\bar{a}},i)=a_{i}$}
+\item )מסיבות טכניות נרצה גם( \L{$\beta(c_{\bar{a}},i)<c_{\bar{a}}$} לכל
+\L{$i\le\beta(c_{\bar{a}},0)$} .\end{enumerate}
+\begin{claim}
+)טענת עזר {\beginL 1\endL}( קיימת פונקציה חשיבה \L{$Pr:\mathbb{N}^{2}\rightarrow\mathbb{N}$}
+שהיא חח\char`\"{}ע ועל. {]}יהיה שימושי לשים לב ש\L{$Pr$} שנמצא מקיימת
+\L{$Pr(x,y)\ge max\{x,y\}$}{[}. 
+\begin{proof}
+\L{$Pr(x,y)$} יהיה המקום של הזוג \L{$(x,y)$} במספור הזוגות:
+
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\hline 
+ & \R{{\beginL \textbf{0}\endL}} & \R{{\beginL \textbf{1}\endL}} & \R{{\beginL \textbf{2}\endL}} & \R{{\beginL \textbf{3}\endL}} & \R{{\beginL \textbf{4}\endL}} & \R{{\beginL \textbf{5}\endL}} & \R{{\beginL \textbf{6}\endL}}\tabularnewline
+\hline 
+\hline 
+\R{{\beginL \textbf{0}\endL}} & \R{{\beginL 0\endL}} & \R{{\beginL 1\endL}} & \R{{\beginL 3\endL}} & \R{{\beginL 6\endL}} & \R{{\beginL 10\endL}} & \R{{\beginL 15\endL}} & \R{\L{$\swarrow$}}\tabularnewline
+\hline 
+\R{{\beginL \textbf{1}\endL}} & \R{{\beginL 2\endL}} & \R{{\beginL 4\endL}} & \R{{\beginL 7\endL}} & \R{{\beginL 11\endL}} & \R{{\beginL 16\endL}} & \R{\L{$\swarrow$}} & \R{\L{$\vdots$}}\tabularnewline
+\hline 
+\R{{\beginL \textbf{2}\endL}} & \R{{\beginL 5\endL}} & \R{{\beginL 8\endL}} & \R{{\beginL 12\endL}} & \R{{\beginL 17\endL}} & \R{\L{$\swarrow$}} & \R{\L{$\vdots$}} & \tabularnewline
+\hline 
+\R{{\beginL \textbf{3}\endL}} & \R{{\beginL 9\endL}} & \R{{\beginL 13\endL}} & \R{{\beginL 18\endL}} & \R{\L{$\swarrow$}} & \R{\L{$\vdots$}} &  & \tabularnewline
+\hline 
+\R{{\beginL \textbf{4}\endL}} & \R{{\beginL 14\endL}} & \R{{\beginL 19\endL}} & \R{\L{$\swarrow$}} & \R{\L{$\vdots$}} &  &  & \tabularnewline
+\hline 
+\R{{\beginL \textbf{5}\endL}} & \R{{\beginL 20\endL}} & \R{\L{$\swarrow$}} & \R{\L{$\vdots$}} &  &  &  & \tabularnewline
+\hline 
+\R{{\beginL \textbf{6}\endL}} & \R{\L{$\swarrow$}} & \R{\L{$\vdots$}} &  &  &  &  & \tabularnewline
+\hline 
+\end{tabular}
+
+לא קשה לבדוק שהפונקציה הזאת היא פשוט \L{$\frac{1}{2}(x+y)\cdot(x+y+1)+x$}.
+לפי התיאור הזה ברור ש:
+\begin{enumerate}
+\item \L{$Pr(x,y)$} חשיבה
+\item מקיימת \L{$Pr(x,y)\ge x$} וגם \L{$Pr(x,y)\ge y$} 
+\item לפי התיאור הגרפי היא חח\char`\"{}ע ועל )הוכחה יותר אלגברית - מכירים
+ממבוא ללוגיקה(.
+\end{enumerate}
+\end{proof}
+\end{claim}
+~
+\begin{claim}
+)טענת עזר {\beginL 2\endL} - משפט השאריות הסיני( יהי \L{$n\in\mathbb{N}$},
+\L{$m_{1},...,m_{n}$} מספרים טבעיים זרים בזוגות. יהיו \L{$k_{1},...,k_{n}$}
+מספרים טבעיים כלשהם )בד\char`\"{}כ מניחים \L{$k_{i}<m_{i}$} אבל זה
+לא חשוב(. אזי קיים \L{$b\in\mathbb{N}$} כך ש\L{$b\equiv_{m_{i}}k_{i}$}
+לכל \L{$1\le i\le n$} . \end{claim}
+\begin{proof}
+ניקח \L{$d{\displaystyle =\prod_{i=1}^{n}}m_{i}$}. לכל \L{$b<d$}
+נגדיר \L{$\bar{b}=\left\langle b\, mod\, m_{1},...,b\, mod\, m_{n}\right\rangle $}.
+יש \L{$d$} n-יות כאלה. לכן אם נראה שההעתקה \L{$b\mapsto\bar{b}$}
+חח\char`\"{}ע אזי היא בהכרח על )כהעתקה בין שתי קבוצות מגודל \L{$d$}(.
+נניח ש\L{$\bar{b}_{1}=\bar{b}_{2}$} כלומר \L{$b_{1}\equiv_{m_{i}}b_{2}$}
+לכל \L{$i$}, כלומר \L{$b_{1}-b_{2}\equiv_{m_{i}}0$}, בפרט \L{$m_{i}|b_{1-b_{2}}$}
+)בה\char`\"{}כ \L{$b_{1}>b_{2}$}( לכל \L{$1\le i\le n$}. לכן \L{$b_{1}-b_{2}$}
+מחלק את המכפלה המשותפת הקטנה ביותר של ה\L{$m_{i}$}. כיוון שה\L{$m_{i}$}
+זרים בזוגות המכפלה המשותפת הקטנה ביותר היא \L{$d$}. אבל \L{$b_{1}-b_{2}<d$}
+וזו סתירה. \end{proof}
+\begin{claim}
+)טענת עזר {\beginL 3\endL}( לכל \L{$n\in\mathbb{N}$} המספרים \L{$\{1+i\cdot(n!)\}_{i=1}^{n}$}זרים
+בזוגות. \end{claim}
+\begin{proof}
+נניח בשלילה ש\L{$p$} ראשוני מחלק את \L{$1+i(n!)$} ומחלק את \L{$1+j(n!)$}
+לאיזה \L{$i>j$}. לכן: \L{$p|(i-j)\cdot(n!)$} . כיוון ש\L{$p$} ראשוני
+הוא מחלק או את \L{$i-j$} או את \L{$n!$}. כיוון ש\L{$i-j<n$} בהכרח
+\L{$p$} מחלק את \L{$n!$}. אבל \L{$p$} אמור לחלק את \L{$1+i(n!)$}
+וזה לא ייתכן. \end{proof}
+\begin{claim}
+תהי \L{$\gamma(z,y,i)=Rem(z,1+y(i+1))$} כאשר \L{$Rem(t_{1},t_{2})$}
+היא השארית של \L{$t_{1}$} בחלוקה ב-\L{$t_{2}$}. אזי:
+\begin{enumerate}
+\item \L{$\gamma(z,y,i)$} חשיבה. מדוע? יספיק להראות ש\L{$Rem(t_{1},t_{2})$}
+חשיבה. אבל \L{$Rem(t_{1},t_{2})=\mu_{z}(t_{2}|t_{1}-z)$} והיחס \L{$t_{2}|t_{1}$}
+הוא חשיב, למשל ע\char`\"{}י \L{$(\exists x<t_{2})(x\cdot t_{2}=t_{1})$}. 
+\item לכל סדרה סופית \L{$\left\langle a_{1},...,a_{n}\right\rangle $} של
+טבעיים יש \L{$y,z$} כך שלכל \L{$0<i\le n$} מתקיים \L{$\gamma(z,y,i)=a_{i}$}.
+מדוע? נבחר \L{$k>n$} כלשהו ונבחר \L{$y=k!$}. לפי טענת עזר {\beginL 3\endL}
+קיים \L{$z$} כך ש\L{$\gamma(z,y,i)=a_{i}$} לכל \L{$i\le n$}. 
+\item )טכני( \L{$\gamma(z,y,i)\le z$} לכל \L{$z,y,i$}. 
+\end{enumerate}
+\end{claim}
+הפונקציה \L{$\beta(b,i)$} המבוקשת תהיה \L{$\gamma(Pr^{L}(b),Pr^{R}(b),i)$}
+כאשר \L{$Pr^{L}(b)=\Pi_{1}(Pr^{-1}(b))$} ו-\L{$Pr^{R}(b)=\Pi_{2}(Pr^{-1}(b))$}.
+הדבר היחיד שנותר לוודא \L{$Pr^{L},Pr^{R}$} הן פונקציות חשיבות. 
+
+
+\section{הצפנות}
+
+\uline{חזרה:} אם \L{$A(x,y)$} יחס חשיב אז \L{$(\exists x<z)A(x,\bar{y})$}
+יחס חשיב. \L{
+\begin{eqnarray*}
+(\mu_{x<z})A(x,\bar{y}) & = & \begin{cases}
+t & \mu_{x}(\chi_{A}(x,\bar{y}))=t,\, t<z\\
+z & else
+\end{cases}
+\end{eqnarray*}
+} פונקציה שלמה. הפונקציה גם חשיבה כי היא שווה ל\L{$\mu_{x}(\chi_{\neg A}(x,\bar{y})\cdot C=(x,z))$}.
+
+נאמר ש\L{$\beta:\mathbb{N}^{2}\rightarrow\mathbb{N}$} מצפינה סדרות
+סופיות אם לכל סדרה סופית \L{$\left\langle a_{1},...,a_{n}\right\rangle $}
+יש \L{$\bar{a}\in\mathbb{N}$} כך ש\L{$\beta(\bar{a},0)=n$} ולכל
+\L{$1\le1\le n$} מתקיים \L{$\beta(\bar{a},i)=a_{i}$}.
+\begin{claim}
+הפונקציה \L{$(x,y)\underset{Pr}{\mapsto}\frac{(x+y)^{2}+(x+y)}{2}+x$}
+היא חח\char`\"{}ע ועל מ\L{$\mathbb{N}^{2}$} ל\L{$\mathbb{N}$}.
+\end{claim}
+~
+\begin{claim}
+לכל \L{$m_{1},...,m_{k}$} זרים בזוגות ולכל \L{$a_{1},...,a_{k}$}
+טבעיים יש \L{$b\in\mathbb{N}$} כך ש\L{$b\equiv_{m_{i}}a_{i}$} לכל
+\L{$i$}.
+\end{claim}
+~
+\begin{claim}
+לכל \L{$n\in\mathbb{N}$} המספרים \L{$1+n!,1+2(n!),...,1+n(n!)$}
+זרים בזוגות.
+\end{claim}
+~
+\begin{claim}
+נגדיר \L{$\gamma(z,g,i)=Rem(z,1+y(i+1))$} מקיימת:
+\begin{enumerate}
+\item \L{$\gamma$} חשיבה
+\item לכל סדרה סופית \L{$\left\langle a_{1},...,a_{n}\right\rangle $} קיימים
+\L{$z,y$} כך שלכל \L{$1\le i\le n$} מתקיים \L{$a_{i}=\gamma(z,y,i)$}
+\item \L{$\gamma(z,y,i)\le z$}
+\end{enumerate}
+
+לגבי \L{$2$} ניקח את \L{$max\{a_{i},n\}_{i=1}^{n}<k$} וניקח \L{$y=k!$}
+. לפי טענה {\beginL 3\endL} מתקיים כי \L{$1+y(i+1)$} זרים בזוגות.
+לפי הטענה השניה יש \L{$z$} שעונה על הדרישה. ביתר דיוק, יש \L{$z$}
+כך שלכל \L{$i$} מתקיים \L{$z\equiv_{i+y(i+1)}a_{i}$}. אבל בעצם \L{$a_{i}=Rem(z,1+y(i+1))$}
+כי \L{$a_{i}<1+y(i+1)$}. 
+
+\end{claim}
+~
+\begin{claim}
+הפונקציה \L{$\beta(y,i)=\gamma(Pr^{L}(y),Pr^{R}(y),i)$} היא פונקצית
+זיווג חשיבה כאשר \L{$Pr^{L}(y)=\Pi_{1}Pr^{-1}(y)$} ו\L{$Pr^{R}(y)=\Pi_{2}Pr^{-1}(y)$}
+. \end{claim}
+\begin{proof}
+מטענה {\beginL 4\endL} ברור כי \L{$\beta(y,i)$} מצפינה סדרות סופיות.
+בהינתן סדרה סופית \L{$\left\langle a_{1},...,a_{n}\right\rangle $}
+טענה {\beginL 4\endL} סעיף ){\beginL 2\endL}( מבטיחה \L{$t_{1},t_{2}\in\mathbb{N}$}
+כך ש\L{$\gamma(t_{1},t_{2},i)=a_{i}$} לכל \L{$1\le i\le n$}. נחליף
+את הסדרה בסדרה \L{$\left\langle n,a_{1},...,a_{n}\right\rangle $},
+נמצא \L{$t_{1},t_{2}$} כמובטח ונגדיר \L{$y=Pr(t_{1},t_{2})$} אז
+\L{$\beta(y,0)=\gamma(t_{1},t_{2},0)=n$} וגם \L{$\beta(y,i)=\gamma(t_{1},t_{2},i)=a_{i}$}.
+נשאר רק לוודא ש\L{$\beta$} חשיבה. מספיק לוודא ש\L{$Pr^{-1}(y)$}
+היא חשיבה ומלאה/שלמה. הפונקציה שלמה כי \L{$Pr$} היא על. הפונקציה
+חשיבה פשוט כי \L{
+\begin{eqnarray*}
+\Pi_{1}(Pr^{-1}(y)) & = & \mu_{t_{1}}[(\exists t_{2})Pr(t_{1},t_{2})=y]=\mu_{t_{1}}((\exists t_{2}<y)Pr(t_{1},t_{2})=y)
+\end{eqnarray*}
+}
+\end{proof}
+מעתה ועד עולם נקבע פונקציה \L{$\beta$} כנ\char`\"{}ל.
+\begin{definition}
+נאמר ש\L{$x$} מצפין סדרה סופית אם אין \L{$x^{\prime}<x$} כך ש\L{$\beta(x^{\prime},0)=\beta(x,0)$}
+ולכל \L{$i\le\beta(x,0)$} מתקיים \L{$\beta(x^{\prime},i)=\beta(x,i)$}. \end{definition}
+\begin{claim}
+היחס \L{$\theta(x)$} האומר \char`\"{}\L{$x$} מצפין סדרה סופית\char`\"{}
+הוא חשיב. \end{claim}
+\begin{proof}
+\L{$\theta(x)=\neg(\exists x^{\prime}<x)[i\le\beta(x,0)\rightarrow\beta(x^{\prime},i)]=\beta(x,i)$}
+.
+\end{proof}
+מטרתנו, כזכור, להוכיח שבהינתן מכונת טיורינג \L{$T$} ו\L{$n\in\mathbb{N}$}
+הפונקציה \L{$f_{T}^{n}$} חשיבה. נקבע אחת ולתמיד מכונת טיורינג \L{$T$}
+ו\L{$n\in\mathbb{N}$} ונראה כיצד למצוא פונקציה חשיבה שזהה ל\L{$f_{T}^{n}$}.
+נזדקק להרבה טענות עזר. כיוון שאנחנו מעוניינים רק ב\L{$f_{T}^{n}$}
+ולא במכונה עצמה אז אפשר לשנות את \L{$T$} איך שנרצה כל עוד לא נשנה
+את הפונקציה שהיא מחשבת. לכן, בה\char`\"{}כ, \L{$T$} מכונת טיורניג
+תקנית:
+\begin{enumerate}
+\item הא\char`\"{}ב של \L{$T$} כולל רק את \L{$\{1,B\}$} ונק' ההתחלה והסיום
+\L{$\{S,E\}$}. 
+\item למכונה יש מצב פנימי יחיד \L{$\hat{q}$} שכל ריצה מסתיימת מסתיימת בו,
+ו\L{$\hat{q}$} אינו מופיע במהלך הריצה.
+\item בתום הריצה הראש הקורא נמצא על \L{$S$} ובין \L{$S$} ל\L{$E$} יש
+רק אחדות. 
+\end{enumerate}
+מכיוון שמספר המצבים הפנימיים של \L{$T$} סופי לא יזיק להניח ש\L{$\{1,B\}$}
+מיוצגים ע\char`\"{}י המספרים הטבעיים \L{$\{1,0\}$} בהתאמה ו\L{$\{S,E\}$}
+ע\char`\"{}י \L{$\{2,3\}$} בהתאמה והמצבים הפנימיים מיוצגים ע\char`\"{}י
+\L{$\{4,...,k\}$} כאשר \L{$q_{0}$} מיוצג ע\char`\"{}י \L{$4$} ו\L{$\hat{q}$}
+מיוצג ע\char`\"{}י \L{$k$}. 
+
+כזכור, מצב של \L{$T$} זו שלשה \L{$\left\langle n,q,h\right\rangle $}
+כאשר \L{$n$} המיקום של הראש ביחס ל\L{$S$} שמיקומו \L{$0$}, \L{$q$}
+המצב הפנימי, ו-\L{$h:\mathbb{Z}\rightarrow\{0,1,2,3\}$} מתארת את
+התאים במכונה. כמובן יספיק להניח ש\L{$h$} מתארת רק את המספר הסופי
+של התאים שבין \L{$S$} ל\L{$E$}. אפשר לתאר מצב ע\char`\"{}י סדרה
+מהצורה הבאה:\L{
+\[
+\left\langle \alpha_{1},\alpha_{2},...,\alpha_{n},q,\alpha_{n+1},...,\alpha_{r}\right\rangle 
+\]
+} כאשר \L{$\alpha_{1}=2,\, a_{r}=3$} ולכל \L{$1<i<r$} מתקיים \L{$a_{i}\in\{0,1\}$}. 
+\begin{claim}
+){\beginL 1\endL}( היחס \L{$\varphi(x)$} האומר \char`\"{}\L{$x$}
+מצפין מצב של המכונה \L{$T$}\char`\"{} חשיב. \end{claim}
+\begin{proof}
+היחס יתואר ע\char`\"{}י חיתוך של הדרישות הבאות:
+\begin{enumerate}
+\item \L{$\theta(x)$} - היחס האומר ש\L{$x$} מצפין סדרה.
+\item לכל \L{$0<i\le\beta(x,0)$} מתקיים \L{$\beta(x,i)\in\{0,...,k\}$}
+\item \L{$\beta(x,1)=2$} וגם \L{$\beta(x,\beta(x,0))=3$}
+\item קיים \L{$0<i\le\beta(x,0)$} יחיד כך ש\L{$\beta(x,i)\in\{4,...,k\}$}.
+\end{enumerate}
+
+כיוון שכל אלה חשיבים - גמרנו.
+
+\end{proof}
+\begin{claim}
+){\beginL 2\endL}( היחסים \L{$\varphi_{s}(x)$}, \char`\"{}\L{$x$}
+מצפין מצב התחלתי של \L{$T$}\char`\"{}, \char`\"{}\L{$x$} מצפין מצב
+סופי של \L{$T$}\char`\"{} - כולם חשיבים.\end{claim}
+\begin{proof}
+\L{$\varphi_{S}(x)$} זה חיתוך של \L{$\varphi(x)$} עם הדרישה הנוספת
+ש\L{$\beta(x,2)=4$}. \L{$\varphi_{E}(x)$} כנ\char`\"{}ל עם \L{$\beta(x,2)=k$}. \end{proof}
+\begin{claim}
+){\beginL 3\endL}( היחס \L{$\varphi(x,y)$} האומר \char`\"{}\L{$x,y$}
+מייצגים מצבים של \L{$T$} ו\L{$y$} המצב העוקב של \L{$x$} לפי \L{$T$}\char`\"{}
+הוא יחס חשיב.\end{claim}
+\begin{proof}
+זה כמובן חיתוך של התנאים \L{$\varphi(x),\varphi(y)$} עם התנאי הנוסף
+ש\L{$y$} המצב העוקב ל\L{$x$}. לכל \L{$p\in I(T)$} )לכל פקודה של
+\L{$T$}( נגדיר יחס \L{$\varphi_{p}(x,y)$} האומר \L{$x,y$} מצבים
+של \L{$T$} ו-\L{$y$} עוקב של \L{$x$} לפי \L{$p$} ובפרט \L{$x$}
+מצב רלוונטי לפקודה \L{$p$}. \char`\"{}\L{$x$} מצב רלוונטי לפקודה
+\L{$p$} \char`\"{} זה פשוט \L{$\varphi(x)$} וגם אם \L{$\beta(x,i)>3$}
+ל\L{$i>1$} אז \L{$p$} פקודה מהצורה \L{$\beta(x,i-1)\beta(x,i)**$}.
+במילים אחרות אם \L{$p$} היא הרביעייה \L{$\left\langle \alpha,q,\alpha^{\prime},q^{\prime}\right\rangle $}
+אז \L{$x$} רלוונטי ל\L{$p$} אם \L{$\beta(x,i-1)=\alpha,\beta(x,i)=q$}.
+נסמן זאת \L{$\varphi_{p}(x)$}. לומר ש\L{$y$} עוקב של \L{$x$} לפי
+\L{$p$} זה לומר \L{$\varphi(x),\varphi(y)$}. \L{$\varphi_{p}(x)$}
+עכשיו מתחלק לפי מהות הפקודה \L{$p$}. נטפל למשל במקרה ש\L{$p=\left\langle \alpha,q,\alpha^{\prime},q^{\prime}\right\rangle $}
+כאשר \L{$\alpha^{\prime}\in\{0,1\}$}. מתי \L{$y$} יתקבל מ\L{$x$}
+ע\char`\"{}י הפקודה \L{$p$}? אם \L{$x=\left\langle \alpha_{1},...,\alpha_{i},q,\alpha_{i+1},...,\alpha_{k}\right\rangle ,y=\left\langle \alpha_{1},...,\alpha_{i},q^{\prime},\alpha_{i+1},...,\alpha_{k}\right\rangle $}.
+פשוט צריך לדרוש:
+\begin{enumerate}
+\item נסמן \L{$i_{0}$} להיות ה\L{$i$} היחיד כך ש\L{$i\le\beta(x,0)$}
+ו-\L{$\beta(x,i_{0})\in\{4,...,k\}$}. 
+\item נדרוש ש\L{$\beta(y,i_{0})=q^{\prime},\beta(y,i_{0}-1)=\alpha^{\prime}$}
+ובכל מקרה אחר \L{$\beta(y,j)=\beta(x,j)$}.
+\end{enumerate}
+
+הטיפול בפקודות של תזוזה הוא דומה. זה מקרה ש\L{$\varphi_{p}(x,y)$}
+חשיבה. לומר ש\L{$y$} עוקב של \L{$x$} זה פשוט \L{${\displaystyle \varphi(x)\wedge\varphi(y)\wedge\bigvee_{p\in I}\varphi_{p}(x,y)}$}
+. 
+
+\end{proof}
+\begin{claim}
+){\beginL 4\endL}( היחס \L{$\rho(x)$} האומר \char`\"{}\L{$x$} מקודד
+ריצה מסתיימת של \L{$T$}\char`\"{} הוא חשיב.\end{claim}
+\begin{proof}
+~
+\begin{enumerate}
+\item \L{$\theta(x)$} - \L{$x$} מצפין סדרה.
+\item \L{$\varphi_{S}(\beta(x,1))$} כלומר האיבר הראשון בסדרה ש\L{$x$}
+מצפין הוא מצב התחלתי של \L{$T$}.
+\item \L{$\varphi_{E}(\beta(x,\beta(x,0)))$} - האיבר האחרון בסדרה הוא מצב
+סופי של \L{$T$}.
+\item לכל \L{$1\le i<\beta(x,0)$} מתקיים \L{$\varphi(\beta(x,i),\beta(x,i+1))$}
+כלומר כל איבר בסדרה הוא מצב עוקב של המצב המוצפן ע\char`\"{}י האיבר
+הקודם לו.
+\end{enumerate}
+\end{proof}
+\begin{claim}
+){\beginL 5\endL}( \L{$f_{E}(x)=n$} זו הפונקציה שמחזירה \L{$n$}
+אם \L{$x$} מצפין מצב סופי של \L{$T$} ו\L{$n$} הפלט של המכונה במצב
+זה. {\beginL 0\endL} אחרת. זו פונקציה חשיבה: \L{$\chi_{\varphi_{E}}(x)\cdot(\beta(x,0)-3)$}
+.
+\end{claim}
+
+\section{חשיבות}
+
+היינו בעיצומה של ההוכחה שכל פונקציה חשיבה טיורינג היא חשיבה.
+\begin{claim}
+){\beginL 1\endL}( היחס \L{$\varphi(x)$} האומר \char`\"{}\L{$x$}
+מצפין מצב של המכונה \L{$T$}\char`\"{} חשיב. 
+\end{claim}
+~
+\begin{claim}
+){\beginL 2\endL}( היחסים \L{$\varphi_{s}(x)$}, \char`\"{}\L{$x$}
+מצפין מצב התחלתי של \L{$T$}\char`\"{}, \char`\"{}\L{$x$} מצפין מצב
+סופי של \L{$T$}\char`\"{} - כולם חשיבים.
+\end{claim}
+~
+\begin{claim}
+){\beginL 3\endL}( היחס \L{$\varphi(x,y)$} האומר \char`\"{}\L{$x,y$}
+מייצגים מצבים של \L{$T$} ו\L{$y$} המצב העוקב של \L{$x$} לפי \L{$T$}\char`\"{}
+הוא יחס חשיב.
+\end{claim}
+~
+\begin{claim}
+){\beginL 4\endL}( היחס \L{$\rho(x)$} האומר \char`\"{}\L{$x$} מקודד
+ריצה מסתיימת של \L{$T$}\char`\"{} הוא חשיב.
+\end{claim}
+~
+\begin{claim}
+){\beginL 5\endL}( \L{$\varphi_{E}(x)=n$} זו הפונקציה שמחזירה \L{$n$}
+אם \L{$x$} מצפין מצב סופי של \L{$T$} ו\L{$n-1$} הפלט של המכונה
+במצב זה. {\beginL 0\endL} אחרת. זו פונקציה חשיבה: \L{$\chi_{\varphi_{E}}(x)\cdot(\beta(x,0)-3)$}
+. נדרוש ש\L{$\varphi_{E}(x)=0$} אחרת.
+\end{claim}
+~
+\begin{claim}
+היחס \char`\"{}\L{$x$} מקודד מצב התחלתי של \L{$T$} שבו הקלט הוא
+\L{$x_{1},...,x_{n}$}\char`\"{} הוא יחס חשיב. נסמן זאת \L{$\varphi_{s}(x,x_{1},...,x_{n})$}.
+\end{claim}
+כדי להוכיח את המשפט עלינו להראות ש\L{$f_{T}^{n}(x_{1},...,x_{n})$}
+פונקציה חשיבה. נגדיר פונקציה חשיבה באופן הבא: \L{
+\begin{eqnarray*}
+f(x_{1},...,x_{n}) & = & \varphi_{E}(\mu_{x}^{*}(\rho(x)\wedge\varphi_{s}(\varphi_{s,0}(x),x_{1},...,x_{n})))
+\end{eqnarray*}
+} כאשר \L{$\varphi_{s,0}(x)=\beta(x,1)$} - האיבר הראשון בסדרה ש\L{$x$}
+מקודד, וכאשר \L{$\mu_{x}^{*}(A(x,y))$} זה ה\L{$x$} המזערי עבורו
+\L{$\chi_{A}(x,y)=1$}. 
+\begin{claim}
+\L{$f(x_{1},...,x_{n})=f_{T}^{n}(x_{1},...,x_{n})$} ובפרט \L{$f$}
+מוגדרת אם ורק אם ריצת \L{$T$} על \L{$x_{1},...,x_{n}$} עוצרת.\end{claim}
+\begin{proof}
+ראשית נבדוק שתחומי ההגדרה של שתי הפונקציות זהים. אם \L{$T$} עוצרת
+על \L{$x_{1},...,x_{n}$} אז קיים \L{$x$} כך ש\L{$\rho(x)\wedge\varphi_{s}(\varphi_{s,0}(x_{1},...,x_{n}))$}
+- כלומר קיים \L{$x$} המקודד ריצה מסתיימת של \L{$T$} המתחילה בקלט
+\L{$x_{1},...,x_{n}$}. אם נבחר \L{$x_{0}$} הקטן ביותר המקיים זאת
+אז \L{
+\begin{eqnarray*}
+x_{0} & = & \mu_{x}^{*}(\rho(x)\wedge\varphi_{s}(\varphi_{s,0}(x),x_{1},...,x_{n}))
+\end{eqnarray*}
+} כי לכל \L{$x^{\prime}<x_{0}$} הפונקציה \L{$\chi_{\rho(x)}\cdot\chi_{\varphi_{s}}$}
+מוגדר ולכן מהגדרת האופרטור \L{$\mu_{x}^{*}$}, ואז \L{
+\begin{eqnarray*}
+f(x_{1},x_{n}) & = & \varphi_{E}(x_{0})\overset{def}{=}f_{T}^{n}(x_{1},...,x_{n})
+\end{eqnarray*}
+}נניח ש\L{$T$} אינה עוצרת על \L{$x_{1},...,x_{n}$} אז \L{$\rho(x)\wedge\varphi_{s}(\varphi_{s,0}(x),x_{1},...,x_{n})$}
+לעולם אינו מוגדר ולכן הפונקציה \L{$\mu_{x}^{*}(\rho(x)\wedge\varphi_{s}(\varphi_{s,0}(x),x_{1},...,x_{n}))$}
+אינה מוגדרת.
+\end{proof}
+עד עכשיו קודדנו מצבים וריצות של מכונות טיורינג, אבל אין סיבה לא לקודד
+גם את המכונות עצמן. מכיוון שאנחנו מתעניינים רק בפונקציות החשיבות )טיורינג(
+ולא במכונות עצמן, אפשר לזהות מכונת טיורינג עם רשימת הפקודות שלה. ומכיוון
+שהא\char`\"{}ב סופי ורשימת הפקודות סופית )וכבר זיהינו את הא\char`\"{}ב
+עם המספרים הטבעיים \L{$\{0..k\}$}(. אם רק נוסיף לזיהוי הזה את \L{$k+1$}
+כפקודה \L{$L$} ואת \L{$k+2$} כפקודה \L{$R$} נוכל לקודד את המכונה
+על ידי מספר טבעי. נקבע פעם אחת ולתמיד קידוד של כל מכונת טיורינג, ולמכונה
+\L{$T$} נסמן \L{$\left\lceil T\right\rceil $} את הקוד של \L{$T$}.
+אם \L{$e\in\mathbb{N}$} הוא קוד של מ\char`\"{}ט נסמן \L{$T_{e}$}
+את המכונה ש-\L{$e$} מקודד. יהיה נוח להניח שאם \L{$n\in\mathbb{N}$}
+אינו מקודד מ\char`\"{}ט אז נחליט ש\L{$n-e$} מקודד את המכונה שאינה
+עוצרת על אף קלט.
+\begin{theorem}
+לא קיימת פונקציה חשיבה \L{$f:\mathbb{N}\rightarrow\mathbb{N}$} כך
+ש\L{
+\begin{eqnarray*}
+f(e) & = & \begin{cases}
+1 & T_{e}\, halts\, on\, input\,0\\
+0 & else
+\end{cases}
+\end{eqnarray*}
+}\end{theorem}
+\begin{proof}
+נניח בשלילה שקיימת פונקציה \L{$f$} כנ\char`\"{}ל. נגדיר פונקציה \L{$g:\mathbb{N}\rightarrow\mathbb{N}$}
+ע\char`\"{}י \L{
+\begin{eqnarray*}
+g(e) & = & \begin{cases}
+T_{e}(e)+1 & f(e)=1\\
+0 & else
+\end{cases}
+\end{eqnarray*}
+}מההנחה )ומהמשפט האחרון, ומהמשפט על ההגדרה לפי מקרים( \L{$g$} פונקציה
+חשיבה )ואפילו שלמה(, ומקודדת, נאמר ע\char`\"{}י \L{$e_{0}$}. אז:
+מצד אחד \L{$T_{e_{0}}(e_{0})=g(e_{0})$} ומצד שני \L{$g(e_{0})=T_{e_{0}}(e_{0})+1$}.\end{proof}
+\begin{corollary}
+היחס \L{$A\subseteq\mathbb{N}$} המוגדר ע\char`\"{}י \L{$e\in A\iff T_{e}(e)\, halts$}
+אינו יחס חשיב. מצד שני \L{$A$} הנ\char`\"{}ל היא תחום של מכונת טיורינג
+\L{$T$}. הרעיון? המכונה מריצה את \L{$T_{e}(e)$} ומחזירה את התשובה,
+אם היא אי פעם מתקבלת. ביתר פירוט, ניקח \L{$\mathcal{U}$} מ\char`\"{}ט
+אוניברסלית ונשים לב ש\L{$\mathcal{U}(e,e)$} עוצרת אם ורק אם \L{$e\in A$}.
+לכן יש \L{$e$} בתחום של המכונה \L{$\mathcal{U}(x,x)$}. \end{corollary}
+\begin{definition}
+מכונת טיורינג \L{$T$} תיקרא אוניברסלית אם \L{$f_{T}^{2}(e,n)=T_{e}(n)$}
+לכל \L{$(e,n)\in\mathbb{N}^{2}$} )ובפרט אם \L{$T_{e}$} לא עוצרת
+על הקלט \L{$n$} אז \L{$f_{T}^{2}(e,n)$} לא מוגדרת(.\end{definition}
+\begin{theorem}
+קיימת מכונת טיורינג אוניברסלית.\end{theorem}
+\begin{proof}
+הרעיון פשוט, ההוכחה מייגעת, ע\char`\"{}י תיאור המכונה. דרך אחרת: בעזרת
+פונקציות חשיבות. נגדיר את \L{$f_{T}^{2}(e,n)$} באופן הבא. נגדיר את
+היחסים הבאים:
+\begin{itemize}
+\item \L{$\theta(x)$} - \L{$x$} הוא קוד.
+\item \L{$\theta_{1}(x)$} - \L{$x$} הוא קוד של מכונת טיורינג. כלומר \L{$x$}
+מקודד סדרה סופית של רביעיות של מספרים טבעיים. כל רביעייה היא פקודה
+ובין הפקודות אין סתירות. 
+\item \L{$\varphi(e,x)$} - \L{$e$} קוד של מכונת טיורינג ו-\L{$x$} מצב
+קוד של מצב פנימי של המכונה המקודדת על ידי \L{$e$}. 
+\item \L{$\varphi(e,x,y)$}- \L{$e$} קוד של מ\char`\"{}ט, \L{$x,y$} קודים
+של המכונה \L{$e$} ו-\L{$y$} הוא העוקב של \L{$x$} לפי \L{$e$}. 
+\end{itemize}
+
+ההמשך זהה בדיוק להוכחת משפט השקילות.
+
+\end{proof}
+\begin{definition}
+קבוצה \L{$A\subseteq\mathbb{N}$} תקרא ניתנת למניה חשיבה )נל\char`\"{}ח
+או נל\char`\"{}ר - ניתנת למניה רקורסיבית( אם \L{$A$} היא התחום של
+פונקציה חשיבה. 
+
+ראינו שקיימות קבוצות נל\char`\"{}ח שאינן חשיבות.\end{definition}
+\begin{theorem}
+התנאים הבאים שקולים לקבוצה \L{$A\subseteq\mathbb{N}$}:
+\begin{enumerate}
+\item \L{$A$} נל\char`\"{}ח )תחום של פונקציה חשיבה(
+\item \L{$A$} היא התמונה של פונקציה חשיבה 
+\item \L{$A$} היא התמונה של פונקציה חשיבה מלאה
+\item \L{$A$} היא מהצורה \L{$\left\{ x\in\mathbb{N}:(\exists y)\varphi(x,y)\right\} $}
+לאיזה יחס חשיב \L{$\varphi(x,y)$}. 
+\item \L{$A$} היא מהצורה \L{$\left\{ x\in\mathbb{N}:(\exists\bar{y})\varphi(x,\bar{y})\right\} $}לאיזה
+יחס חשיב \L{$\varphi(x,y)$}
+\end{enumerate}
+
+\section{מניה רקורסיבית}
+
+תהי \L{$\emptyset\not=A\subseteq\mathbb{N}$} אזי התנאים הבאים שקולים:
+\begin{enumerate}
+\item \L{$A$} נל\char`\"{}ח
+\item \L{$A$} הטווח של פונקציה חשיבה
+\item \L{$A$} הטווח של פונקציה מלאה
+\item קיים יחס חשיב \L{$B\subseteq\mathbb{N}^{2}$} כך ש\L{$A=\{x:(\exists y)B(x,y)\}$}
+\item כנ\char`\"{}ל עבור \L{$B\subseteq\mathbb{N}^{k+1}$} ו-\L{$A=\{x:(\exists y_{1},...,y_{k})B(x,y_{1},...,y_{k})\}$}
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+~
+\begin{itemize}
+\item \L{$(1)\Rightarrow(2)$}. תהי \L{$f:\mathbb{N}\rightarrow\mathbb{N}$}
+כך ש\L{$A=dom(f)$}. תהי \L{$T_{f}$} מ\char`\"{}ט המחשבת את \L{$f$}
+כלומר \L{$f=f_{T_{f}}^{1}$}. כיוון ש\L{$A\not=\emptyset$} אפשר לבחור
+\L{$a\in A$}. נגדיר פונקציה חשיבה \L{$g:\mathbb{N}\rightarrow\mathbb{N}$}
+באופן הבא: \L{
+\[
+g(n)=\begin{cases}
+Pr^{L}(n) & T_{f}\, halts\, on\, Pr^{L}(n)\, after\, less\, than\, Pr^{R}(n)\, steps\\
+a & else
+\end{cases}
+\]
+}נסמן את התנאי הנ\char`\"{}ל ב\L{$*$}. אנחנו יודעים ש\L{$*$} הוא
+יחס חשיב לכן גם המשלים חשיב. לכן לפי המשפט על הגדרה לפי מקרים גם \L{$g$}
+חשיבה. נראה ש\L{$g$} עונה על דרישותינו - \L{$g(\mathbb{N})=A$}.
+אם \L{$l\in g(\mathbb{N})$} אז או ש\L{$l=a$} ואז \L{$l\in A$} .
+או ש\L{$l=Pr^{L}(n)$} לאיזה \L{$n\in\mathbb{N}$}. אבל אז זה אומר
+ש\L{$T_{f}$} עוצרת על הקלט \L{$l$} אחרי פחות מ\L{$Pr^{R}(n)$} צעדים.
+כיוון ש\L{$f_{T_{f}}^{1}=f$} אם אגף שמאל מוגדר גם אגף ימין מוגדר,
+כלומר \L{$l\in Dom(f)=A$}. בכיוון השני, אם \L{$l\in Dom(f)$} אז
+\L{$T_{f}$} עוצרת על הקלט \L{$l$} אחרי איזה מספר \L{$k$} של צעדים.
+אז \L{$n=Pr(l,k+1)$} ולפי הגדרה \L{$g(n)=Pr^{L}(n)=l$}, כלומר \L{$l\in Range(g)$}.
+נשים לב: הפונקציה \L{$g$} שלמה.
+\item \L{$(2)\Rightarrow(3)$} - מוכיחים באותו אופן. בוחרים \L{$a\in A$}
+ומגדירים:\L{
+\[
+g(n)=\begin{cases}
+f(Pr^{L}(n)) & T_{f}\, halts\, on\, Pr^{L}(n)\, after\, less\, than\, Pr^{R}(n)\, steps\\
+a & else
+\end{cases}
+\]
+} 
+\item \L{$(3)\Rightarrow(4)$} - אם \L{$A=Range(f)$} עבור \L{$f$} חשיבה
+)ושלמה( אז היחס \L{$B(x,f(x))$} חשיב. לכן, \L{$y\in Range(f)\iff(\exists x)(B(x,y))$}.
+\item \L{$(4)\Rightarrow(5)$} - אין מה להוכיח )מקרה פרטי(. 
+\item \L{$(4)\Rightarrow(1)$} - פשוט: \L{$f(x)=\mu_{y}B(x,y)$}.
+\item \L{$(5)\Rightarrow(4)$} - אם \L{$A=\{x:(\exists y_{1},...y_{k})B(x,\bar{y})\}$}
+אז נגדיר יחס \L{
+\begin{eqnarray*}
+C(x,z) & = & \{(x,z):z\, encodes\, a\, series\, of\, length\, k\,\wedge B(x,\beta(z,1),...,\beta(z,k)\}
+\end{eqnarray*}
+}
+\end{itemize}
+\end{proof}
+\begin{theorem}
+)משפט הרקורסיה( תהי \L{$C(x,y)$} פונקציה חשיבה. אזי קיימת מ\char`\"{}ט
+\L{$T$} כך ש-\L{$C(\left\lceil T\right\rceil ,y)=T(y)=f_{T}^{1}(y)$}
+לכל \L{$y$}. \end{theorem}
+\begin{claim}
+קיימת מכונת טיורינג \L{$T$} כל שלכל \L{$n\in\mathbb{N}$} מתקיים
+\L{$f_{T}^{1}(n)=\left\lceil w_{n}\right\rceil $} כאשר \L{$w_{n}$}
+היא המכונה אשר על הקלט הריק כותבת את המספר \L{$n$}. )ההוכחה - בתרגיל
+הבית(.\end{claim}
+\begin{proof}
+המכונה \L{$T$} תהיה הרכבה של {\beginL 3\endL} מכונות: \L{$ABC$}
+)מפעילים קודם את \L{$A$} אח\char`\"{}כ את \L{$B$} אח\char`\"{}כ
+את \L{$C$}(. המכונה \L{$A$} על הקלט \L{$y$} תחזיר את הפלט \L{$\left\lceil B\right\rceil \left\lceil C\right\rceil ,y$}.
+מה עושה \L{$B$} על הקלט \L{$x,y$}? היא כותבת את הקוד של המכונה שכותבת
+\L{$x$} {]}מטענת העזר{[} ואחריו את \L{$x,y$}. מה יהיה \L{$B(\left\lceil B\right\rceil \left\lceil C\right\rceil ,y)$}?
+\L{$B(\left\lceil B\right\rceil \left\lceil C\right\rceil ,y)=\left\lceil A\right\rceil \left\lceil B\right\rceil \left\lceil C\right\rceil ,y$}.
+יוצא ש-\L{$C(B(A(y)))=C(B(\left\lceil B\right\rceil \left\lceil C\right\rceil ,y))=C(\left\lceil A\right\rceil \left\lceil B\right\rceil \left\lceil C\right\rceil ,y)$}
+אבל זה בדיוק מה שהיינו צריכים. \end{proof}
+\begin{corollary}
+)משפט נקודת השבת( תהי \L{$f:\mathbb{N}\rightarrow\mathbb{N}$} פונקציה
+חשיבה ושלמה. אזי קיים \L{$e\in\mathbb{N}$} כך ש\L{$f_{T_{e}}^{1}=f_{T_{f(e)}}^{1}$}.
+\end{corollary}
+~
+\begin{corollary}
+)משפט \inputencoding{latin9}\L{Rice}\inputencoding{cp1255}( נגדיר
+יחס שקילות של \L{$\mathbb{N}$} ע\char`\"{}י \L{$e_{1}\sim e_{2}$}
+אם ורק אם \L{$f_{T_{e_{1}}}^{1}=f_{T_{e_{2}}}^{1}$} . תהי \L{$L\subseteq\mathbb{N}$}
+כך שלכל \L{$e\in L$} אם \L{$e^{\prime}\sim e$} אז \L{$e^{\prime}\in L$}.
+אזי \L{$L$} חשיבה אם ורק אם \L{$L=\mathbb{N}$} או \L{$L=\emptyset$}. \end{corollary}
+\begin{proof}
+נניח בשלילה שלא. אז יש \L{$e_{0}\in L$} ו-\L{$e_{1}\not\in L$}.
+נגדיר פונקציה חשיבה: \L{
+\[
+f(n)=\begin{cases}
+e_{1} & n\in L\\
+e_{0} & n\not\in L
+\end{cases}
+\]
+} אז \L{$f$} חשיבה ושלמה. לכן ממשפט נקודת השבת יש \L{$e$} כך ש-\L{$f_{T_{e}}^{1}=f_{T_{f(e)}}^{1}$}.
+אם \L{$e\in L$} אז גם \L{$f(e)\in L$} כי \L{$L$} סגורה תחת \L{$\sim$}.
+אבל אם \L{$e\in L$} אז \L{$e_{1}=f(e)$} ו-\L{$e_{1}\not\in L$}.
+באותו אופן בדיוק גם \L{$e\not\in L$} גורר סתירה. 
+\end{proof}
+\uline{דוגמה:} בעיית העצירה אינה חשיבה. אין מכונת טיורינג המחליטה
+האם \L{$e$} קוד של מכונה שעוצרת על הקלט הריק. במילים אחרות \L{
+\begin{eqnarray*}
+L & = & \{e\in\mathbb{N}:e\, encodes\, a\, machine\, which\, halts\, on\, empty\, input\}
+\end{eqnarray*}
+} אינה חשיבה. ברור ש-\L{$L$} סגורה תחת \L{$\sim$}. לפי משפט רייס
+כיוון ש-\L{$L\not=\emptyset$} )יש מ\char`\"{}ט שעוצרת על כל קלט ובפרט
+על הקלט הריק( וגם \L{$\mathbb{N}\backslash L\not=\emptyset$} )יש
+מכונות שלא עוצרות על שום קלט(. לכן לפי משפט רייס \L{$L$} אינה חשיבה.
+\begin{proof}
+)משפט נקודת השבת( תהי \L{$\mathcal{U}(x,y)$} מ\char`\"{}ט אוניברסלית
+ו-\L{$C(x,y)=\mathcal{U}(f(x),y)$}. אז \L{$C$} מ\char`\"{}ט. לכן
+יש \L{$T$} כך ש-\L{$\mathcal{U}(f(\left\lceil T\right\rceil ),y)=C(\left\lceil T\right\rceil ,y)=T(y)$}.
+אז \L{$e=\left\lceil T\right\rceil $}. \end{proof}
+\begin{remark}
+~
+\begin{enumerate}
+\item קבוצה \L{$A\subseteq\mathbb{N}$} חשיבה היא נל\char`\"{}ח
+\item קבוצה \L{$A\subseteq\mathbb{N}$} נל\char`\"{}ח היא חשיבה אם ורק אם
+גם המשלים של \L{$A$} נל\char`\"{}ח. \uline{הוכחה}: אם גם \L{$A$}
+וגם \L{$\mathbb{N}\backslash A$} נל\char`\"{}ח אז יש מ\char`\"{}ט
+\L{$T_{1},T_{2}$} שמחשבות את איבריהן. אפשר להניח שהן \L{$f_{T_{1}}^{1}$}
+והן \L{$f_{T_{2}}^{1}$} פונקציות שלמות. לכל מספר \L{$n$} נתחיל לחשב
+את \L{$T_{1}(1),T_{1}(2),...$} ובמקביל את \L{$T_{2}(1),T_{2}(2),...$}
+)אפשר לסירוגין(. המכונה תעצור ברגע שיתקבל פלט \L{$n$}. כיוון ש\L{$A=f_{T_{1}}^{1}(\mathbb{N})$}
+וגם \L{$\mathbb{N}\backslash A=f_{T_{2}}^{1}(\mathbb{N})$} קיים \L{$m\in\mathbb{N}$}
+כך ש\L{$f_{T_{1}}^{1}(m)=n$} או \L{$f_{T_{2}}^{1}(m)=n$}. בכל מקרה
+אחרי \L{$2m$} חישובים המכונה שלנו תיעצר. אם היא עצרה על הריצה של
+\L{$T_{1}(m)$} אז \L{$n\in A$} אחרת \L{$n\not\in A$}. 
+\end{enumerate}
+
+\section{פונקציות יציגות}
+
+\end{remark}
+\uline{תרגיל:} תהיינה \L{$A_{1},A_{2}\subseteq\mathbb{N}$} נל\char`\"{}ח
+אז:
+\begin{enumerate}
+\item גם \L{$A_{1}\cup A_{2}$} נל\char`\"{}ח
+\item גם \L{$A_{1}\cap A_{2}$} נל\char`\"{}ח
+\item יש דרך אחת סבירה להגדיר מתי \L{$A\subseteq\mathbb{N}^{k}$} נל\char`\"{}ח
+ואז הטלה של קבוצה נל\char`\"{}ח היא נל\char`\"{}ח\end{enumerate}
+\begin{definition}
+תהי שפה \L{$\mathcal{L}$} חשיבה. \uline{מספור גדל} של הנוסחאות
+\L{$F(\mathcal{L})$} ב-\L{$\mathcal{L}$}זו פונקציה \L{$g:F(\mathcal{L})\rightarrow\mathbb{N}$}
+המוגדרת באינדוקציה באופן הבא:
+\begin{enumerate}
+\item שם עצם \L{$x_{i}$} יקודד ע\char`\"{}י \L{$g(x_{i})=2^{1}\cdot3^{i}$} 
+\item קבוע אישי \L{$c_{i}$} יקודד ע\char`\"{}י \L{$g(c_{i})=2^{2}\cdot3^{i}$} 
+\item שם עצם מהצורה \L{$F_{i}(t_{1},...,t_{n})$} יקודד ע\char`\"{}י \L{
+\begin{eqnarray*}
+g(F_{i}(t_{1},...,t_{n})) & = & 2^{3}\cdot3^{i}\cdot5^{g(t_{1})}\cdot7^{g(t_{2})}\cdot\cdots\cdot P_{n+2}^{g(t_{n})}
+\end{eqnarray*}
+}
+\item נוסחה מהצורה \L{$R_{i}(t_{1},...,t_{n})$} יקודד ע\char`\"{}י \L{
+\begin{eqnarray*}
+g(R_{i}(t_{1},...,t_{n})) & = & 2^{4}\cdot3^{i}\cdot5^{g(t_{1})}\cdot7^{g(t_{2})}\cdot\cdots\cdot P_{n+2}^{g(t_{n})}
+\end{eqnarray*}
+}
+\item נוסחה \L{$\varphi$} מהצורה \L{$\varphi=\neg\psi$} תקודד ע\char`\"{}י
+\L{$g(\varphi)=2^{5}\cdot3^{g(\psi)}$}
+\item נוסחה \L{$\varphi$} מהצורה \L{$\varphi=\psi_{1}\rightarrow\psi_{2}$}
+תקודד ע\char`\"{}י \L{$g(\varphi)=2^{6}\cdot3^{g(\psi_{1})}\cdot5^{g(\psi_{2})}$}
+\item נוסחה \L{$\varphi$} מהצורה \L{$\varphi=(\exists x_{i})\psi$} תקודד
+ע\char`\"{}י \L{$g(\varphi)=2^{7}\cdot3^{i}\cdot5^{g(\psi)}$} )הכמת
+\L{$\forall$} בדומה(
+\end{enumerate}
+\end{definition}
+~
+\begin{definition}
+~
+\begin{enumerate}
+\item תורה \L{$T$} בשפה \L{$\mathcal{L}$} היא \uline{כריעה} אם הקבוצה
+\L{$\{g(\varphi):T\vdash\varphi\}$} חשיבה.
+\item תורה היא חשיבה אם \L{$\{g(\varphi):\varphi\in T\}$} חשיבה.
+\end{enumerate}
+\end{definition}
+\begin{claim}
+~
+\begin{enumerate}
+\item מספור גדל הוא חח\char`\"{}ע )באינדוקציה על יצירת הנוסחה(
+\item בהינתן שפה חשיבה )או סופית( \L{$\mathcal{L}$} היחס \char`\"{}\L{$n$}
+מקודד נוסחה בשפה \L{$\mathcal{L}$}\char`\"{} הוא חשיב.
+\end{enumerate}
+\end{claim}
+\begin{proof}
+)רעיון כללי( נשים לב )קל לראות באינדוקציה( שאם \L{$\varphi$} נוסחה
+באורך \L{$n$} אז \L{$g(\varphi)>n$}. בנוסף, אם ב-\L{$\varphi$}
+מופיע סימן פונקציה, סימן יחס, קבוע אישי או משתנה עם אינדקס \L{$i>n$}
+אז )באינדוקציה( \L{$g(\varphi)>n$}.
+
+לכן השאלה האם \L{$n$} מספר גדל של נוסחה שקולה לשאלה האם קיימת נוסחה
+\L{$\varphi$} באורך קטן-שווה ל-\L{$n$}, שכל הסימנים הלא-לוגיים המופיעים
+בה הם עם אינדקס קטן או שווה ל-\L{$n$}. ומספר גדל של \L{$\varphi$}
+הוא \L{$n$}. 
+
+אבל קבוצת הנוסחאות \L{$\varphi$} מאורך קטן-שווה ל-\L{$n$} , שכל
+הסימנים בה עם אינדקס קטן-שווה ל-\L{$n$} היא סופית, כלומר זהו כימות
+חסום. לכן מספיק לבדוק שהפונקציה ששולחת נוסחה למספר גדל שלה היא חשיבה
+טיורינג. )זה עסק מייגע, אבל לא קשה.(\end{proof}
+\begin{definition}
+~
+\begin{enumerate}
+\item תהי \L{$f:\mathbb{N}\rightarrow\mathbb{N}$} , נאמר שתורה \L{$T$}
+בשפה המרחיבה את \L{$(0,s)$} מייצגת )חלש( את \L{$f$} אם קיימת נוסחה
+\L{$\varphi(x,y)$} בשפה \L{$\mathcal{L}$} כל שלכל \L{$n\in Dom(f)$}
+מתקיים \L{$T\vdash(\forall y)(\varphi(\underline{n},y)\iff\underline{f(n)})$}
+כאשר הסימון \L{$\underline{n}:=s^{n}(0)$} עבור \L{$s$} פונקציית
+העוקב.
+\item יחס \L{$A\subseteq\mathbb{N}$} \uline{מיוצג} ב-\L{$T$} אם \L{$\chi_{A}$}
+מיוצגת ב\L{$T$}.
+\end{enumerate}
+\end{definition}
+~
+\begin{definition}
+\uline{תורת פיאנו} \inputencoding{latin9}\L{(Peano Arithmetic)}\inputencoding{cp1255}
+זו קבוצת הפסוקים הבאה בשפה \L{$\mathcal{L}=\{0,+,\cdot,s)$}:
+\begin{enumerate}
+\item \L{$(\forall x)(s(x)\not=0)$}
+\item \L{$(\forall x\forall y)(s(x)=s(y)\rightarrow x=y)$}
+\item \L{$(\forall x)(x+0=x)$}
+\item \L{$(\forall x\forall y)(x+s(y)=s(x+y))$}
+\item \L{$(\forall x)(x\cdot0=0)$}
+\item \L{$(\forall x\forall y)(x\cdot s(y)=x\cdot y+x)$}
+\item \uline{סכימת האינדוקציה:} לכל נוסחה \L{$\varphi(x,y)$} אקסיומה
+מהצורה:\L{
+\[
+(\forall x)[\varphi(\bar{x},0)\wedge\forall y(\varphi(\bar{x},y)\rightarrow\varphi(\bar{x},s(y))\rightarrow\forall y(\varphi(\bar{x},y))]
+\]
+}
+\end{enumerate}
+\end{definition}
+\begin{theorem}
+כל פונקציה חשיבה ניתנת לייצוג ב-\L{$PA$}. יתר על כן, קיימת תורה \L{$N$}
+סופית כך ש-\L{$PA\vdash N$} וכל פונקציה חשיבה מיוצגת ב-\L{$N$}.
+\end{theorem}
+\uline{תרגיל}: אם \L{$f:\mathbb{N}\rightarrow\mathbb{N}$} שלמה
+ומיוצגת ב-\L{$PA$} אז \L{$f$} חשיבה.
+\begin{corollary}
+התורה \L{$N$} שמובטחת במשפט, אינה כריעה.\end{corollary}
+\begin{proof}
+תהי \L{$\varphi(e,z,n)$} הנוסחה האומרת שמ\char`\"{}ט \L{$T_{e}$}
+)שהקוד שלה הוא \L{$e$}( עוצרת על הקלט \L{$n$} אחרי \L{$z$} צעדים.
+
+היחס \L{$\varphi(e,z,n)$} חשיב {]}הוכחנו{[}, לכן לפי המשפט מיוצג
+ב-\L{$N$}. כלומר אם \L{$T_{e}(n)$} \uline{לא עוצרת} אז לכל \L{$z$}
+מתקיים \L{$N\vdash\neg\varphi(e,z,n)$}. 
+
+מצד שני, אם \L{$T_{e}(n)$} \uline{עוצרת} אז \L{$N\vdash\varphi(e,z,n)$}
+לאיזה \L{$z$}. נניח בשלילה ש-\L{$N$} כריעה אז \L{$N\vdash(\exists z)\varphi(e,z,n)$}
+אם ורק אם \L{$T_{e}(n)$} עוצרת.
+
+אבל מכריעות נקבל שלכל זוג \L{$\left\langle e,n\right\rangle $} אפשר
+לדעם האם \L{$N\vdash(\exists z)\varphi(e,z,n)$} או \L{$N\vdash(\neg\exists z)\varphi(e,z,n)$}.
+כלומר אפשר להכריע האם \L{$T_{e}(n)$} עוצרת או לא. אבל לפי משפט רייס
+זו איננה קבוצה חשיבה. סתירה.
+\end{proof}
+\uline{הערה}: אם \L{$N\subseteq T$} )\L{$N$} התורה המובטחת במשפט(
+אז:
+\begin{enumerate}
+\item כל פונקציה חשיבה ניתנת לייצוג ב-\L{$T$}
+\item לכן, \L{$T$} איננה כריעה, כי אותה ההוכחה ש-\L{$N$} אינה כריעה תעבוד
+עבור \L{$T$}.
+\end{enumerate}
+\uline{הערה}: אם תורה \L{$T$} היא חשיבה ושלמה אז \L{$T$} כריעה.
+להלן אלגוריתם הכרעה:
+
+נראה בהמשך שאם \L{$T$} חשיבה אז \L{$C_{T}:=\{g(\varphi):T\vdash\varphi\}$}
+נל\char`\"{}ח. כיוון ש-\L{$T$} שלמה, כדי לבדוק האם \L{$T\vdash\varphi$}
+נפעיל את המכונה המונה את \L{$C_{T}$}. בכל שלב נבדוק האם האיבר שהמכונה
+פלטה הוא הוכחה של \L{$\varphi$} או הוכחה של \L{$\neg\varphi$} .
+השלמות מבטיחה לנו שאחד מהם יתקבל בזמן סופי. אם מתקבל \L{$\varphi$}
+- ניצחנו. אם מתקבל \L{$\neg\varphi$} - גם ניצחנו.
+\begin{corollary}
+כל תורה \L{$T$} כך ש-\L{$N\subseteq T\subseteq PA$} מהמסקנה הקודמת
+אינה כריעה. )למשל תורת המספרים איננה כריעה(.
+\end{corollary}
+
+\section{פונקציות יציגות}
+
+\uline{תזכורת:} פונקציה \L{$f:\mathbb{N}^{k}\rightarrow\mathbb{N}$}
+תקרא מיוצגת )חלש( בתורה \L{$T$} )בשפה עם סימן קבוע {\beginL 0\endL}
+וסימן פונקציה חד מקומי \L{$s$}( אם קיימת נוסחה \L{$\varphi(x,y)$}
+כך שלכל \L{$\bar{n}\in Dom(f)$} מתקיים\L{
+\begin{eqnarray*}
+T & \vdash & (\forall y)(\varphi(\underline{\bar{n}},y)\iff\underline{f(n)}=y)
+\end{eqnarray*}
+}כאשר \L{$\underline{n}=s^{n}(0)$}. 
+\begin{theorem}
+כל פונקציה חשיבה יציגה בתורת פאנו ואפילו יש תת-תורה סופית של \L{$PA$}
+שבה כל פונקציה חשיבה יציגה.\end{theorem}
+\begin{corollary}
+תהי \L{$N\subseteq PA$} כמובטח במשפט. אזי \L{$N$} אינה כריעה. \end{corollary}
+\begin{proof}
+יהי \L{$\varphi(e,n,z)$} היחס האומר \char`\"{}המכונה שהקוד שלה \L{$e$}
+עצרה על הקלט \L{$n$} אחרי לכל היותר \L{$z$} מהלכים\char`\"{}. אז
+ברור ש-\L{$\varphi(e,n,z)$} הוא יחס חשיב. מהמשפט נובע שלכל שלשה \L{$\left\langle e,n,z\right\rangle \in\mathbb{N}^{3}$}
+מתקיים \L{$N\vdash\varphi(e,n,z)$} אם ורק אם \L{$\left\langle e,n,z\right\rangle $}
+עומדת ביחס, כלומר המכונה \L{$e$} עוצרת על \L{$n$} אחרי לא יותר מ\L{$z$}
+צעדים. לכן אם \L{$\left\langle e,n\right\rangle $} עוצרת יש \L{$z_{0}$}
+כך ש\L{$N\vdash\varphi(\underline{e},\underline{n},\underline{z_{0}})$}.
+לכן אם \L{$\left\langle e,n\right\rangle $} עוצרת אז \L{$N\vdash(\exists z)\varphi(\underline{e},\underline{n},z)$}.
+מצד שני, אם \L{$\left\langle e,n\right\rangle $} לא עוצרת אז \L{$N\not\vdash\varphi(\underline{e},\underline{n},\underline{z_{0}})$}
+לכל \L{$\underline{z_{0}}$}. אבל \L{$\mathbb{N}\models PA$} ולכן
+\L{$\mathbb{N}\models N$} . לכן לא ייתכן ש\L{$N\vdash(\exists z)\varphi(\underline{e},\underline{n},z)$}
+אבל מהנחתנו זה לא מתקיים. יוצא \L{$N\vdash(\exists z)\varphi(\underline{e},\underline{n},z)$}
+אם ורק אם \L{$\left\langle e,n\right\rangle $} עוצרת. לכן אילו הייתה
+\L{$N$} כריעה היינו יכולים להכריע את בעיית העצירה: בהינתן זוג \L{$\left\langle e,n\right\rangle $}
+היינו פשוט שואלים אם \L{$N\vdash(\exists z)(\underline{e},\underline{n},z)$}.
+אם כן - \L{$\left\langle e,n\right\rangle $} עוצרת, ואם לא אז \L{$\left\langle e,n\right\rangle $}
+לא עוצרת.\end{proof}
+\begin{corollary}
+כל תורה \L{$N\subseteq T\subseteq PA$} מהמסקנה הקודמת אינה כריעה.
+
+ניגש להוכחת המשפט עצמו. 
+\end{corollary}
+תהי \L{$N\subseteq PA$} התורה הבאה:
+\begin{itemize}
+\item \L{$PA(1)-PA(6)$}
+\item \L{$(N7)$}: \L{$(\forall x)(\neg x<0)$}
+\item \L{$(N8)$}: \L{$(\forall x\forall y)(x<s(y)\iff x<y\vee x=y)$}
+\item \L{$(N9)$}: \L{$(\forall x\forall y)(x<y\vee x=y\wedge y<x)$}
+\item כאשר \L{$x<y$} זה קיצור לנוסחה \L{$(\exists z)(z\not=0\wedge x+z=y)$}\end{itemize}
+\begin{claim}
+\L{$PA\vdash N$}.
+\begin{proof}
+צריך להוכיח רק את \L{$PA\vdash\{N(7),N(8),N(9)\}$}. כלומר צריך להוכיח:\L{
+\begin{eqnarray*}
+PA & \vdash & (\forall x)\neg(x<0)\\
+ & \iff & (\forall x\forall z)(x+z=0\rightarrow z=0)\\
+ & \iff & (\forall x\forall z)(z\not=0\rightarrow x+z\not=0)\\
+ & \iff & (\forall x\forall z)((\exists y)s(y)=z\rightarrow x+s(y)\not=0)
+\end{eqnarray*}
+} אבל \L{$PA\vdash z\not=0\rightarrow(\exists y)((sy)=z)$}. לכן יספיק
+להוכיח ש-\L{$PA\vdash x+s(y)=s(x+y)$}. זה יספיק כי אז נקבל \L{$(\forall x\forall z)((\exists y)(sy=z))\rightarrow s(x+y)\not=0$}.
+ההוכחה ל-\L{$N8$} ו-\L{$N9$} דומה מאוד. 
+\end{proof}
+\end{claim}
+\begin{proof}
+נראה שכל פונקציה חשיבה יציגה ב-\L{$N$}. לשם כך יספיק להראות: משפחת
+הפונקציות היציגות ב-\L{$N$} מכילה מכילה את הפונקציות החשיבות הבסיסיות
+וסגורה תחת הרכבות ותחת מזעור.
+\begin{claim}
+){\beginL 1\endL}( פונקציית ההיטל \L{$P_{i}(x_{1},...,x_{n})=x_{i}$}
+יציגה ע\char`\"{}י \L{
+\[
+\varphi(x_{1},...,x_{n},y):=x_{i}\approx y
+\]
+} \end{claim}
+\begin{proof}
+יש להראות ש\L{$N\vdash(\forall y)\varphi(\underline{k_{1}},...,\underline{k_{n}},y)\iff P_{i}(k_{1},...k_{n})=y$}
+לכל \L{$k_{1},...,k_{n}\in\mathbb{N}$}. אבל זה שקול ל \L{$N\vdash(\forall y)\underline{k_{i}}=y\iff\underline{k_{i}=y}$}.\end{proof}
+\begin{claim}
+){\beginL 2\endL}( הפונקציה \L{$c_{0}(x)=0$} יציגה ב-\L{$N$} ע\char`\"{}י
+\L{$\varphi(x,y):=y\approx0$}. ההוכחה קשה באותה מידה.
+\end{claim}
+
+~
+
+\end{proof}
+\begin{claim}
+){\beginL 3\endL}( הפונקציה \L{$x+y$} יציגה ב-\L{$N$} ע\char`\"{}י
+\L{$\varphi(x,y,z):=z\approx x\oplus y$}.
+\begin{proof}
+עלינו להראות \L{$N\vdash(\underline{n_{1}}\oplus\underline{n_{2}}=\underline{n_{1}+n_{2}})$}.
+באינדוקציה על \L{$n_{2}$} . עבור \L{$n_{2}=0$} מקבלים \L{$\underline{n_{1}}+0=\underline{n_{1}}$}.
+נניח עבור \L{$n_{2}$} ונוכיח עבור \L{$n_{2}+1$}:\L{
+\[
+\underline{n_{1}}\oplus\underline{n_{2}+1}=\underline{n_{1}}\oplus s(\underline{n_{2}})=s(\underline{n_{1}}\oplus\underline{n_{2}})=s(\underline{n_{1}}+\underline{n_{2}})=\underline{n_{1}+n_{2}+1}
+\]
+}
+\end{proof}
+
+לגבי כפל זה בדיוק אותו דבר.
+\begin{claim}
+){\beginL 4\endL}( \L{$c_{<}(x,y)$} יציגה ב-\L{$N$} ע\char`\"{}י
+\L{$\varphi(x,y,z)\vdash(x<y\wedge z=1)\vee(y<x\wedge z=0)\vee(x=y\wedge z=0)$}.\end{claim}
+\begin{proof}
+ראשית מראים שלכל \L{$n,m\in\mathbb{N}$} אם \L{$n<m$} אז \L{$N\vdash\underline{n}<\underline{m}$}
+. באותו אופן אם \L{$\neg(n<m)$} אז \L{$N\vdash\neg(\underline{n}<\underline{m})$}.
+{]}למשל באינדוקציה על \L{$m$}: מ\L{$N7$} אנחנו יודעים ש\L{$N\vdash\neg(n<0)$}
+לכל \L{$n\in N$}. אז נניח שהוכחנו ל\L{$n$} נתון עבור \L{$m$} ונוכיח
+עבור \L{$m+1$}. אז אם \L{$n<m$} מהנחת האינדוקציה \L{$N\vdash\underline{n}<\underline{m}$}
+ולפי \L{$N8$} גם \L{$N\vdash\underline{n}<\underline{m+1}=s(\underline{m})$}.
+המקרה ההפוך דומה{[}.\end{proof}
+\begin{claim}
+){\beginL 5\endL}( משפחת הפונקציות היציגות ב\L{$N$} סגורה תחת הרכבה. \end{claim}
+\begin{proof}
+נניח ש\L{$G(x_{1},...x_{n})$} יציגה ב\L{$N$} ו\L{$h_{i}(y_{1},...,y_{m})$}
+יציגות ב\L{$N$} ל\L{$1\le i\le n$}. עלינו להראות ש\L{$G(h_{1}(y_{1},...,y_{m}),...,h_{n}(y_{1},...,y_{m}))$}
+יציגה ב\L{$N$}. נניח ש\L{$\varphi_{i}(y_{1},...,y_{m},z_{i})$} מייצגות
+את \L{$h_{i}$} ל\L{$1\le i\le n$} , ו\L{$\psi(z_{1},..,z_{n},t)$}
+את \L{$G$}. נראה ש \L{
+\begin{eqnarray*}
+\theta(y_{1},...,y_{m},t): & = & (\exists z_{1},...,z_{n})\bigwedge_{i=1}^{n}\varphi_{i}(y_{1},...,y_{m},z_{i})\wedge\psi(z_{1},...,z_{m},t)
+\end{eqnarray*}
+} מייצגת את ההרכבה. כלומר עלינו להראות שלכל \L{$p_{1},...,p_{m}$}
+טבעיים {]}ובתחום של הפונקציות \L{$h_{i}$}{[} מתקיים ש\L{
+\begin{eqnarray*}
+N & \vdash & (\forall t)(\theta(\underline{p_{1}},...,\underline{p_{m}},t)\iff t=G(\underline{h_{1}(p_{1},...,p_{m}),...,h_{n}(p_{1},...,p_{m})})
+\end{eqnarray*}
+}. אם נסמן \L{$q_{i}=h_{i}(p_{1},...,p_{m})$} ו-\L{$r=G(q_{1},...,q_{n})$}
+{]}בהנחה שהכל מוגדר{[} מה שעלינו להראות זה ש\L{$N\vdash(\forall t)(\theta(p_{1},...,p_{m},t)\iff t=r)$}.
+על ידי שנחליף את \L{$t$} בקבוע שאינו מופיע ב\L{$N$} יספיק להוכיח
+\L{$N\vdash\theta(p_{1},...,p_{m},t)\iff t=\underline{r}$}. יספיק
+להוכיח כל כיוון בנפרד. כזכור \L{$T\vdash\varphi\rightarrow\psi\iff T\cup\{\varphi\}\vdash\psi$}.
+לכן עלינו להוכיח:
+\begin{enumerate}
+\item \L{$N\cup\{\theta(\underline{p_{1}},...,\underline{p_{m}},t)\}\vdash t=\underline{r}$}
+\item \L{$N\cup\{t=\underline{r}\}\vdash\theta(\underline{p_{1}},...,\underline{p_{m}},t)$}
+\end{enumerate}
+
+נתחיל מ{\beginL 2\endL}. \L{$\varphi_{i}$} מייצגת את \L{$h_{i}$}
+ו\L{$p_{1},...,p_{m}$} בתחום של \L{$h_{i}$} לכן \L{$N\vdash(\forall z_{i})(\varphi_{i}(p_{1},...,p_{m},z_{i})\iff z_{i}=q_{i})$}.
+באותו אופן \L{$\psi$} מייצגת את \L{$G$} ו-\L{$q_{1},...,q_{n}$}
+בתחום של \L{$G$} לכן \L{
+\begin{eqnarray*}
+N & \vdash & (\forall t)(\psi(q_{1},...,q_{m},t)\iff t=\underline{r})
+\end{eqnarray*}
+}לכן \L{
+\begin{eqnarray*}
+N & \vdash & \bigwedge_{i=1}^{n}\varphi_{i}(\underline{p_{1}},...,\underline{p_{m}},q_{i})\wedge\psi(\underline{q_{1}},...,\underline{q_{n}},\underline{r})
+\end{eqnarray*}
+} ולכן \L{
+\begin{eqnarray*}
+N\cup\{t & = & \underline{r}\}\vdash\bigwedge_{i=1}^{n}\varphi_{i}(\underline{p_{1}},...,\underline{p_{m}},q_{i})\wedge\psi(\underline{q_{1}},...,\underline{q_{n}},t)
+\end{eqnarray*}
+}
+
+נסיים עם {\beginL 1\endL}. כיוון ש\L{$\varphi_{i}$} מייצגות את \L{$h_{i}$}
+אנחנו יודעים שמההנחה \L{$\varphi_{i}(p_{1},...,p_{m},z_{i})$} אפשר
+להסיק \L{$z_{i}=q_{i}$}. כלומר \L{$N\cup\theta\vdash z_{i}=q_{i}$}.
+כיוון ש\L{$\psi$} מייצגת את \L{$G$} אז מ\L{$z_{i}=q_{i}$} עבור
+\L{$1\le i\le n$} אפשר להסיק מההנחה \L{$\psi(z_{1},...,z_{n},t)$}
+ש\L{$t=\underline{r}$}. לכן \L{$N\cup\theta\vdash t=\underline{r}$}
+כנדרש. \end{proof}
+\begin{claim}
+){\beginL 6\endL}( משפחת הפונקציות היציגות ב\L{$N$} סגורה תחת מזעור.\end{claim}
+\begin{proof}
+)רעיון ההוכחה( תהי \L{$G(x_{1},...,x_{n},y)$} פונקציה יציגה ע\char`\"{}י
+נוסחה \L{$\varphi(x_{1},...,x_{n},y,t)$}. תהי \L{$H(x_{1},...,x_{n})=\mu_{y}(G(x_{1},...,x_{n},y))$}
+. איזו נוסחה תייצג את \L{$H$}? \L{$\varphi(x_{1},...,x_{n},y,0)\wedge(\forall y^{\prime}<y)(\neg\varphi(x_{1},...,x_{n},y^{\prime},0))$}.
+ההוכחה שזה אכן מייצג דומה למה שעשינו עד כה.
+\end{proof}
+
+\section{הוכחת משפטי אי השלמות של גדל}
+
+\end{claim}
+\uline{תזכורת}: הוכחנו אם \L{$f:\mathbb{N}\rightarrow\mathbb{N}$}
+חשיבה )חלקית( אז \L{$f$} יציגה )חלש( ב\L{$N$}.
+
+\uline{תרגיל )מתוך תרגיל }{\beginL \uline{10}\endL}\uline{(:
+}אם \L{$A\subseteq\mathbb{N}$} יחס חשיב אז הוא יציג ולכן יש נוסחה
+\L{$\varphi(x)$} כך ש:
+\begin{enumerate}
+\item \L{$N\vdash\varphi(\underline{n})$} אם \L{$n\in A$} 
+\item \L{$N\vdash\neg\varphi(\underline{n})$} אם \L{$n\not\in A$}
+\end{enumerate}
+\uline{תזכורת}: הגדרנו פונקציה \L{$g:F(\mathcal{L})\rightarrow\mathbb{N}$}
+\char`\"{}מספור גדל\char`\"{} של הנוסחאות בשפה \L{$\mathcal{L}$}
+של \L{$PA$} וראינו שזו פונקציה חשיבה. לשם נוחות הסימון בהינתן נוסחה
+\L{$\varphi\in F(\mathcal{L})$} נסמן \L{$\left\lceil \varphi\right\rceil $}
+מספר הגדל של \L{$\varphi$}.
+\begin{theorem}
+)משפט נקודת השבת של גדל(: לכל נוסחה \L{$\varphi(x)$} בשפה של \L{$PA$}
+קיימת נוסחה \L{$\psi$} כך ש-\L{$N\vdash\varphi(\left\lceil \psi\right\rceil )\iff\psi$}. \end{theorem}
+\begin{definition}
+תהי \L{$\Delta:F_{1}(\mathcal{L})\rightarrow F_{0}(\mathcal{L})$}
+)נוסחאות עם משתנה חופשי אחד לנוסחאות ללא משתנים חופשיים( הפונקציה
+המקיימת \L{$\varphi(x)\mapsto\varphi(\left\lceil \varphi\right\rceil )$}.
+אז \L{$\Delta$} נקראת פונקציית האלכסון.
+
+קל להשתכנע ש-\L{$\Delta$} ניתנת לחישוב ע\char`\"{}י מכונת טיורינג.
+לכן הפונקציה הבאה חשיבה: \L{$\tilde{\Delta}:\mathbb{N}\rightarrow\mathbb{N}$}
+המוגדרת ע\char`\"{}י \L{$n\in Dom(\tilde{\Delta)}$} אם ורק אם \L{$n$}
+מספר גדל של נוסחה במשתנה חופשי אחד, ואם \L{$n\in Dom(\tilde{\Delta)}$}
+אז \L{$n=\left\lceil \varphi(x)\right\rceil $} ו\L{$\tilde{\Delta}(n)=\left\lceil \Delta(\varphi)\right\rceil $}.
+לכן היחס \L{$\tilde{\Delta}(n,m)$} המוגדר ע\char`\"{}י \L{$n\in Dom(\tilde{\Delta})$}
+ו-\L{$\tilde{\Delta}(n)=m$} הוא יחס חשיב. לכן \L{$\tilde{\Delta}(x,y)$}
+יציג ב\L{$N$}. לפי התרגיל יש נוסחה \L{$\delta(x,y)$} כך ש-\L{$N\vdash\delta(\underline{n},\underline{m})$}
+אם \L{$(n,m)\in\tilde{\Delta}$} ו-\L{$N\vdash\neg\delta(\underline{n},\underline{m})$}
+אם \L{$(n,m)\not\in\tilde{\Delta}$}.
+
+תהי \L{$\chi_{x}=(\exists y)(\delta(x,y)\wedge\varphi(y))$}. יהי
+\L{$\psi=\Delta(\chi)=\chi(\left\lceil \chi\right\rceil )$}. \end{definition}
+\begin{claim}
+\L{$N\vdash\varphi(\left\lceil \psi\right\rceil )\iff\psi$}.\end{claim}
+\begin{proof}
+נניח ש-\L{$N\vdash\psi$}. צריך להראות ש-\L{$N\vdash\varphi(\left\lceil \psi\right\rceil )$}.
+אבל \L{$\psi:=(\exists y)(\delta(\left\lceil \chi\right\rceil ,y)\wedge\varphi(y))$}.
+נזכור ש\L{$\left\lceil \chi\right\rceil $} מספר גדל של נוסחה במשתנה
+אחד. בנוסף, \L{$\delta(x,y)$} היא יצוג של היחס \L{$\tilde{\Delta}(x,y)$}.
+לכן \L{$N\vdash\delta(\left\lceil \chi\right\rceil ,y)$} אם ורק אם
+\L{$y=\left\lceil \Delta(\chi)\right\rceil $}. לכן אם \L{$N\vdash(\exists y)(\delta(\left\lceil \chi\right\rceil ,y)\wedge\varphi(y))$}
+המועמד היחיד שיכול להעיד על כך הוא \L{$\left\lceil \psi\right\rceil =\left\lceil \Delta(\chi)\right\rceil $}.
+לכן \L{$N\vdash\varphi(\left\lceil \psi\right\rceil )$} . בכיוון
+השני, נניח ש\L{$N\vdash\varphi(\left\lceil \psi\right\rceil )$} ועלינו
+להוכיח \L{$N\vdash\psi$} . עלינו להראות ש-\L{$N\vdash(\exists y)(\delta(\left\lceil \chi\right\rceil ,y)\wedge\varphi(y))$}.
+יספיק להוכיח ש-\L{$N\vdash\delta(\left\lceil \chi\right\rceil ,y_{0})\wedge\varphi(y_{0})$}
+עבור \L{$y_{0}$} כלשהו. אבל \L{$N\vdash\delta(\left\lceil \chi\right\rceil ,\left\lceil \psi\right\rceil )$}
+- כי \L{$\delta(x,y)$} מייצגת את \L{$\tilde{\Delta}$} ומהנתון \L{$N\vdash\varphi(\left\lceil \psi\right\rceil )$}.
+נשים \L{$y_{0}=\left\lceil \psi\right\rceil $} וגמרנו.\end{proof}
+\begin{theorem}
+)משפט השלמות הראשון של גדל( תהי \L{$T\supseteq N$} תורה חשיבה ו-\L{$\omega$}-שלמה
+, אז \L{$T$} אינה שלמה. \end{theorem}
+\begin{definition}
+תורה \L{$T$} נקראת \L{$\omega$}-שלמה אם \L{$T\vdash(\exists x)\varphi(x)$}
+לאיזה נוסחה \L{$\varphi(x)$} גורר ש\L{$T\vdash\varphi(\underline{n})$}
+לאיזה \L{$n\in\mathbb{N}$}.
+\begin{definition}
+נוסחה \L{$Pr(x)$} נקראת \uline{יחס יכיחות} אם היא מקיימת את התכונות
+הבאות:
+\begin{enumerate}
+\item אם \L{$T\vdash\phi$} אז \L{$T\vdash Pr(\left\lceil \phi\right\rceil )$}
+\item אם \L{$T\vdash Pr(\left\lceil \phi\right\rceil )$} אז \L{$T\vdash Pr(\left\lceil Pr(\left\lceil \phi\right\rceil )\right\rceil )$}.
+\item אם \L{$T\vdash Pr(\left\lceil \phi\rightarrow\psi\right\rceil )$}
+אז \L{$T\vdash Pr(\left\lceil \phi\right\rceil )\iff Pr(\left\lceil \psi\right\rceil )$}. 
+\end{enumerate}
+\end{definition}
+\end{definition}
+\begin{claim}
+ב\L{$N$} יש יחס יכיחות ואם מניחים ש\L{$N$} היא \L{$\omega$}-שלמה
+אז בנוסף מתקיים: אם \L{$N\vdash Pr(\left\lceil \phi\right\rceil )$}
+אז \L{$N\vdash\phi$}. \end{claim}
+\begin{proof}
+נגדיר יחס דו מקומי \L{$\tilde{Pr}(x,y)$} כך ש \L{$(n,m)\in\tilde{Pr}$}
+אם:
+\begin{enumerate}
+\item \L{$n$} מספר גדל של נוסחה \L{$\varphi$}, ו-
+\item \L{$n$} מקודד הוכחה של \L{$\varphi$} מתוך \L{$N$} . 
+\end{enumerate}
+
+אז \L{$\tilde{Pr}$} יחס חשיב. לכן יש נוסחה \L{$Pr(x,y)$} שמייצגת
+את \L{$\tilde{Pr}$}. כלומר \L{$N\vdash Pr(\underline{n},\underline{m})$}
+אם \L{$(n,m)\in\tilde{Pr}$} ומוכיח את השלילה - אחרת. 
+
+נגדיר \L{$Pr(x):=(\exists y)Pr(x,y)$}. מדוע, למשל \L{$N\vdash\phi$}
+אז \L{$N\vdash Pr(\left\lceil \phi\right\rceil )$}? משום שאם \L{$N\vdash\phi$}
+אז יש הוכחה של \L{$\phi$} מ\L{$N$} ויהי \L{$m$} קידוד של ההוכחה
+הזו. אז \L{$\tilde{Pr}(\left\lceil \phi\right\rceil ,m)$}. בגלל ש\L{$Pr(x,y)$}
+מייצגת את \L{$\tilde{Pr}$} אז \L{$N\vdash Pr(\left\lceil \phi\right\rceil ,m)$}
+לכן \L{$N\vdash(\exists y)Pr(\left\lceil \phi\right\rceil ,y)$}.
+{\beginL 2\endL} נובע מ-{\beginL 1\endL}, ו-{\beginL 3\endL} הוכח
+באופן דומה )תרגיל(. 
+
+כדי לקבל את {\beginL 4\endL}: אם \L{$N\vdash Pr(\left\lceil \phi\right\rceil )$}
+ו-\L{$N$} \L{$\omega$}-שלמה אז \L{$N\vdash Pr(\left\lceil \phi\right\rceil ,\underline{m})$}
+לאיזה \L{$m\in\mathbb{N}$}. אבל אז מהגדרת היציגות \L{$N\models\tilde{Pr}(\left\lceil \phi\right\rceil ,m)$}
+כלומר \L{$m$} מקודד הוכחה של \L{$\phi$} מ\L{$N$}. 
+\end{proof}
+~
+\begin{proof}
+)למשפט השלמות הראשון של גדל( לפי משפט נקודת השבת יש \L{$\phi$} כך
+ש\L{$T\vdash\psi\iff\neg Pr(\psi)$}.
+\begin{itemize}
+\item מקרה א': \L{
+\[
+T\vdash\psi\overset{(1)}{\Rightarrow}T\vdash Pr(\left\lceil \psi\right\rceil )\Rightarrow T\vdash\neg\psi\Rightarrow\Leftarrow
+\]
+}
+\item מקרה ב': \L{
+\[
+T\vdash\neg\psi\Rightarrow T\vdash Pr(\psi)\overset{(4)}{\Rightarrow}T\vdash\psi\Rightarrow\Leftarrow
+\]
+}יוצא \L{$\psi,\neg\varphi$} אינם יכיחים ב\L{$T$} ולכן \L{$T$} אינה
+שלמה. 
+\end{itemize}
+\end{proof}
+\uline{סימון:} תהי \L{$T$} תורה חשיבה. נגדיר \L{$Con_{T}:=\neg Pr(\underline{0}=\underline{1})$}.
+\begin{theorem}
+)משפט אי השלמות השני של גדל( אם \L{$T\supseteq N$} חשיבה ועקבית אז
+\L{$T\not\vdash Con_{T}$}. במילים אחרות \L{$T$} עקבית לא יודעת את
+זה על עצמה. \end{theorem}
+\begin{proof}
+נבחר \L{$\psi$} כמו בהוכחת המשפט הראשון. \L{$T\vdash\psi\iff\neg Pr(\left\lceil \psi\right\rceil )$}.
+אז:
+\begin{enumerate}
+\item \L{$T\vdash Pr(\left\lceil \psi\right\rceil )\rightarrow\neg\psi$}.
+מ-{\beginL 2\endL} ומ-{\beginL 3\endL} נקבל:
+\item \L{$T\vdash Pr(\left\lceil Pr(\left\lceil \psi\right\rceil )\right\rceil )\rightarrow Pr(\left\lceil \neg\psi\right\rceil )$}
+\item לפי {\beginL 2\endL} \L{$T\vdash Pr(\left\lceil \psi\right\rceil )\rightarrow Pr(\left\lceil Pr(\left\lceil \psi\right\rceil )\right\rceil )$}.
+\item מ-{\beginL 2\endL} ו-{\beginL 3\endL} ביחד נקבל \L{$T\vdash Pr(\left\lceil \psi\right\rceil )\rightarrow Pr(\left\lceil \neg\psi\right\rceil )$}.
+\end{enumerate}
+
+אבל \L{$\psi\rightarrow(\neg\psi\rightarrow\underline{0}=\underline{1})$}
+היא אקסיומה לוגית )ואפילו טאוטולוגיה(. לכן \L{$T\vdash\psi\rightarrow(\neg\psi\rightarrow\underline{0}=\underline{1})$}.
+לפי {\beginL 1\endL} ו-{\beginL 3\endL} מקבלים: \L{
+\[
+T\vdash Pr(\left\lceil \psi\right\rceil )\rightarrow(Pr(\left\lceil \neg\psi\right\rceil )\rightarrow Pr(\left\lceil \underline{0}=\underline{1}\right\rceil ))
+\]
+} לפי כלל {\beginL 4\endL} וכלל הניתוק \L{
+\[
+T\vdash Pr(\psi)\rightarrow\neg Con_{T}
+\]
+} כלומר \L{
+\[
+T\vdash Con_{T}\rightarrow\neg Pr(\left\lceil \psi\right\rceil )
+\]
+} אבל לפי בחירת \L{$\psi$}, אם מניחים ש\L{$T\vdash Con_{T}$} אז מכלל
+הניתוק \L{$T\vdash\neg Pr(\psi)$} ולכן \L{$T\vdash\psi$}. אבל לפי
+{\beginL 1\endL} זה גורר \L{$T\vdash Pr(\left\lceil \psi\right\rceil )$}
+- סתירה. 
+
+\end{proof}
+
+\section{תורת רקורסיה}
+
+תהי \L{$H:\mathbb{N}\rightarrow\mathbb{N}$}. פונקציה חלקית. מכונת
+טיורינג עם אוב )אורקל( עבור \L{$H$} זו מכונת טיורינג רגילה שלה פקודה
+נוספת: \char`\"{}חשב את הערך של \L{$H$} עבור \L{$n$} כלשהו\char`\"{}.
+ואז הערך של \L{$H(n)$} מוחזר אם \L{$n\in Dom(H)$} ואחרת האוב אינו
+מחזיר תשובה, והחישוב של המכונה אינו מסתיים. 
+
+למשל, נוסיף למכונת טיורינג רגילה עוד סרט והפקודה \char`\"{}קרא מן
+האוב\char`\"{} תתפרש כ-\char`\"{}חשב את \L{$H$} עבור הערך שכתוב בסרט
+בתא מספר {\beginL 2\endL}\char`\"{}. מה שחשוב הוא שמ\char`\"{}ט עם
+אוב \L{$H$} ניתנת לתיאור סופי. לכן בהינתן אוב \L{$H$} אפשר לקודד
+את כל מ\char`\"{}ט עם אוב \L{$H$} בדומה לקידוד של מ\char`\"{}ט רגילות. 
+
+המושגים:
+\begin{enumerate}
+\item מצב של מכונה עם אוב \L{$H$}
+\item ריצה של מכונה עם אוב \L{$H$}
+\item ריצה מסתיימת
+\item \L{$f_{T}^{n}(\bar{x})$} 
+\end{enumerate}
+כולם מוגדרים באופן זהה להגדרה הרגילה.
+
+פונקציה \L{$f:\mathbb{N}\rightarrow\mathbb{N}$} תקרא חשיבה עם אוב
+\L{$H$} אם קיימת מ\char`\"{}ט \L{$T$} עם אוב \L{$H$} כך ש\L{$f=f_{T}^{1}$}
+\begin{definition}
+~
+\begin{enumerate}
+\item יהיו \L{$H,G$} אובות. נאמר ש\L{$H\le_{R}G$} אם כל פונקציה חשיבה
+מ\L{$H$} חשיבה מ\L{$G$}. 
+\item נאמר ש\L{$H\sim_{R}G$} אם \L{$H\le_{R}G$} ו-\L{$G\le_{R}H$}.
+\end{enumerate}
+\end{definition}
+\begin{claim}
+\L{$\sim_{R}$} הוא יחס שקילות.\end{claim}
+\begin{proof}
+צריך להראות רק שאם \L{$H\le_{R}G\le_{R}F$} אז \L{$H\le_{R}F$}. נניח
+ש\L{$f$} חשיבה מ\L{$H$}. עלינו להראות ש\L{$f$} חשיבה מ\L{$F$}.
+מהנחתנו \L{$f$} חשיבה מ\L{$G$}, אבל אז גם \L{$f$} חשיבה מ\L{$F$}. \end{proof}
+\begin{definition}
+~
+\begin{enumerate}
+\item דרגת טיורינג של \L{$H$} הינה \L{$deg(H)=H/_{\sim_{R}}=[H]_{\sim_{R}}$}. 
+\item אם \L{$a,b$} דרגות אז נאמר ש\L{$a\le_{R}b$} אם לכל \L{$H,G$} כך
+ש\L{$deg(H)=a,deg(G)=b$} מתקיים \L{$H\le_{R}G$}. {]}הערה: בהגדרה
+אפשר להחליף \char`\"{}לכל\char`\"{} ב\char`\"{}קיים\char`\"{}{[}.
+\end{enumerate}
+
+ברור ש\L{$\le_{R}$} הוא יחס סדר חלקי על הדרגות. מטרה ראשונה לחקור
+את המבנה של הקבוצה סדורה חלקית של דרגות טיורינג. 
+
+\end{definition}
+תכונות בסיסיות של הדרגות:
+\begin{enumerate}
+\item אם \L{$F$} חשיבה אז \L{$deg(F)\le_{R}deg(G)$} לכל \L{$G$}.
+\item בפרט:
+
+\begin{enumerate}
+\item אם \L{$F,G$} חשיבות אז \L{$F\sim_{R}G$}
+\item אם נסמן \L{$0=degF$} ל\L{$F$} חשיבה אז \L{$0\le_{R}a$} לכל דרגה
+\L{$a$}.
+\end{enumerate}
+\item אם \L{$a_{1},...,a_{n}$} דרגות כלשהן אז יש להן חסם מלעיל משותף קטן
+ביותר.
+
+\begin{proof}
+יהיו \L{$F_{1},...,F_{n}$} כך ש\L{$degF_{i}=a_{i}$}. ברור שכל \L{$H$}
+המקיימת \L{$F_{i}\le_{R}H$} לכל \L{$i$} מחשבת את \L{$F_{1},...,F_{n}$}.
+לכן אם נקח בתור אוב את \L{$\tilde{H}=\{F_{1},...,F_{n}\}$} )\L{$n$}-אובות(
+נקבל ש\L{$F_{i}\le_{R}\tilde{H}$} לכל \L{$i$} ומזערי כזה. עכשיו
+פשוט נחליף את \L{$\tilde{H}$} ב-\L{$H$} הפועלת באופן הבא: \L{$H(m)=F_{Pr^{L}(m)}(Pr^{R}(m))$}.
+\L{$H$} חשיבה מ\L{$\tilde{H}$} ולכן \L{$\tilde{H}$} היא החסם המבוקש.
+\end{proof}
+\item נאמר שסדרת פונקציות \L{$\{F_{n}\}_{n\in\mathbb{N}}$} היא חשיבה מ\L{$H$}
+אם הפונקציה \L{$F(n,x)=F_{n}(x)$} חשיבה מ\L{$H$}. ברור שאם \L{$\{F_{n}\}_{n\in\mathbb{N}}$}
+סדרת פונקציות אז \L{$\{F_{n}\}_{n\in\mathbb{N}}$} חשיבה מ\L{$F(n,x)$}.
+לכן לכל סדרת פונקציות יש חסם מלעיל. \uline{אזהרה: }אבל זה לא נכון
+שלכל סדרת פונקציות יש חסם עליון. \end{enumerate}
+\begin{definition}
+נאמר ש\L{$H$} נל\char`\"{}ח ב\L{$G$} )ונרשום \L{$H\le_{RE}G$}(
+אם \L{$Dom(f)=H$} לאיזו \L{$f\le_{R}G$}.
+\end{definition}
+בדיוק כמו במקרה של פונקציות חשיבות לכל \L{$G$}יש \L{$H\le_{RE}G$}
+כך ש\L{$H\not\le_{R}G$}.
+
+בהינתן \L{$G(x)$} נסמן ב\L{$G^{*}(e,x)$} זו מכונת טיורינג אשר )עם
+אוב \L{$G$}( אשר בהינתן \L{$e$} קוד של מ\char`\"{}ט עם אוב \L{$G$}
+וקלט \L{$x$} מחשבת את \L{$T_{e}(x)$}. ברור ישירות מההגדרה ש:
+\begin{enumerate}
+\item אם \L{$H\le_{RE}G$} אז \L{$H\le_{R}G^{*}$}
+\item \L{$G^{*}\le_{RE}G$}.
+\end{enumerate}
+מדוע?
+\begin{enumerate}
+\item אם \L{$H\le_{RE}G$} אז יש \L{$f\le_{R}G$} כך ש\L{$H=Im(f)$} ו-\L{$f$}
+שלמה. אז \L{$H=Im(G^{*}(e_{f},x))$} כאשר על הקוד של \L{$f$}. וברור
+ש\L{$G^{*}(e_{f},x)\le_{R}G^{*}$}. 
+\item ברור - כי \L{$G^{*}$} חשיבה מ\L{$G$} ולכן הגרף שלה נל\char`\"{}ח
+מ\L{$G$}. \end{enumerate}
+\begin{definition}
+אם \L{$a$} דרגה ו-\L{$a=degH$} אז הקפיצה של \L{$a$} היא \L{$degH^{*}$}
+ומסומנת \L{$a^{\prime}$}.
+
+שאלה: האם זה מוגדר היטב? אם \L{$H\sim G$} האם \L{$H^{*}\sim G^{*}$}?
+מתקיים:\L{
+\[
+G^{*}\le_{RE}G\underset{H\sim G}{\Rightarrow}G^{*}\le_{RE}H
+\]
+} לכן יספיק להראות ש\L{$G^{*}$} נל\char`\"{}ח מירבית מ\L{$H$}. לפי
+הטענה הקודמת עבור \L{$H,H^{*}$} יוצא ש\L{$G^{*}\le_{R}H^{*}$}. מסימטריה
+בין \L{$H$}ו-\L{$G$} גם \L{$H^{*}\le_{R}G^{*}$} ולכן זה מוגדר היטב.
+
+\uline{שאלה}: האם קיימת דרגה \L{$0<a$} כך ש\L{$a^{\prime}=0^{\prime}$}?
+תשובה: כן!
+\end{definition}
+
+\section{תורת רקורסיה - המשך}
+
+\uline{תזכורת}: אם \L{$F,G$} פונקציות )מהטבעיים לטבעיים( אז \L{$F\le_{R}G$}
+אם כל פונקציה חשיבה מ\L{$F$} חשיבה מ\L{$G$}. \L{$F\sim_{R}G$} אם
+\L{$F\le_{R}G$} ו-\L{$G\le_{R}F$}. כמו כן נסמן \L{$F/_{\sim}=degF$}.
+
+אם \L{$a,b$} דרגות אז \L{$a\le b$} אם קיימות פונקציות \L{$F,G$}
+כך ש\L{$degF=a,degG=b$} ו-\L{$F\le_{R}G$}. אמרנו: אפשר להחליף את
+\char`\"{}קיימות \L{$F,G$}\char`\"{} ב\char`\"{}לכל \L{$F,G$}\char`\"{}.
+
+מתי נאמר ש\L{$F\le_{RE}G$}? אם \L{$a,b$} דרגות אז נגדיר \L{$a\le_{RE}b$}
+בדיוק אם קיימות \L{$F,G$} כך ש\L{$degF=a,degG=b$} ו-\L{$F\le_{RE}G$}.
+\uline{תרגיל}: \L{$A\subseteq\mathbb{N}$} חשיבה ב\L{$G$} אם ורק
+אם \L{$A$} נל\char`\"{}ח מ\L{$G$} ו-\L{$\mathbb{N}\backslash A$}
+נל\char`\"{}ח מ\L{$G$}.
+
+אם \L{$H$} פונקציה כלשהי אז \L{$H^{*}$} היא הפונקציה המתאימה למכונת
+טיורינג אוניברסלית עם אוב \L{$H$}. באופן פורמלי: \L{$H^{*}$} היא
+הפונקציה המציינת של הקבוצה:\L{
+\[
+\{\left\langle e,n\right\rangle :e\, is\, a\, code\, for\, machine\, H\, and\, T_{e}(n)\, halts\}
+\]
+}ישירות מן ההגדרה נובע שאם \L{$G\le_{RE}H$} אז \L{$degG\le degH^{*}$}.
+\uline{כמסקנה}: אם נגדיר לדרגה \L{$a$} את הדרגה \L{$a^{\prime}$}
+ע\char`\"{}י \L{$a^{\prime}=degH^{*}$} עבור \L{$H$} כלשהי כך ש\L{$a=degH$}
+אז:
+\begin{enumerate}
+\item \L{$a^{\prime}$} מוגדר היטב
+\item \L{$a^{\prime}$} הוא הדרגה המירבית מעל \L{$a$} שהיא נל\char`\"{}ח
+ב\L{$a$}. במילים אחרות, אם \L{$a\le b$} ו-\L{$b\le_{RE}a$} אז \L{$b\le a^{\prime}$}.
+מדוע? אם \L{$b\le_{RE}a$} אז לפי הגדרה יש \L{$G$} כך ש\L{$degG=b$}
+ו-\L{$G\le_{RE}H$}. לכן \L{$degG\le degH^{*}\overset{def}{=}a^{\prime}$}.
+\end{enumerate}
+ראינו: אם \L{$F,G$} חשיבות אז \L{$F\sim G$} וסימנו \L{$degF=0$}:
+\begin{enumerate}
+\item \L{$0\le a$} לכל דרגה \L{$a$}
+\item אם \L{$a,b$} דרגות אז יש דרגה \L{$c$} כך ש-\L{$c$} חסם מלעיל קטן
+ביותר ל\L{$a,b$}.
+\item לכל סדרה \L{$F(y,x):=\{F_{n}\}_{n=1}^{\infty}$} יש חסם מלעיל )שהוא
+פשוט \L{$F(y,x)$}( אבל אין חסם עליון.
+\end{enumerate}
+\uline{תרגיל}: אם \L{$a,b$} דרגות אז \L{$a<a^{\prime}$} )ללא
+שיוויון( ואם \L{$a\le b$} אז \L{$a^{\prime}\le b^{\prime}$}. אבל
+בהמשך נראה שיש \L{$a<b$} כך ש\L{$a^{\prime}=b^{\prime}$} .
+\begin{theorem}
+קיימות דרגות \L{$a,b\le0^{\prime}$} שאינן ניתנות להשוואה. \end{theorem}
+\begin{corollary}
+קיימת דרגה \L{$0<a<0^{\prime}$}.
+\begin{proof}
+לפי המשפט יש \L{$a,b\le0^{\prime}$} שאינן ניתנות להשוואה. אז \L{$a,b\not=0^{\prime}$}
+ו-\L{$a,b\not=0$}.
+\end{proof}
+\end{corollary}
+שאלה מרכזית: )הבעיה של \inputencoding{latin9}\L{Post}\inputencoding{cp1255}(
+האם קיימת \L{$a$} כנ\char`\"{}ל שהיא נל\char`\"{}ח?
+
+\uline{אבחנה:} נניח ש\L{$f$} חשיבה עם אוב \L{$H$}. אז לכל \L{$n$}
+יש \L{$\sigma\subseteq H$} פונקציה סופית )ז\char`\"{}א תחום של \L{$\sigma$}
+סופי( כך ש\L{$f(n)$} ניתן לחישוב מ\L{$\sigma$}.
+\begin{proof}
+)למשפט( נשים לב שגם אם האוב \L{$F$} אינו ידוע לנו עדיין ניתן לרשום
+את כל הקודים של מכונת טיורינג עם אוב \L{$F$}. בתור התחלה נבנה שתי
+פונקציות \L{$F,G$} כך ש-\L{$G\not\le_{R}F$} וגם \L{$F\not\le_{R}G$}.
+כדי למלא את הדרישה הזו עלינו לקיים שני אוספים של תנאים:
+\begin{enumerate}
+\item )e{\beginL 1\endL}( מ\char`\"{}ט עם אוב \L{$G$} שהקוד שלה הוא \L{$e$}
+אינה מחשבת את \L{$F$}.
+\item )e{\beginL 2\endL}( מ\char`\"{}ט עם אוב \L{$F$} שהקוד שלה הוא \L{$e$}
+אינה מחשבת \L{$G$}.
+\end{enumerate}
+
+אז תהי \L{$\{e_{i}\}_{i=1}^{\infty}$} מניה חשיבה של התנאים הנ\char`\"{}ל.
+נבנה באופן אינדוקטיבי פונקציות סופיות \L{$F_{i},G_{i}$} כך ש\L{$F_{i}\subseteq F_{i+1},G_{i}\subseteq G_{i+1}$}
+ג לכל \L{$i$} ואם \L{$e_{i}$} היא תנאי מסוג {\beginL 1\endL}, למשל
+אז \L{$F_{i+1}$} תבטיח שהפונקציה המחושבת ע\char`\"{}י המכונה \L{$e_{i}$}
+עם האוב \L{$G$} לא תחשב את \L{$F_{i+1}$}. במילים אחרות המכונה \L{$e_{i}$}
+עם האוב \L{$G$} על קלט מסויים \L{$n$} אז תתן ערך ששונה מ\L{$F_{i+1}(n)$}.
+נניח שהגדרנו \L{$F_{i},G_{i}$} כך ש\L{$F_{i-1}\subseteq F_{i}$}
+ו-\L{$G_{i-1}=G_{i}$} ונניח שבה\char`\"{}כ \L{$e_{i}$} הוא תנאי
+מסוג {\beginL 1\endL} )התפקידים של \L{$F,G$} סימטריים לחלוטין בהוכחה(.
+יהי \L{$n_{i}\in\mathbb{N}$} הקטן ביותר כך ש\L{$n_{i}\not\in dom(F_{i})$}.
+נבחים בין שני מקרים:
+\begin{enumerate}
+\item מקרה א' - קיימת פונקציה סופית \L{$\sigma$} כך ש:
+
+\begin{enumerate}
+\item \L{$\sigma$} מתיישבת עם \L{$G_{i}$} )כלומר אם \L{$x\in dom(\sigma)\cap dom(G_{i})$}
+אז \L{$\sigma(x)=G_{i}(x)$}(
+\item מ\char`\"{}ט \L{$e_{i}$} עם אוב \L{$\sigma$} עוצרת על הקלט \L{$n_{i}$}.
+\end{enumerate}
+
+במקרה זה, נגדיר \L{$G_{i}\subseteq G_{i+1}$} עם \L{$G_{i+1}=G_{i}\cup\sigma$}.
+בגלל הנחה ){\beginL 1\endL}( - זוהי פונקציה. נגדיר \L{$T_{e_{i}}^{\sigma}(n_{i})+1=F_{i+1}(n_{i})$}
+)כאשר \L{$T_{e_{i}}^{\sigma}$} הוא הערך שמ\char`\"{}ט \L{$e_{i}$}
+עם אוב \L{$\sigma$} מחזירה עבור \L{$n_{i}$}( וזה מוגדר בגלל הנחה
+){\beginL 2\endL}(.
+
+\item מקרה ב' - לא מקרה א'. אז נגדיר \L{$G_{i+1}=G_{i},F_{i+1}(n_{i})=0$}.
+עתה נגדיר \L{${\displaystyle F=\bigcup_{i=1}^{\infty}F_{i},G=\bigcup_{i=1}^{\infty}G_{i}}$}.
+נראה ש\L{$F\not\le_{R}G$} )המקרה השני סימטרי לחלוטין(. תהי \L{$e$}
+מ\char`\"{}ט כלשהי עם אוב \L{$G$}. נראה ש\L{$e$} אינה מחשבת את \L{$F$}.
+לשם כך יספיק למצוא \L{$n\in\mathbb{N}$} כלשהו כך ש\L{$F(n)\not=T_{e}^{G}(n)$}
+{]}נשים לב ש\L{$F(n)$} מוגדרת לכל \L{$n$}, פשוט משום שהבניה מבטיחה
+שנטפל בבניה של \L{$F$} אינסוף פעמים ובכל פעם אנחנו מגדירים את \L{$F_{i+1}(n_{i})$}
+עבור \L{$n_{i}$} קטן ביותר עבורו הפונקציה טרם הוגדרה. לכן בהכרח \L{$dom(F)=\mathbb{N}$}{[}.
+בפרט, אם \L{$T_{e}^{G}(n)$} לא עוצרת, נקבל את הדרישה.
+\end{enumerate}
+
+יש שלב \L{$i$} שבו טיפלנו במכונה \L{$e$}. יש שתי אפשרויות. אם היינו
+במקרה ב' אז \L{$T_{e_{i}}^{G}(n_{i})$} אינה עוצרת. אילו הייתה עוצרת,
+לפי האבחנה שרשמנו היה \L{$\sigma\subseteq G$} סופי כך ש\L{$T_{e_{i}}^{\sigma}(n_{i})$}
+עוצרת, ומכיוון של\L{$G_{i}$} ול\L{$\sigma$} הרחבה משותפת \L{$G$}
+הן מתיישבות בסתירה להנחה שאנחנו במקרה ב'. אם היינו במקרה א' אז יש
+\L{$\sigma_{i}\subseteq G$} סופית )שהיא זאת שמופיעה בבניה בשלב ה\L{$i$}(
+כך ש\L{$F(n)=F_{i+1}(n_{i})=T_{e_{i}}^{\sigma}(n_{i})+1\not=T_{e_{i}}^{\sigma}(n_{i})=T_{e_{i}}^{G}(n_{i})$}. 
+
+\end{proof}
+\begin{corollary}
+\L{$degG$} אינו ניתן להשוואה עם \L{$degF$}. נותר להראות \L{$degF\le0^{\prime}$}.
+\end{corollary}
+
+\section{תורת רקורסיה - המשך}
+
+התחלנו להוכיח: קיימות דרגות \L{$0\le a,b\le0^{\prime}$} כך ש-\L{$a,b$}
+אינן ניתנות להשוואה ונסמן \L{$a|b$}. בנינו שתי פונקציות \L{$F,G$}
+כך ש-\L{$F\not\le_{R}G$} ו-\L{$G\not\le_{R}F$}. נותר לבדוק ש-\L{$degF,degG\le0^{\prime}$}.
+כדי להבטיח שהפונקציות בלתי ניתנות להשוואה היה צריך להגשים שני סוגי
+תנאים:
+\begin{enumerate}
+\item )e{\beginL 1\endL}( \L{$F\not=f_{T_{e}^{G}}$}
+\item )e{\beginL 2\endL}( \L{$G\not=f_{T_{e}^{F}}$}\end{enumerate}
+\begin{lemma}
+)למת השימוש( תהי \L{$e$} מ\char`\"{}ט ו-\L{$H,G$} אובות. נניח שבריצה
+של \L{$T_{e}^{H}(n)$} הפניות לאורקל \L{$H$} מבקשות בדיוק את הערכים
+\L{$H(r_{1}),...,H(r_{k})$} לאיזה \L{$k\in\mathbb{N}$} ונניח ש-\L{$G(r_{i})=H(r_{i})$}
+לכל \L{$1\le i\le k$}. אז \L{$T_{e}^{H}(n)=T_{e}^{G}(n)$}. בפרט:
+אם \L{$T_{e}^{H}(n)$} עוצרת אז יש \L{$\sigma\subseteq H$} סופית
+כך ש-\L{$T_{e}^{H}(n)=T_{e}^{\sigma}(n)$}. 
+
+כדי לבנות את \L{$F,G$} מספרנו את התנאים \L{$\{e_{i}\}_{i=0}^{\infty}$}
+בצורה חשיבה. אם בשלב \L{$n$} עלינו לטפל בתנאי מסוג e{\beginL 1\endL}
+אז נבחר \L{$k$} להיות הראשון שאינו ב\L{$domF_{n}$} ונבחין בין שני
+מקרים. \end{lemma}
+\begin{enumerate}
+\item מקרה א' - אם קיימת \L{$\sigma$} סופית כך ש:
+
+\begin{enumerate}
+\item \L{$\sigma$} מתיישבת עם \L{$G_{n}$} ו-
+\item \L{$T_{e}^{\sigma}(k)$} עוצרת
+\end{enumerate}
+
+אז נגדיר \L{$G_{n+1}=G_{n}\cup\sigma$} ו- \L{$F_{n+1}=F_{n}\cup\{(k,\sigma\}$}
+כאשר \L{$r=f_{T_{e}^{\sigma}}(k)+1$}.
+
+\item מקרה ב' - אחרת )כלומר, אין \L{$\sigma$} כנ\char`\"{}ל( נגדיר \L{$F_{n+1}(k)=0,G_{n+1}=G_{n}$}.
+אז ראינו ש-\L{$F\not\le_{R}G$}ו-\L{$G\not\le_{R}F$} כאשר \L{${\displaystyle F=\bigcup_{i=0}^{\infty}F_{i}}$}
+ו-\L{${\displaystyle G=\bigcup_{i=0}^{\infty}G_{i}}$}. נותר לבדוק
+ש-\L{$degG,degF\le0^{\prime}$}. כלומר עלינו להראות שיש אוב נל\char`\"{}ח
+שממנו \L{$F,G$} חשיבות. משיקולי סימטריה יספיק לבדוק שזה נכון עבור
+\L{$F$}.
+\end{enumerate}
+נגדיר פונקציה \L{$s:\mathbb{N}\rightarrow\mathbb{N}$} שהיא הבניה:
+כלומר \L{$s(n)$} מחזיר לנו קוד עבור \L{$\left\langle F_{n},G_{n},e_{n}\right\rangle $}.
+יספיק לוודא ש-\L{$s$} חשיבה מאיזה אוב נל\char`\"{}ח. נניח שאנחנו
+יודעים את \L{$s(n)$} ואנחנו רוצים לחשב את \L{$s(n+1)$}. ב.ה.כ השלב
+\L{$e_{n+1}$} הוא מסוג e{\beginL 1\endL} . דבר ראשון \L{$s$} צריכה
+להכריע אם אנחנו במקרה א' או מקרה ב'. ז\char`\"{}א עלינו לדעת להכריע
+אם קיימת \L{$\sigma$} שמתיישבת עם \L{$G_{n}$} ו-\L{$T_{e+1}^{\sigma}(k)$}
+עוצרת )מיהו \L{$k$} ידוע מ\L{$s(n)$}(. דבר ראשון נשים לב שהתנאי
+בתוך הסוגריים הוא נל\char`\"{}ח {]}ב\L{$\sigma$}, אבל מכיוון ש\L{$\sigma$}
+סופית אז היא ממש נל\char`\"{}ח{[}. אבל לכל יחס נל\char`\"{}ח \L{$A(\bar{x},\bar{y})$}
+אז גם \L{$(\exists x)A(\bar{x},\bar{y})$} נל\char`\"{}ח. לכן ההכרעה
+האם אנחנו במקרה א' או במקרה ב' חשיבה מאוב נל\char`\"{}ח. אם נחנו במקרה
+ב' - אין בעיה, הכל חשיב. אם אנחנו במקרה א' - עלינו למצוא את \L{$\sigma$}.
+זה שוב דבר שהוא חשיב באופן כללי, כי אם \L{$A(\bar{x},\bar{y})$} נל\char`\"{}ח
+ו-\L{$\bar{y}$} כזה ש-\L{$(\exists x)A(\bar{x},\bar{y})$} אז יש
+פונקציה חשיבה שמחזירה \L{$\bar{x}$} שמעיד על כך. לכן בסה\char`\"{}כ
+\L{$s(n+1)$} חשיבה מ\L{$s(n)$} בעזרת האוב הנל\char`\"{}ח \L{$(\exists\sigma)(...)$}.
+\begin{corollary}
+קיימת \L{$0<a<0^{\prime}$}.
+
+אותה הוכחה בדיוק תראה: לכל דרגה \L{$c$} קיימת דרגה \L{$a$} כך ש\L{$c<a<c^{\prime}$}. 
+
+האם אפשר למצוא \L{$a$} כמו במסקנה שהיא נל\char`\"{}ח? תשובה: כן.
+ואפשר אפילו לדרוש ש-\L{$a^{\prime}=0^{\prime}$}. \end{corollary}
+\begin{theorem}
+קיימת דרגת טיורינג נל\char`\"{}ח \L{$a$} כך ש-\L{$a\not=0$} ו-\L{$a^{\prime}=0^{\prime}$}.\end{theorem}
+\begin{proof}
+)רעיון( נבנה קבוצה \L{$A\subseteq\mathbb{N}$} באינדוקציה. בכל שלב
+\L{$n$} נוסיף לקבוצה שבנינו בשלבים הקודמים מספר של איברים. הבניה
+תהיה כזו שלגבי כל איבר שהכנסנו ל-\L{$A$} אנחנו מתחייבים שהוא יישאר
+ב-\L{$A$}. אבל באופן כללי בשום שלב סופי לא נתחייב לגבי שום מספר טבעי
+שהוא לא ייכנס ל-\L{$A$} מתישהו בעתיד. לפי מה אנחנו מחליטים האם להכניס
+איבר ל-\L{$A$} או לא )שזה דבר שלא יקרה(? כדי להבטיח את התנאים נרצה
+לוודא שהקבוצה \L{$A$} שאנחנו בונים אינה חשיבה. לכן נרצה להבטיח ש-\L{$\chi_{A}$}
+שונה מ\L{$\chi_{E}$} לכל קבוצה חשיבה \L{$E$}. 
+
+הצרה היא שאנחנו לא יכולים להתמקד בפונקציות מציינות של קבוצות חשיבות.
+צריך לעבור על כל הפונקציות החשיבות - ובכלל זה אלו שאינן שלמות. מתי
+נכניס איבר \L{$k$} ל-\L{$A$}? לכל מ\char`\"{}ט \L{$T_{e}$} נתאים
+מספר טבעי \L{$k(e)$} ונריץ את \L{$T_{e}(k(e))$}. אם נקבל {\beginL 0\endL}
+עולה החשד ש\L{$T_{e}$} פונקציה מציינת של איזו קבוצה ו-\L{$T_{e}$}
+חושבת ש-\L{$k(e)$} לא בקבוצה. ליתר בטחון, נכניס את \L{$k(e)$} ל-\L{$A$}
+וזה יבטיח ש\L{$A$} שונה מהקבוצה ש-\L{$T_{e}$} )אולי( מקודדת. הקושי
+העיקרי - כיצד נדע אם \L{$T_{e}(k(e))$} אי פעם תעצור?
+
+כדי להבטיח ש-\L{$A$} שנבנה תהיה נל\char`\"{}ח נרצה לוודא שהבניה שאנחנו
+מנהלים היא חשיבה. לכן שאלות מהסוג \char`\"{}האם \L{$T_{e}(k(e))$}
+עוצרת\char`\"{} אינן באות בחשבון. מה הפתרון? נשים לב שאם \L{$T_{e}(k(e))$}
+אינה עוצרת ומחזירה {\beginL 0\endL}, לא יקרה שום דבר רע אם אף פעם
+לא נחליט להכניס את \L{$k(e)$} ל-\L{$A$} כי בסוף פשוט \L{$k(e)$}
+לא יהיה ב\L{$A$} ואנחנו בסדר. השאלה היא איך לא לתקוע את הבניה אם
+\L{$T_{e}(k(e))$} לא עוצרת. כמו תמיד, נדאג לחזור ל\L{$e$} אינסוף
+פעמים ובכל פעם לבצע מספר חסום )אבל עולה לאינסוף( של צעדים. אם אי פעם
+\L{$T_{e}(k(e))$} תעצור נדע אם עצרה על {\beginL 0\endL} או לא - אם
+כן נכניס את \L{$k(e)$} ואם לא - לא נעשה כלום. בדיוק כמו במקרה שבו
+\L{$T_{e}(k(e))$} בכלל לא עוצרת.
+
+הדרישה השניה, ש-\L{$(degA)^{\prime}=0^{\prime}$} מצריכה אותנו לטפל
+בעוד משפחה של תנאים: \L{$(2_{e,k})$}- צריך להחליט האם \L{$T_{e}^{A}(k)$}
+עוצרת או לא. נניח שרוצים לטפל בתנאים אלה. רוצים לדעת האם \L{$T_{e}^{A}(k)$}
+עוצרת או לא. אבל איפה \L{$A$} ואיפה אנחנו?? )אליבא ד'חסון(. בשלב
+סופי התחייבנו רק לגבי מספר סופי של \L{$A_{i}$} שהם ב\L{$A$}. ננסה
+לחשב את \L{$T_{e}^{A}(k)$} - את זה גם כן אי אפשר לחשב. את זה נפתור
+כמו קודם. נטפל בתנאי \L{$2_{e,k}$} אינסוף פעמים וכל פעם נריץ את המכונה
+עוד קצת. כל זה יעזור בכלל במשהו אם בסוף, לגבי כל \L{$r$} שעליו \L{$T_{e}^{A}(k)$}
+שאלה האם \L{$r\in A_{i}$} נקבל בדיוק את אותה התשובה גם ב\L{$A$}
+)או לחלופין בכל שלב בעתיד בו נחזור לטפל ב\L{$(2_{e,k})$}.
+
+המכונה שואלת את האוב \L{$A_{i}$} שאלות מהצורה \char`\"{}האם \L{$r\in A_{i}$}?\char`\"{}
+או \char`\"{}האם \L{$r\not\in A_{i}$}?\char`\"{}. מהבניה - אם \L{$T_{e}^{A_{i}}$}
+שאלה \char`\"{}האם \L{$r\in A_{i}$}?\char`\"{} וקיבלה תשובה חיובית
+אז היא תמיד תקבל תשובה חיובית לכל \L{$A_{j}$} עם \L{$i\le j$}. לכן
+התשובות היחידות שיכולות להשתנות הן תשובות ש\L{$A_{i}$} חושב ש\L{$r\not\in A_{i}$}.
+ל\L{$r$} יש שימוש שלילי בריצה של \L{$T_{e}^{A_{i}}$} אם \L{$T_{e}^{A_{i}}$}
+פונה לאוב בשאלה \char`\"{}האם \L{$r\in A_{i}$}?\char`\"{} ומקבלת
+תשובה \L{$r\not\in A_{i}$}. לכל חישוב של ריצה עבור \L{$T_{e}^{A_{i}}$}
+{]}במילים אחרות, לכל טיפול בתנאי \L{$2_{e,k}$}{[} נצוות רשימה \L{$N_{e,k}$}
+של כל ה\L{$r\in\mathbb{N}$} בהם נעשה שימוש שלילי בזמן הריצה.
+
+כל עוד \L{$N_{e,k}\wedge A_{j}=\emptyset$} - אנחנו בסדר. מה שנרצה
+הוא להשתדל שלא להכניס איברים מ-\L{$N_{e,k}$} ל-\L{$A$}. אבל מה נעשה
+אם פתאום תנאי מסוג \L{$1$} מחליט שהוא רוצה להכניס ל-\L{$A$} איבר
+ששייך לאיזה \L{$N_{e,k}$}? נחליט על סדר קדימויות. נמספר את כל התנאים
+שלנו )כמו בהוכחת המשפט הקודם( ונרשה לתנאי מסוג \L{$1_{e}$} לפצוע
+קבוצה מסוג \L{$N_{e,k}$} רק אם המספר הסידורי של \L{$1_{e}$} קטן
+מזה של \L{$2_{e,k}$}. 
+\end{proof}
+
+\section{תורת רקורסיה - המשך}
+
+)המשך רעיון ההוכחה משיעור שעבר(
+\begin{itemize}
+\item תהי \L{$\{e_{i}\}_{i=0}^{\infty}$} רשימה של כל התנאים \L{$1_{e},2_{e,k}$}
+כך שכל תנאי מופיע אינסוף פעמים. אין בעיה לייצר רשימה כזו באופן חשיב.
+\item נבחר פעם אחת ולתמיד חלוקה של \L{$\mathbb{N}$} לאינסוף קבוצות אינסופיות
+זרות. גם את זה אפשר לעשות באופן חשיב. {]}למשל \L{$a\in A_{n}$} אם
+\L{$n=Pr^{L}(a)$} - שיטת האלכסון של קושי{[}.
+\item ראשית, נתאר בהינתן תנאי מהצורה \L{$1_{e}$} כיצד נבחר \L{$k$} שעבורו
+ננסה לחשב את \L{$T_{e}(k)$}. אם \L{$e$} היא המכונה ה-\L{$n$}-ית
+באיזה מספור )חשיב( של הפונקציות החשיבות אז נבחר את \L{$k$} מ-\L{$A_{n}$}
+. שנית, נדרוש ש-\L{$k$} מספיק גדול כך שאינו מופיע בשום \L{$2_{e,k}$}
+- הכרזה שהתקבלה עד כה בבניה.
+\item עכשיו נתאר את השלב ה-\L{$n$} בבניה:
+
+\begin{itemize}
+\item \uline{מקרה א'} - השלב ה-\L{$n$} הוא מהצורה \L{$1_{ei}$}.
+
+\begin{enumerate}
+\item כבר הכנסנו מספר מ-\L{$R_{i}$} ל-\L{$A$} - לא עושים כלום.
+\item אם קיים \L{$k\in R_{i}$} כך ש-\L{$k<n$} ו-\L{$T_{ei}(k)=0$}, מתקבל
+אחרי פחות מ-\L{$n$} צעדים. בנוסף \L{$k$} לא שייך לשום \L{$2_{e,k}$}
+- הכרזה שמספרה הסידורי קטן ממספור הסידורי של \L{$1_{ei}$}. {]}ברקע
+יש לנו מספור חשיב של כל הדרישות שלנו, למשל המספור הסידורי של הדרישה
+\L{$c_{i}$} - במספור שקבענו בהתחלה - יכול להיות האינדקס הראשון \L{$i_{0}$}
+כך שהתנאי ב-\L{$c_{i}$} שווה לתנאי ב-\L{$c_{i_{0}}$}{[}. במקרה הזה
+- נכניס את \L{$k$} ל-\L{$A$} וכמובן ש\char`\"{}נפצע\char`\"{} )נסמן(
+כל \L{$2_{e,k}$} - הכרזה שהמספר הסידורי שלה גדול מזה של \L{$1_{ei}$}
+ו-\L{$k$} שייך להכרזה.
+\item אחרת - לא נעשה כלום.
+\end{enumerate}
+\item \uline{מקרה ב'} - אם \L{$T_{e}^{A_{n-1}}(k)$} )כאשר \L{$A_{n-1}$}
+הקבוצה שחיברנו עד כה( עוצרת אחרי \L{$n$} צעדים, אז נגיש \L{$2_{e,k}$}
+- הכרזה שמתאימה לחישוב. {]}כלומר מכינים הכרזה ובה כל המספרים \L{$l\in\mathbb{N}$}
+כך שבמהלך החישוב \L{$T_{e}^{A_{n-1}}(k)$} פנתה לאוב ושאלה \char`\"{}האם
+\L{$l\in A_{n-1}$}\char`\"{} וקיבלה תשובה שלילית{[}.
+\end{itemize}
+\end{itemize}
+\begin{claim}
+הקבוצה \L{$A$} שנקבל בסוף הבניה עונה על כל התנאים \L{$1_{e},2_{e,k}$}. \end{claim}
+\begin{proof}
+נניח שיש לנו תנאי \L{$1_{e_{i}}$}. אם בשלב כלשהו הכנסו ל-\L{$A$}
+מספר \L{$k$} מ-\L{$R_{i}$} זה אומר שמצאנו ש-\L{$T_{e_{i}}(k)=0$}
+והכנסנו את \L{$k$} ל-\L{$A$} ולכן \L{$\chi_{A}(k)=1$} ואנחנו בסדר.
+
+אז נניח שאין \L{$k\in R_{i}$} שהוכנס ל-\L{$A$}. נבחר \L{$k\in R_{i}$}
+גדול מספיק כדי ש-\L{$k$} אינו מופיע באף \L{$2_{e,k}$} - הכרזה עם
+אינדקס קטן מהאינדקס של \L{$1_{ei}$}. 
+
+מדוע יש \L{$k$} כזה? נשים לב שאם \L{$n$} הוא האינדקס של \L{$2_{e,l}$}
+אז כל תנאי עם אינדקס \L{$m<n$} יכול \char`\"{}לפצוע\char`\"{} הכרזה
+של \L{$n$} לכל היותר פעם אחת. אם התנאי עם אינדקס \L{$n$} פצע הכרזה
+כלשהי ז\char`\"{}א שהתנאי הכניס איבר כלשהו ל-\L{$A$} ולפי ){\beginL 1\endL}(
+של מקרה א' לעולם לא נחזור לטפל בתנאי עם אינדקס \L{$n$}. בסה\char`\"{}כ
+את ה-\L{$2_{e,l}$} הכרזות ניתן \char`\"{}לפצוע\char`\"{} לכל היותר
+\L{$n$} פעמים. לכן יש לכל היותר \L{$n+1$} הכרזות \L{$2_{e,l}$}.
+בסה\char`\"{}כ לכל תנאי שהוא יש לכל היותר מספר סופי של הכרזות של תנאים
+עם אינדקס קטן יותר. לכן יש \L{$k$} כמו שאנחנו רוצים ועבור \L{$k$}
+כזה לא ייתכן ש-\L{$T_{e_{i}}(k)=0$}. מדוע? אילו זה היה מתקיים לפי
+מקרה )א'{\beginL 2\endL}( היינו מכניסים את \L{$k$} ל-\L{$A$} בסתירה
+להנחה. לכן על התנאים \L{$1_{e}$} מתקיימים.
+
+מה בקשר לתנאים \L{$2_{e,k}$} ? נאמר ש-\L{$2_{e,k}$} הכרזה היא קבועה
+אם היא זרה ל-\L{$A$}. נראה ש-\L{$T_{e}^{A}(k)$} עוצרת אם ורק אם
+קיימת \L{$2_{e,k}$} הכרזה קבועה. 
+
+אם קיימת \L{$2_{e,k}$} הכרזה קבועה ז\char`\"{}א שקיים איזה שלב \L{$n$}
+בבניה שבו \L{$T_{e}^{A_{n-1}}$} עצרה )אחרי \L{$n$} צעדים( ויצרה
+את ההכרזה. כיוון שההכרזה קבועה, לכל \L{$r\in\mathbb{N}$} כך ש-\L{$T_{e}^{A_{n-1}}$}
+פנתה לאוב בשאלה \char`\"{}האם \L{$r\in A_{n-1}$}?\char`\"{} האוב
+\L{$A$} יחזיר את אותה התשובה. לכן לפי עקרון השימוש \L{$T_{e}^{A}(k)$}
+עוצרת. 
+
+בכיוון השני אם \L{$T_{e}^{A}(k)$} עוצרת )נאמר אחרי \L{$n$} צעדים(
+אז לכל \L{$c_{i}$} כך שהתנאי ב-\L{$c_{i}$} הוא \L{$2_{e,k}$} ו-\L{$i>n$},
+הבניה במקרה ב' תייצר \L{$2_{e,k}$} - הכרזה. )ובתנאי שבשלב ה-\L{$i$}
+כבר נכנסו ל-\L{$A$} כל האיברים שבהם נעשה שימוש חיובי בחישוב של \L{$T_{e}^{A}(k)$}.
+
+אבל מהדיון הקודם, כל תנאי יכול לייצר לכל היותר מספר סופי של הכרזות.
+אז האחרונה מביניהן שהכרח לא תשתנה, ז\char`\"{}א תהיה קבועה.
+
+עד עתה: בנינו את \L{$A$}, הראנו ש-\L{$A$} מקיימת את התנאים \L{$1_{e}$}
+ואת \L{$2_{e,k}$} )לפי א' הנ\char`\"{}ל( וברור שהבניה חשיבה. כיוון
+ש-\L{$A$} מקיימת את \L{$1_{e}$} לכל \L{$e$}, ברור ש-\L{$A$} אינה
+חשיבה. כיוון שהבניה חשיבה, אם נגדיר \L{$s(n)$} להיות הקבוצה \L{$A_{n}$}
+שהתקבלה בשלב ה-\L{$n$} של הבנייה נקבל ש-\L{$A$} נל\char`\"{}ח, כי
+\L{$s(n)$} חשיבה.
+
+נותר לוודא ש-\L{$deg(A^{*})\le0$}. ראינו בתרגיל {\beginL 11\endL}
+טענה שאומרת שאם \L{$A^{*}=dim(B_{i})$} עבור \L{$i\in\mathbb{N}$}
+כך ש-\L{$B_{i}$} חשיבה מ{\beginL -\endL}\L{$A$} אז \L{$deg(A^{*})\le0^{\prime}$}.
+נגדיר \L{$\left\langle e,k\right\rangle \in B_{i}$}אם ורק אם בשלב
+ה-\L{$i$} של הבנייה יש \L{$2_{e,k}$} - הכרזה שאיננה פצועה. כיוון
+שהבניה חשיבה \L{$B_{i}$} יחס חשיב. לפי )א( הנ\char`\"{}ל \L{$T_{e}^{A}(k)(\iff\left\langle e,k\right\rangle \in B_{i})$}
+עוצרת אם ורק אם \L{$dim\chi_{B_{i}}(\left\langle e,k\right\rangle )=1$}.\end{proof}
+\begin{theorem}
+לכל דרגה \L{$0^{\prime}\le a$} קיימת דרגה \L{$b$} כך ש-\L{$b^{\prime}=0^{\prime}\cup b=a$}.
+\end{theorem}
+\uline{רעיון ההוכחה}: נבחר \L{$g:\mathbb{N}\rightarrow\mathbb{N}$}
+כך ש-\L{$deg(g)=a$}, אפשר לבחור \L{$g$} כזו שלמה. נרצה לבנות \L{$f:\mathbb{N}\rightarrow\mathbb{N}$}
+כך ש-\L{$f^{*}$} חשיבה מ-\L{$0^{\prime}\cup deg(f)$} ו-\L{$g$}
+חשיבה מ-\L{$f^{*}$}.
+
+נרצה להגשים שני סוגים תנאים:
+\begin{itemize}
+\item \L{$1_{e,k}$} - להחליט האם \L{$T_{e}^{f}(k)$} עוצרת
+\item \L{$2_{n}$} - לוודא ש-\L{$f(m)=g(n)$} לאיזה \L{$m\in\mathbb{N}$}.
+\end{itemize}
+כרגיל נמספר את התנאים \L{$\{c_{i}\}$}, ובשלב ה-\L{$i$} אם אנו בתנאי
+\L{$1_{e,k}$} ויש \L{$\sigma:\mathbb{N}\rightarrow\mathbb{N}$} סופית
+שמתיישבת עם \L{$f_{i-1}$} כך ש-\L{$T_{e}^{\sigma}(k)$} עוצרת, נגדיר
+\L{$f_{i}=f_{i-1}\cup\sigma$} ואחרת נגדיר \L{$f_{i}=f_{i-1}$}. ואם
+בשלב ה-\L{$i$} אנו בתנאי \L{$2_{n}$} אז נבחר \L{$m$} מזערי כך שאינו
+בתחום של \L{$f_{i-1}$} ונגדיר \L{$f_{i}(m)=g(n)$}. לסיכום: יוצא
+שהבניה חשיבה מ-\L{$0^{\prime}\cup a=a$} וחשיבה גם מ-\L{$0^{\prime}\cup b$}.
+
+~
+\begin{proof}
+תהי \L{$g$} כנ\char`\"{}ל ונמצא פונקציה \L{$f$} כך ש-\L{$deg(f)$}
+תענה על הדרישות.
+
+\L{$b\cup b^{\prime}\le b^{\prime}$} ולכן יספיק למצוא \L{$b$} כך
+ש-\L{$b^{\prime}\le a\le b$}. מזה נבטיח שיש שיוויונות לכל אורך הדרך.
+אז צריך למצוא \L{$b$} כך ש-\L{$b^{\prime}$} חשיבה מ-\L{$b$} ומ-\L{$0^{\prime}$}. 
+
+כרגיל נמספר את התנאים )כולם ביחד( במספור חשיב \L{$\{e_{i}\}_{i=0}^{\infty}$}
+ונניח שלכל \L{$i\le n$} בנינו פונקציה \L{$f_{i}$} )עם תחום סופי(
+כך ש-\L{$f_{i}\subseteq f_{j}$} אם \L{$i\le j$}.
+
+\uline{בניית \L{$f_{n+1}$}:}
+\begin{itemize}
+\item אם \L{$e_{n+1}$} הוא תנאי מסוג \L{$1_{e,k}$}: נבדוק האם יש \L{$\sigma$}
+סופית שמתיישבת עם \L{$f_{n}$} כך ש-\L{$T_{e}^{\sigma}(k)$} עוצרת.
+אם כן, נגדיר \L{$f_{n+1}=f_{n}\cup\sigma$} אחרת נגדיר \L{$f_{n+1}=f_{n}$}.
+\item אם \L{$e_{n+1}$} הוא תנאי מסוג \L{$2_{k}$} אז נמצא \L{$m$} מזערי
+שאיננו בתחום של \L{$f_{n}$} ונגדיר \L{$f_{n+1}=f_{n}\cup\left\langle m,g(k)\right\rangle $}.
+נגדיר \L{$f={\displaystyle \bigcup_{i=0}^{\infty}}f_{i}$} ואז \L{$f$}
+פונקציה שלמה.
+\end{itemize}
+
+כדי לממש את הבניה:
+\begin{itemize}
+\item אם אנחנו בתנאי \L{$1_{e,k}$} צריך לדעת האם קיים \L{$\sigma$} כזה.
+כדי לענות על השאלה הזו אנו יכולים מ-\L{$0^{\prime}$}.
+\item אם אנחנו בתנאי מסוג \L{$2_{k}$}, אין בעיה למצוא את \L{$m$}. כל מה
+שצריך זה לחשב את \L{$g(k)$} ואת זה אפשר לעשות מ-\L{$g$}.
+\end{itemize}
+
+נשאר להראות כי את \L{$b^{\prime}$} ניתן לחשב מ-\L{$b$} ומ-\L{$0^{\prime}$}
+אבל \L{$b^{\prime}=deg(f^{*})$} ו-\L{$f^{*}$} זהו האוב שעונה לכל
+שאלה מהצורה \char`\"{}האם \L{$T_{e}^{f}(k)$} עוצרת?\char`\"{}. ראשית
+אם אנו יודעים את הבניה של \L{$t$} אז אנו יודעים לענות על כל השאלות
+מהצורה הנ\char`\"{}ל. אבל הבניה חשיבה גם מ-\L{$0^{\prime}$} וגם מ-\L{$b^{\prime}$}
+)ביחד( ולכן \L{$b^{\prime}\le b\cup0^{\prime}$} כנדרש.
+
+\end{proof}
+\begin{corollary}
+הפונקציה \L{$a\rightarrow a^{\prime}$} איננה חח\char`\"{}ע.\end{corollary}
+
+\end{document}

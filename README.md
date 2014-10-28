@@ -7,5 +7,7 @@ Complete notes in Hebrew for one of the best and worst courses I ever took: "Inc
 
 Read and weep.
 
+PDF version available on https://yuvadm.github.io/incompleteness-notes/notes.pdf
+
 HTML version for quick viewing (but horrible rendering) is available on https://yuvadm.github.io/incompleteness-notes/
 
